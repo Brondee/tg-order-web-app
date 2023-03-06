@@ -1,6 +1,5 @@
 import React from "react";
 import "./Specialist.css";
-import plus from "../../assets/img/plus.png";
 
 const Specialist = ({ name, qualification, photo }) => {
   return (
@@ -11,7 +10,7 @@ const Specialist = ({ name, qualification, photo }) => {
         <p className="qualification">{qualification}</p>
       </div>
       <div class="plus-circle">
-        <img src={plus} alt="plus" class="plus" />
+        <img src="" alt="plus" class="plus" />
       </div>
     </div>
   );
