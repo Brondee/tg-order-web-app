@@ -9,10 +9,11 @@ body {
   justify-content: center;
 }
 .wrap {
-  width: 90%;
+  width: 95%;
 }
 .main-title {
   font-weight: 700;
   font-size: 23px;
-  color: #000000;
+  color: #ffffff;
+  margin-top: 20px;
 }
