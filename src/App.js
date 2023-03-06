@@ -6,7 +6,7 @@ import DateTime from "./screens/DateTime";
 import Service from "./screens/Service";
 
 function App() {
-  const { tg, onClose, onToggleButton } = useTelegram();
+  const { tg } = useTelegram();
 
   useEffect(() => {
     tg.ready();
