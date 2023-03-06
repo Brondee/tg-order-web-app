@@ -6,6 +6,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+.img-name-container {
+  display: flex;
+  align-items: center;
 }
 .photo {
   width: 50px;
@@ -13,14 +19,25 @@
   object-fit: cover;
   border-radius: 11px;
 }
+.name-qual-container {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .name {
   font-weight: 600;
   font-size: 16px;
+  color: #000000;
+  margin-bottom: 2px;
+  margin-top: 0;
 }
 .qualification {
   font-weight: 500;
   font-size: 11px;
   color: #b4b4b4;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .plus-circle {
   width: 30px;
