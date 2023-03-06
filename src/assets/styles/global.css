@@ -4,7 +4,7 @@ body {
   font-family: "Montserrat";
 }
 .main-container {
-  width: 85%;
+  width: calc(92% - 51px);
   margin: 0 auto;
 }
 .main-title {
