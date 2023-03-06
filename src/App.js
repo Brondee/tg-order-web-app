@@ -1,5 +1,9 @@
 import { useEffect } from "react";
 import { useTelegram } from "./hooks/useTelegram";
+import { Routes, Route } from "react-router-dom";
+import Specialists from "./screens/Specialists/Specialists";
+import DateTime from "./screens/DateTime";
+import Service from "./screens/Service";
 
 function App() {
   const { tg, onClose, onToggleButton } = useTelegram();
@@ -9,11 +13,11 @@ function App() {
   });
 
   return (
-    <div>
-      work
-      <button onClick={onClose}>Закрыть</button>
-      <button onClick={onToggleButton}>toggle</button>
-    </div>
+    <Routes>
+      <Route index element={<Specialists />} />
+      <Route path="/date" element={<DateTime />} />
+      <Route path="/service" element={<Service />} />
+    </Routes>
   );
 }
 
