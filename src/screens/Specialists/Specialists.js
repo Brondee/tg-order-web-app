@@ -1,5 +1,7 @@
 import React from "react";
 import Specialist from "../../components/Specialist/Specialist";
+import { useTelegram } from "../../hooks/useTelegram";
+import { useNavigate } from "react-router-dom";
 
 import "../../assets/styles/global.css";
 import "./Specialists.css";
@@ -7,6 +9,9 @@ import "./Specialists.css";
 import { specialists } from "../../data";
 
 const Specialists = () => {
+  const navigate = useNavigate();
+  const { tg } = useTelegram();
+  tg.MainButton.onClick(() => navigate("/date"));
   return (
     <div class="main-container">
       <div className="wrap">
