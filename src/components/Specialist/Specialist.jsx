@@ -7,10 +7,10 @@ const Specialist = ({ name, qualification, photo }) => {
   const [isActive, setIsActive] = useState(false);
 
   const onClick = () => {
-    setIsActive(!isActive);
-    if (isActive) {
+    if (!isActive) {
       onToggleButton();
     }
+    setIsActive(!isActive);
   };
   return (
     <div
