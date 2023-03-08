@@ -1,6 +1,6 @@
 .date-container {
   border-radius: 10px;
-  width: 44px;
+  min-width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
