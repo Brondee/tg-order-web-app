@@ -24,6 +24,7 @@ const DateTime = () => {
             );
           })}
         </div>
+        <h3>Утро</h3>
       </div>
     </div>
   );

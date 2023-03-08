@@ -329,3 +329,10 @@ export const dates = [
     ],
   },
 ];
+
+export const services = [
+  {
+    id: 0,
+    type: "Маникюр",
+  },
+];

@@ -3,7 +3,7 @@ import { useTelegram } from "./hooks/useTelegram";
 import { Routes, Route } from "react-router-dom";
 import Specialists from "./screens/Specialists/Specialists";
 import DateTime from "./screens/DateTime/DateTime";
-import Service from "./screens/Service";
+import Service from "./screens/Service/Service";
 
 function App() {
   const { tg } = useTelegram();
