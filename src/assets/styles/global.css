@@ -2,6 +2,7 @@
 body {
   background: var(--tg-theme-bg-color);
   font-family: "Montserrat";
+  background: #000000;
 }
 .main-container {
   width: 100%;

@@ -10,8 +10,10 @@ import { specialists } from "../../data";
 
 const Specialists = () => {
   const navigate = useNavigate();
+
   const { tg } = useTelegram();
   tg.MainButton.onClick(() => navigate("/date"));
+
   return (
     <div class="main-container">
       <div className="wrap">
