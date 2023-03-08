@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Specialist.css";
-import plus from "../../assets/img/plus.png";
+import { useTelegram } from "../../hooks/useTelegram";
 
 const Specialist = ({ name, qualification, photo }) => {
+  const { onToggleButton } = useTelegram();
+  const [isActive, setIsActive] = useState(false);
+
+  const onClick = () => {
+    setIsActive(!isActive);
+    if (isActive) {
+      onToggleButton();
+    }
+  };
   return (
-    <div class="container">
+    <div
+      class={`container ${isActive && "container-active"}`}
+      onClick={onClick}
+    >
       <div className="img-name-container">
         <img src={photo} alt="person img" class="photo" />
         <div class="name-qual-container">
@@ -12,8 +24,11 @@ const Specialist = ({ name, qualification, photo }) => {
           <p className="qualification">{qualification}</p>
         </div>
       </div>
-      <div class="plus-circle">
-        <img src={plus} alt="plus" class="plus" />
+      <div class={`circle-plus closed ${isActive && "opened"}`}>
+        <div class="circle">
+          <div class="horizontal"></div>
+          <div class="vertical"></div>
+        </div>
       </div>
     </div>
   );

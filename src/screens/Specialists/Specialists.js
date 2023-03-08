@@ -13,9 +13,10 @@ const Specialists = () => {
         <h1 class="main-title">Выберите специалиста</h1>
         <div className="components-container">
           {specialists.map((person) => {
-            const { name, qualification, photo } = person;
+            const { id, name, qualification, photo } = person;
             return (
               <Specialist
+                key={id}
                 name={name}
                 qualification={qualification}
                 photo={photo}
