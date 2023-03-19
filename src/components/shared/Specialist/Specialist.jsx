@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Specialist.css";
-import { useTelegram } from "../../hooks/useTelegram";
+import { useTelegram } from "../../../hooks/useTelegram";
+import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 
 const Specialist = ({ name, qualification, photo }) => {
   const { onToggleButton } = useTelegram();
@@ -22,12 +23,7 @@ const Specialist = ({ name, qualification, photo }) => {
           <p className="qualification">{qualification}</p>
         </div>
       </div>
-      <div class={`circle-plus closed ${isActive && "opened"}`}>
-        <div class="circle">
-          <div class="horizontal"></div>
-          <div class="vertical"></div>
-        </div>
-      </div>
+      <CircleBtn isActive={isActive} />
     </div>
   );
 };

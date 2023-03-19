@@ -4,7 +4,7 @@ import "../../assets/styles/global.css";
 import "./DateTime.css";
 
 import { dates } from "../../data";
-import Date from "../../components/Date/Date";
+import Date from "../../components/shared/Date/Date";
 
 const DateTime = () => {
   return (

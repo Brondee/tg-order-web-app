@@ -1,5 +1,5 @@
 import React from "react";
-import Specialist from "../../components/Specialist/Specialist";
+import Specialist from "../../components/shared/Specialist/Specialist";
 import { useTelegram } from "../../hooks/useTelegram";
 import { useNavigate } from "react-router-dom";
 
