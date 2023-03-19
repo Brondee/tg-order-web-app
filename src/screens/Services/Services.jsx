@@ -22,7 +22,7 @@ const Services = () => {
       const response = await axios.get(`http://localhost:3333/services/all`);
       const data = response.data;
       const activeServices = data?.filter(
-        (service) => service.isActive != false
+        (service) => service.isActive !== false
       );
       setServices(activeServices);
     } catch (error) {
