@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+import AddBtn from "../../components/ui/AddBtn/AddBtn";
+import { curServiceIds } from "../../store/orderInfoSlice";
 import { useTelegram } from "../../hooks/useTelegram";
 import Service from "../../components/shared/Service/Service";
+import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 
 import "../../assets/styles/global.css";
 import "./Services.css";
+import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 
 const Services = () => {
   const [categories, setCategories] = useState(null);
   const [services, setServices] = useState(null);
+
+  const { isAdminActions } = useSelector((state) => state.admin);
 
   const navigate = useNavigate();
 
@@ -39,36 +46,58 @@ const Services = () => {
     }
   };
 
+  const moveNext = () => {
+    navigate("/specialists");
+  };
+
   useEffect(() => {
     getCategories();
     getServices();
   }, []);
 
   return (
-    <div className="main-container">
-      <div className="wrap">
-        <h1 className="main-title">Выберите услугу</h1>
-        <div className="components-container">
-          {categories?.map((category) => {
-            const { id, title } = category;
-            const curServices = services?.filter(
-              (service) => service.categoryId === id
-            );
-            return (
-              <div key={id}>
-                <h3 className="category">{title}</h3>
-                {curServices?.map((service) => {
-                  const { id, title, price, time } = service;
-                  return (
-                    <Service key={id} title={title} price={price} time={time} />
-                  );
-                })}
-              </div>
-            );
-          })}
+    <AnimationPage>
+      <div className="main-container">
+        <div className="wrap">
+          <div className="arrow-title-container">
+            {isAdminActions && <ArrowBack screenTitle="/admin" />}
+            <h1 className="main-title">Выберите услугу</h1>
+          </div>
+          <div className="components-container">
+            {isAdminActions && <AddBtn screenTitle={"/add"} />}
+            {categories?.map((category) => {
+              const { id, title } = category;
+              const curServices = services?.filter(
+                (service) => service.categoryId === id
+              );
+              return (
+                <div key={id}>
+                  <h3 className="category">
+                    {curServices?.length !== 0 && title}
+                  </h3>
+                  {curServices?.map((service) => {
+                    const { id, title, price, time, categoryId } = service;
+                    return (
+                      <Service
+                        key={id}
+                        id={id}
+                        title={title}
+                        price={price}
+                        time={time}
+                        categoryId={categoryId}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+          <div className="move" onClick={moveNext}>
+            <p>Continue</p>
+          </div>
         </div>
       </div>
-    </div>
+    </AnimationPage>
   );
 };
 

@@ -1,0 +1,15 @@
+.add-btn-container {
+  background: #ffffff;
+  border-radius: 20px;
+  height: 63px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.add-btn-container p {
+  font-weight: 600;
+  font-size: 16px;
+  color: #282e33;
+  margin-left: 10px;
+}

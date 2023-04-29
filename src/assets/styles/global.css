@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap");
 body {
-  background: #000000;
   background: var(--tg-theme-bg-color);
+  background: #282e33;
   font-family: "Montserrat";
 }
 .main-container {
@@ -14,7 +14,13 @@ body {
 }
 .main-title {
   font-weight: 700;
-  font-size: 23px;
+  font-size: 20px;
   color: #ffffff;
+  margin: 0;
+}
+.arrow-title-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
   margin-top: 20px;
 }

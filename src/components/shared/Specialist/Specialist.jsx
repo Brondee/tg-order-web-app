@@ -1,29 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import { setSpecialistId } from "../../../store/orderInfoSlice";
+import { setIsEdit } from "../../../store/adminSlice";
 import "./Specialist.css";
 import { useTelegram } from "../../../hooks/useTelegram";
 import CircleBtn from "../../ui/CircleBtn/CircleBtn";
+import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 
-const Specialist = ({ name, qualification, photo }) => {
-  const { onToggleButton } = useTelegram();
+const Specialist = ({ id, name, qualification, photo }) => {
   const [isActive, setIsActive] = useState(false);
+  const [isAnimation, setIsAnimation] = useState(false);
+
+  const { isAdminActions, isEdit, curEditType } = useSelector(
+    (state) => state.admin
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClick = () => {
-    onToggleButton();
     setIsActive(!isActive);
+    dispatch(setSpecialistId(id));
+    if (isAdminActions && curEditType !== "datetime") {
+      dispatch(setIsEdit(true));
+      navigate("/edit");
+    } else {
+      navigate("/date");
+    }
+    if (isEdit) {
+      deleteClick();
+    }
   };
+
+  const deleteClick = async () => {
+    try {
+      await axios.delete(`http://localhost:3333/specialist/del/${id}`);
+      dispatch(setIsEdit(false));
+      navigate("/specialists");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    setIsAnimation(true);
+  }, []);
+
   return (
     <div
-      class={`container ${isActive && "container-active"}`}
+      className={`spec-container ${isAnimation && "spec-animation"} ${
+        isActive && "spec-container-active"
+      } ${isEdit && "spec-container-active"}`}
       onClick={onClick}
     >
       <div className="img-name-container">
-        <img src={photo} alt="person img" class="photo" />
-        <div class="name-qual-container">
+        <img
+          src={require(`../../../assets/img/default-avatar.png`)}
+          alt="person img"
+          className="photo"
+        />
+        <div className="name-qual-container">
           <h3 className="name">{name}</h3>
           <p className="qualification">{qualification}</p>
         </div>
       </div>
-      <CircleBtn isActive={isActive} />
+      {isEdit ? (
+        <DeleteIcon width="26" height="26" />
+      ) : (
+        <CircleBtn isActive={isActive} />
+      )}
     </div>
   );
 };

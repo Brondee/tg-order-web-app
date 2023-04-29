@@ -1,0 +1,14 @@
+.arrow-back-container {
+  width: 29px;
+  height: 29px;
+  background: rgba(217, 217, 217, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.arrow-back-img {
+  padding-right: 2px;
+}

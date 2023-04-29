@@ -1,19 +1,71 @@
-import React, { useState } from "react";
-import "./Service.css";
-import { useTelegram } from "../../../hooks/useTelegram";
-import CircleBtn from "../../ui/CircleBtn/CircleBtn";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Service = ({ id, title, price, time }) => {
+import { useTelegram } from "../../../hooks/useTelegram";
+import { setCurServiceIds } from "../../../store/orderInfoSlice";
+import { setIsEdit, setCurCategoryIds } from "../../../store/adminSlice";
+import "./Service.css";
+import CircleBtn from "../../ui/CircleBtn/CircleBtn";
+import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
+
+const Service = ({ id, title, price, time, categoryId }) => {
   const [isActive, setIsActive] = useState(false);
+  const [isAnimation, setIsAnimation] = useState(false);
   const { onToggleButton } = useTelegram();
 
-  const onClick = () => {
-    onToggleButton();
-    setIsActive(!isActive);
+  const { curServiceIds } = useSelector((state) => state.orderInfo);
+  const { curCategoryIds } = useSelector((state) => state.admin);
+  const { isAdminActions, isEdit } = useSelector((state) => state.admin);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onClick = async () => {
+    if (isEdit) {
+      deleteClick();
+    } else if (isAdminActions) {
+      navigate("/edit");
+      dispatch(setCurServiceIds([id]));
+      dispatch(setIsEdit(true));
+    } else {
+      onToggleButton();
+      setIsActive(!isActive);
+      if (!isActive) {
+        dispatch(setCurServiceIds([...curServiceIds, id]));
+        dispatch(setCurCategoryIds([...curCategoryIds, categoryId]));
+      } else {
+        const newCurServiceIds = curServiceIds.filter(
+          (dataId) => dataId !== id
+        );
+        const newCurCategoryIds = curCategoryIds.filter(
+          (dataId) => dataId !== categoryId
+        );
+        dispatch(setCurServiceIds(newCurServiceIds));
+        dispatch(setCurCategoryIds(newCurCategoryIds));
+      }
+    }
   };
+
+  const deleteClick = async () => {
+    try {
+      await axios.delete(`http://localhost:3333/services/del/${id}`);
+      dispatch(setIsEdit(false));
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    setIsAnimation(true);
+  }, []);
+
   return (
     <div
-      class={`container ${isActive && "container-active"}`}
+      className={`container ${isActive && "container-active"} ${
+        isEdit && "container-active"
+      } ${isAnimation && "container-animation"}`}
       onClick={onClick}
     >
       <div className="info-container">
@@ -23,7 +75,7 @@ const Service = ({ id, title, price, time }) => {
           <p className="time">{time}</p>
         </div>
       </div>
-      <CircleBtn isActive={isActive} />
+      {isEdit ? <DeleteIcon /> : <CircleBtn isActive={isActive} />}
     </div>
   );
 };
