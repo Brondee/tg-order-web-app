@@ -11,6 +11,7 @@ export function useTelegram() {
     } else {
       tg.MainButton.show();
     }
+    console.log("toggledbtn");
   };
 
   return {
