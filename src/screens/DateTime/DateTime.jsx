@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../../assets/styles/global.css";
 import "./DateTime.css";
 
-import { dateArray } from "../../utils/getDateArray";
+import { getDateArray } from "../../utils/getDateArray";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import Date from "../../components/shared/Date/Date";
 import Time from "../../components/shared/Time/Time";
@@ -16,20 +16,27 @@ import { ReactComponent as TickIcon } from "../../assets/img/tick.svg";
 const DateTime = () => {
   const [isEmptyTime, setIsEmptyTime] = useState(false);
   const [isTickActive, setIsTickActive] = useState(false);
+  const [dateArray, setDateArray] = useState([]);
+  const [isTickChange, setIsTickChange] = useState(false);
 
   const { morningTime, afternoonTime, eveningTime, curDate, curSpecialistId } =
     useSelector((state) => state.orderInfo);
-  const { isAdminActions, curTimeArray } = useSelector((state) => state.admin);
+  const { isAdminActions, curTimeArray, curBeginDate, curTimeTable } =
+    useSelector((state) => state.admin);
 
   const navigate = useNavigate();
 
   const tickClick = () => {
     setIsTickActive(!isTickActive);
+    setIsTickChange(true);
   };
 
   const confirmClick = () => {
-    updateTimeDb();
-    updateDateDb();
+    if (isTickChange) {
+      updateDateDb();
+    } else {
+      updateTimeDb();
+    }
   };
 
   const updateTimeDb = async () => {
@@ -67,12 +74,14 @@ const DateTime = () => {
         date: curDate,
         specialistId: curSpecialistId,
         isWorkingDate: isTickActive,
+        isWorkingDateChanged: true,
       };
       const response = await axios.patch(
-        "http://localhost:3333/dates/edit",
+        "http://localhost:3333/dates/editDate",
         dto
       );
       console.log(response.data);
+      navigate("/admin");
     } catch (error) {
       console.log(error);
     }
@@ -91,6 +100,10 @@ const DateTime = () => {
       setIsTickActive(true);
     }
   }, [morningTime, afternoonTime, eveningTime]);
+  useEffect(() => {
+    const dateFuncArray = getDateArray(curBeginDate, curTimeTable);
+    setDateArray(dateFuncArray);
+  }, []);
 
   return (
     <AnimationPage>
@@ -101,7 +114,7 @@ const DateTime = () => {
             <h1 className="main-title">Выберите дату и время</h1>
           </div>
           <div className="dates-container">
-            {dateArray.map((dateOnly) => {
+            {dateArray?.map((dateOnly) => {
               const { id, date, isWorking, weekDay, fullDate } = dateOnly;
               return (
                 <Date

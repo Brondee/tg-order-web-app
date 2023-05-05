@@ -4,15 +4,27 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { setSpecialistId } from "../../../store/orderInfoSlice";
-import { setIsEdit } from "../../../store/adminSlice";
+import {
+  setIsEdit,
+  setCurBeginDate,
+  setCurTimeTable,
+} from "../../../store/adminSlice";
 import "./Specialist.css";
 import { useTelegram } from "../../../hooks/useTelegram";
 import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 
-const Specialist = ({ id, name, qualification, photo }) => {
+const Specialist = ({
+  id,
+  name,
+  qualification,
+  photo,
+  beginDate,
+  timeTable,
+}) => {
   const [isActive, setIsActive] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
+  const [imgPath, setImgPath] = useState("");
 
   const { isAdminActions, isEdit, curEditType } = useSelector(
     (state) => state.admin
@@ -24,6 +36,8 @@ const Specialist = ({ id, name, qualification, photo }) => {
   const onClick = () => {
     setIsActive(!isActive);
     dispatch(setSpecialistId(id));
+    dispatch(setCurBeginDate(beginDate));
+    dispatch(setCurTimeTable(timeTable));
     if (isAdminActions && curEditType !== "datetime") {
       dispatch(setIsEdit(true));
       navigate("/edit");
@@ -32,6 +46,21 @@ const Specialist = ({ id, name, qualification, photo }) => {
     }
     if (isEdit) {
       deleteClick();
+    }
+  };
+
+  const getImage = async () => {
+    if (photo) {
+      try {
+        const response = await axios(
+          `http://localhost:3333/specialist/img/${photo}`,
+          { responseType: "blob" }
+        );
+        const data = response.data;
+        setImgPath(URL.createObjectURL(data));
+      } catch (err) {
+        console.log("err");
+      }
     }
   };
 
@@ -47,7 +76,8 @@ const Specialist = ({ id, name, qualification, photo }) => {
 
   useEffect(() => {
     setIsAnimation(true);
-  }, []);
+    getImage();
+  }, [photo]);
 
   return (
     <div
@@ -57,11 +87,7 @@ const Specialist = ({ id, name, qualification, photo }) => {
       onClick={onClick}
     >
       <div className="img-name-container">
-        <img
-          src={require(`../../../assets/img/default-avatar.png`)}
-          alt="person img"
-          className="photo"
-        />
+        <img src={imgPath} alt="person img" className="photo" />
         <div className="name-qual-container">
           <h3 className="name">{name}</h3>
           <p className="qualification">{qualification}</p>

@@ -23,6 +23,7 @@ const Confirm = () => {
   const [services, setServices] = useState([]);
   const [nameError, setNameError] = useState(false);
   const [telephoneError, setTelephoneError] = useState(false);
+  const [imgPath, setImgPath] = useState("");
 
   let servicesPrice = 0;
   const navigate = useNavigate();
@@ -126,10 +127,28 @@ const Confirm = () => {
     }
   };
 
+  const getImage = async () => {
+    if (specialist?.photoUrl) {
+      try {
+        const response = await axios(
+          `http://localhost:3333/specialist/img/${specialist.photoUrl}`,
+          { responseType: "blob" }
+        );
+        const data = response.data;
+        setImgPath(URL.createObjectURL(data));
+      } catch (err) {
+        console.log("err");
+      }
+    }
+  };
+
   useEffect(() => {
     getSpecialistInfo();
     getServicesInfo();
   }, []);
+  useEffect(() => {
+    getImage();
+  }, [specialist]);
 
   return (
     <AnimationPage>
@@ -185,11 +204,7 @@ const Confirm = () => {
           <h3 className="details-title">Детали заказа</h3>
           <div className="spec-container container-animation">
             <div className="img-name-container">
-              <img
-                src={specialist.photoUrl}
-                alt="person img"
-                className="photo"
-              />
+              <img src={imgPath} alt="person img" className="photo" />
               <div className="name-qual-container">
                 <h3 className="name">{specialist.name}</h3>
                 <p className="qualification">{specialist.qualification}</p>

@@ -91,6 +91,8 @@ const Edit = () => {
                 nameProp={specialistInfo?.name}
                 qualificationProp={specialistInfo?.qualification}
                 photoUrlProp={specialistInfo?.photoUrl}
+                timeTable={specialistInfo?.timeTable}
+                beginingDate={specialistInfo?.beginingDate}
               />
             </div>
           )}

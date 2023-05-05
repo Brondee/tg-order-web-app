@@ -6,6 +6,8 @@ const initialState = {
   isEdit: false,
   curCategoryIds: [],
   curTimeArray: [],
+  curBeginDate: "",
+  curTimeTable: "",
 };
 
 export const adminSlice = createSlice({
@@ -27,6 +29,12 @@ export const adminSlice = createSlice({
     setCurTimeArray: (state, action) => {
       state.curTimeArray = action.payload;
     },
+    setCurBeginDate: (state, action) => {
+      state.curBeginDate = action.payload;
+    },
+    setCurTimeTable: (state, action) => {
+      state.curTimeTable = action.payload;
+    },
   },
 });
 
@@ -36,6 +44,8 @@ export const {
   setIsEdit,
   setCurCategoryIds,
   setCurTimeArray,
+  setCurBeginDate,
+  setCurTimeTable,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

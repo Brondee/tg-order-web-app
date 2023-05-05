@@ -35,6 +35,13 @@ const ServiceEditForm = ({
   const onChangeTime = (e) => {
     setTime(e.target.value);
   };
+  const onKeyDownTime = (e) => {
+    if (e.key !== "Backspace") {
+      if (time.length === 2 && time[1] === "ч") {
+        setTime(time + " ");
+      }
+    }
+  };
 
   const confirmClick = async () => {
     if (title.length === 0 && price.length === 0 && time.length === 0) {
@@ -94,6 +101,8 @@ const ServiceEditForm = ({
         inputValue={time}
         onChangeFunc={onChangeTime}
         isError={timeError}
+        placeholder="1ч 30м"
+        onKeyDown={onKeyDownTime}
       />
       <CategoriesInput categoryId={categoryId} />
       <div onClick={confirmClick}>Confirm</div>

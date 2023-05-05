@@ -15,6 +15,7 @@ import { months } from "../../../utils/calendarArrays";
 const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
   const [monthTitle, setMonthTitle] = useState("");
   const [isWorking, setIsWorking] = useState(true);
+  const [isWorkingPropState, setIsWorkingPropState] = useState(false);
 
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
@@ -24,7 +25,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     dispatch(setCurWeekDay(weekDay));
     dispatch(setCurTime(""));
     dispatch(setCurTimeArray([]));
-    if (isWorking && isWorkingProp) {
+    if (isWorking && isWorkingPropState) {
       try {
         const response = await axios(
           `http://localhost:3333/dates/${fullDate}/${curSpecialistId}`
@@ -47,8 +48,9 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
         `http://localhost:3333/dates/single/${fullDate}/${curSpecialistId}`
       );
       const data = response.data;
-      if (!data.isWorkingDate) {
-        setIsWorking(false);
+      if (data.isWorkingDateChanged) {
+        setIsWorkingPropState(true);
+        setIsWorking(data.isWorkingDate);
       }
     } catch (err) {
       console.log(err);
@@ -57,6 +59,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
 
   useEffect(() => {
     setIsWorking(isWorkingProp);
+    setIsWorkingPropState(isWorkingProp);
     getDateInfo();
     let today = new window.Date();
     if (date === today.getDate()) {

@@ -16,12 +16,20 @@ const SpecialistForm = ({
   nameProp,
   qualificationProp,
   photoUrlProp,
+  timeTable,
+  beginingDate,
 }) => {
   const [name, setName] = useState("");
   const [qualification, setQualification] = useState("");
   const [image, setImage] = useState(null);
   const [nameError, setNameError] = useState(false);
   const [qualError, setQualError] = useState(false);
+  const [firstTimeTable, setFirstTimeTable] = useState("");
+  const [secondTimeTable, setSecondTimeTable] = useState("");
+  const [beginDate, setBeginDate] = useState("");
+  const [isFirstTimeTableError, setIsFirstTimeTableError] = useState(false);
+  const [isSecondTimeTableError, setIsSecondTimeTableError] = useState(false);
+  const [isBeginDateError, setIsBeginDateError] = useState(false);
 
   const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
@@ -36,22 +44,48 @@ const SpecialistForm = ({
   const onChangeUploadImage = (e) => {
     setImage(e.target.files[0]);
   };
+  const onChangeFirstTimeTable = (e) => {
+    setFirstTimeTable(e.target.value);
+  };
+  const onChangeSecondTimeTable = (e) => {
+    setSecondTimeTable(e.target.value);
+  };
+  const onChangeBeginDate = (e) => {
+    setBeginDate(e.target.value);
+  };
 
   const confirmClick = async () => {
-    if (name.length === 0 && qualification.length === 0) {
-      setNameError(true);
-      setQualError(true);
-    }
     if (name.length === 0) {
       setNameError(true);
-    } else if (qualification.length === 0) {
+    }
+    if (qualification.length === 0) {
       setQualError(true);
-    } else {
+    }
+    if (firstTimeTable.length === 0) {
+      setIsFirstTimeTableError(true);
+    }
+    if (secondTimeTable.length === 0) {
+      setIsSecondTimeTableError(true);
+    }
+    if (beginDate.length === 0 || beginDate.length < 10) {
+      setIsBeginDateError(true);
+    }
+    if (
+      name.length !== 0 &&
+      qualification.length !== 0 &&
+      firstTimeTable.length !== 0 &&
+      secondTimeTable.length !== 0 &&
+      beginDate.length !== 0 &&
+      beginDate.length >= 10
+    ) {
+      const timeTable = firstTimeTable + "/" + secondTimeTable;
       const data = {
         id: specialistId,
         name,
         photoUrlProp,
         qualification,
+        timeTable,
+        beginingDate: beginDate,
         categoryIds: curCategoryIds,
       };
       try {
@@ -59,6 +93,7 @@ const SpecialistForm = ({
           "http://localhost:3333/specialist/edit",
           data
         );
+        console.log(response.data);
         dispatch(setIsEdit(false));
         dispatch(setCurCategoryIds([]));
         navigate("/specialists");
@@ -68,9 +103,20 @@ const SpecialistForm = ({
     }
   };
 
+  const onKeyDownBeginDate = (e) => {
+    if (e.key !== "Backspace") {
+      if (beginDate.length === 4 || beginDate.length === 7) {
+        setBeginDate(beginDate + "-");
+      }
+    }
+  };
+
   useEffect(() => {
     setName(nameProp);
     setQualification(qualificationProp);
+    setFirstTimeTable(timeTable?.split("/")[0]);
+    setSecondTimeTable(timeTable?.split("/")[1]);
+    setBeginDate(beginingDate);
   }, [nameProp]);
 
   return (
@@ -108,6 +154,54 @@ const SpecialistForm = ({
             Выбрано: <span className="pink-text">{image?.name}</span>
           </p>
         )}
+      </div>
+      <div className="timetable-label-container">
+        <label
+          htmlFor="firstTimeTable"
+          className={`form-label ${
+            isFirstTimeTableError && "form-label-error"
+          } ${isSecondTimeTableError && "form-label-error"}`}
+        >
+          Режим работы
+        </label>
+      </div>
+      <div className="timetable-container">
+        <input
+          type="text"
+          id="firstTimeTable"
+          onChange={(e) => onChangeFirstTimeTable(e)}
+          className={`input-timetable ${
+            isFirstTimeTableError && "form-input-error"
+          }`}
+          value={firstTimeTable}
+          maxLength={1}
+        />
+        <p className="timetable-text">через</p>
+        <input
+          type="text"
+          id="secondTimeTable"
+          onChange={(e) => onChangeSecondTimeTable(e)}
+          className={`input-timetable ${
+            isSecondTimeTableError && "form-input-error"
+          }`}
+          value={secondTimeTable}
+          maxLength={1}
+        />
+        <p className="timetable-text">дней</p>
+      </div>
+      <div className="begin-date-container">
+        <p className="timetable-text">начиная с</p>
+        <input
+          type="text"
+          onChange={(e) => onChangeBeginDate(e)}
+          className={`input-begin-date input-timetable ${
+            isBeginDateError && "form-input-error"
+          }`}
+          maxLength={10}
+          value={beginDate}
+          placeholder="ГГГГ-ММ-ДД"
+          onKeyDown={(e) => onKeyDownBeginDate(e)}
+        />
       </div>
       <CategoriesInput specialistId={specialistId} />
       <div onClick={confirmClick}>Confirm</div>

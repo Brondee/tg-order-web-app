@@ -35,3 +35,43 @@
 .pink-text {
   color: #ffeeee;
 }
+.timetable-label-container {
+  margin-top: 15px;
+}
+.timetable-container {
+  display: flex;
+  align-items: center;
+}
+.input-timetable {
+  border: 2.5px solid #ffffff;
+  border-radius: 8px;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  padding-left: 15px;
+  width: 22px;
+  height: 35px;
+  margin-top: 8px;
+}
+.input-timetable:focus {
+  outline: none;
+}
+.timetable-text {
+  font-weight: 500;
+  font-size: 15px;
+  color: #ffffff;
+  margin: 0 10px;
+  padding-top: 5px;
+}
+.begin-date-container {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+}
+.begin-date-container .timetable-text {
+  margin-left: 0;
+}
+.input-begin-date {
+  width: 100px;
+}

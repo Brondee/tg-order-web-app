@@ -1,7 +1,19 @@
 import React from "react";
 import "./FormInput.css";
 
-const FormInput = ({ labelTitle, inputValue, onChangeFunc, isError }) => {
+const FormInput = ({
+  labelTitle,
+  inputValue,
+  onChangeFunc,
+  placeholder,
+  isError,
+  onKeyDown,
+}) => {
+  const onKeyDownFunc = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
+  };
   return (
     <div>
       <label
@@ -14,7 +26,9 @@ const FormInput = ({ labelTitle, inputValue, onChangeFunc, isError }) => {
         type="text"
         id={labelTitle}
         value={inputValue}
+        placeholder={placeholder}
         onChange={(e) => onChangeFunc(e)}
+        onKeyDown={onKeyDownFunc}
         className={`form-input ${isError && "form-input-error"}`}
       />
     </div>

@@ -71,7 +71,14 @@ const Specialists = () => {
             {isAddBtnShown && <AddBtn screenTitle={"/add"} />}
             {specialists.length > 0 ? (
               specialists?.map((person) => {
-                const { id, name, qualification, photoUrl } = person;
+                const {
+                  id,
+                  name,
+                  qualification,
+                  photoUrl,
+                  timeTable,
+                  beginingDate,
+                } = person;
                 return (
                   <Specialist
                     key={id}
@@ -79,6 +86,8 @@ const Specialists = () => {
                     name={name}
                     qualification={qualification}
                     photo={photoUrl}
+                    beginDate={beginingDate}
+                    timeTable={timeTable}
                   />
                 );
               })

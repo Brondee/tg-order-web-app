@@ -15,7 +15,6 @@ const ArrowBack = ({ screenTitle }) => {
 
   const onClick = () => {
     if (screenTitle === "/") {
-      console.log("scree");
       dispatch(setCurCategoryIds([]));
       dispatch(setCurServiceIds([]));
     }
