@@ -21,7 +21,10 @@ const Services = () => {
   const navigate = useNavigate();
 
   const { tg } = useTelegram();
-  tg.MainButton.onClick(() => navigate("/specialists"));
+  tg.MainButton.onClick(() => {
+    navigate("/specialists");
+    tg.MainButton.hide();
+  });
 
   const getServices = async () => {
     try {

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import { setCurServiceIds } from "../../store/orderInfoSlice";
 import { sendOrder } from "../../utils/sendOrder";
+import { useTelegram } from "../../hooks/useTelegram";
 
 import "../../assets/styles/global.css";
 import "./Confirm.css";
@@ -27,6 +28,7 @@ const Confirm = () => {
   let servicesPrice = 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { tg } = useTelegram;
 
   const {
     curTime,
@@ -40,6 +42,9 @@ const Confirm = () => {
   } = useSelector((state) => state.orderInfo);
 
   const onKeyDownTelephone = (e) => {
+    if (telephone.length > 0 && name.length > 0) {
+      tg.MainButton.show();
+    }
     if (e.key !== "Backspace") {
       if (telephone.startsWith("+7")) {
         if (
