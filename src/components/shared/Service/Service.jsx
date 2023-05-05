@@ -13,7 +13,7 @@ import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 const Service = ({ id, title, price, time, categoryId }) => {
   const [isActive, setIsActive] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
-  const { onToggleButton } = useTelegram();
+  const { tg } = useTelegram();
 
   const { curServiceIds } = useSelector((state) => state.orderInfo);
   const { curCategoryIds } = useSelector((state) => state.admin);
@@ -29,7 +29,6 @@ const Service = ({ id, title, price, time, categoryId }) => {
       dispatch(setCurServiceIds([id]));
       dispatch(setIsEdit(true));
     } else {
-      onToggleButton();
       setIsActive(!isActive);
       if (!isActive) {
         dispatch(setCurServiceIds([...curServiceIds, id]));
@@ -43,6 +42,9 @@ const Service = ({ id, title, price, time, categoryId }) => {
         );
         dispatch(setCurServiceIds(newCurServiceIds));
         dispatch(setCurCategoryIds(newCurCategoryIds));
+      }
+      if (curServiceIds.length > 0) {
+        tg.MainButton.show();
       }
     }
   };
