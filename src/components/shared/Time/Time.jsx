@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 
 import { setCurTime } from "../../../store/orderInfoSlice";
 import { setCurTimeArray } from "../../../store/adminSlice";
@@ -10,14 +9,7 @@ import "./Time.css";
 
 const Time = ({ time }) => {
   const [isActive, setIsActive] = useState(false);
-  const {
-    curTime,
-    curSpecialistId,
-    morningTime,
-    afternoonTime,
-    eveningTime,
-    curDate,
-  } = useSelector((state) => state.orderInfo);
+  const { curTime, curDate } = useSelector((state) => state.orderInfo);
   const { curEditType, curTimeArray } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
 
@@ -46,7 +38,7 @@ const Time = ({ time }) => {
     if (!curTimeArray.includes(time)) {
       setIsActive(false);
     }
-  }, [curDate]);
+  }, [curDate, curTimeArray, time]);
 
   return (
     <div

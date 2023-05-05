@@ -3,7 +3,6 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { useTelegram } from "../../hooks/useTelegram";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import { setCurServiceIds } from "../../store/orderInfoSlice";
 import { sendOrder } from "../../utils/sendOrder";
@@ -105,48 +104,45 @@ const Confirm = () => {
     }
   };
 
-  const getSpecialistInfo = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3333/specialist/${curSpecialistId}`
-      );
-      setSpecialist(response.data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
-  const getServicesInfo = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3333/services/${curServiceIds}`
-      );
-      setServices(response.data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
-  const getImage = async () => {
-    if (specialist?.photoUrl) {
+  useEffect(() => {
+    const getSpecialistInfo = async () => {
       try {
-        const response = await axios(
-          `http://localhost:3333/specialist/img/${specialist.photoUrl}`,
-          { responseType: "blob" }
+        const response = await axios.get(
+          `http://localhost:3333/specialist/${curSpecialistId}`
         );
-        const data = response.data;
-        setImgPath(URL.createObjectURL(data));
-      } catch (err) {
-        console.log("err");
+        setSpecialist(response.data);
+      } catch (error) {
+        console.log(error.response);
       }
-    }
-  };
-
-  useEffect(() => {
+    };
     getSpecialistInfo();
+    const getServicesInfo = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3333/services/${curServiceIds}`
+        );
+        setServices(response.data);
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
     getServicesInfo();
-  }, []);
+  }, [curServiceIds, curSpecialistId]);
   useEffect(() => {
+    const getImage = async () => {
+      if (specialist?.photoUrl) {
+        try {
+          const response = await axios(
+            `http://localhost:3333/specialist/img/${specialist.photoUrl}`,
+            { responseType: "blob" }
+          );
+          const data = response.data;
+          setImgPath(URL.createObjectURL(data));
+        } catch (err) {
+          console.log("err");
+        }
+      }
+    };
     getImage();
   }, [specialist]);
 

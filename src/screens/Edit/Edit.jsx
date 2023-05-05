@@ -24,52 +24,53 @@ const Edit = () => {
   );
   const { curCategoryIds } = useSelector((state) => state.admin);
 
-  const getSpecialist = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3333/specialist/${curSpecialistId}`
-      );
-      const data = response.data;
-      setSpecialistInfo(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const getServiceInfo = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3333/services/${curServiceIds}`
-      );
-      const data = response.data;
-      setServiceInfo(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getCategory = async () => {
-    try {
-      const response = await axios("http://localhost:3333/category/all");
-      const data = response.data;
-      const curCategoryId = curCategoryIds[0];
-      const newData = data.filter((category) => category.id === curCategoryId);
-      setCategoryInfo(newData[0]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     if (curEditType === "specialists") {
       setArrowScreenTitle("/specialists");
+      const getSpecialist = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3333/specialist/${curSpecialistId}`
+          );
+          const data = response.data;
+          setSpecialistInfo(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
       getSpecialist();
     } else if (curEditType === "services") {
       setArrowScreenTitle("/");
+      const getServiceInfo = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3333/services/${curServiceIds}`
+          );
+          const data = response.data;
+          setServiceInfo(data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
       getServiceInfo();
     } else if (curEditType === "categories") {
       setArrowScreenTitle("/categories");
+      const getCategory = async () => {
+        try {
+          const response = await axios("http://localhost:3333/category/all");
+          const data = response.data;
+          const curCategoryId = curCategoryIds[0];
+          const newData = data.filter(
+            (category) => category.id === curCategoryId
+          );
+          setCategoryInfo(newData[0]);
+        } catch (err) {
+          console.log(err);
+        }
+      };
       getCategory();
     }
-  }, []);
+  }, [curEditType, curCategoryIds, curServiceIds, curSpecialistId]);
   return (
     <AnimationPage>
       <div className="main-container">

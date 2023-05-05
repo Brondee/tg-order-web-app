@@ -25,39 +25,38 @@ const Specialists = () => {
   const { tg } = useTelegram();
   tg.MainButton.onClick(() => navigate("/date"));
 
-  const getSpecialists = async (categoryIds) => {
-    try {
-      if (isAdminActions) {
-        const response = await axios.get(
-          `http://localhost:3333/specialist/all`
-        );
-        const data = response.data;
-        setSpecialists(data);
-      } else {
-        const response = await axios.get(
-          `http://localhost:3333/specialist/all/${categoryIds}`
-        );
-        let data = response.data;
-        data = data.filter((specialist) => specialist !== null);
-        setSpecialists(data);
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
   const moveNext = () => {
     navigate("/date");
   };
 
   useEffect(() => {
+    const getSpecialists = async (categoryIds) => {
+      try {
+        if (isAdminActions) {
+          const response = await axios.get(
+            `http://localhost:3333/specialist/all`
+          );
+          const data = response.data;
+          setSpecialists(data);
+        } else {
+          const response = await axios.get(
+            `http://localhost:3333/specialist/all/${categoryIds}`
+          );
+          let data = response.data;
+          data = data.filter((specialist) => specialist !== null);
+          setSpecialists(data);
+        }
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
     getSpecialists(curCategoryIds);
     if (curEditType === "datetime") {
       setIsAddBtnShown(false);
     } else if (isAdminActions) {
       setIsAddBtnShown(true);
     }
-  }, []);
+  }, [curCategoryIds, curEditType, isAdminActions]);
 
   return (
     <AnimationPage>

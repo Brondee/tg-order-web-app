@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -20,7 +20,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
 
-  const onClick = async () => {
+  const onClick = useCallback(async () => {
     dispatch(setCurDate(fullDate));
     dispatch(setCurWeekDay(weekDay));
     dispatch(setCurTime(""));
@@ -40,26 +40,32 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
         setCurDateTime({ morningTime: [], afternoonTime: [], eveningTime: [] })
       );
     }
-  };
-
-  const getDateInfo = async () => {
-    try {
-      const response = await axios(
-        `http://localhost:3333/dates/single/${fullDate}/${curSpecialistId}`
-      );
-      const data = response.data;
-      if (data.isWorkingDateChanged) {
-        setIsWorkingPropState(true);
-        setIsWorking(data.isWorkingDate);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [
+    curSpecialistId,
+    dispatch,
+    fullDate,
+    isWorking,
+    isWorkingPropState,
+    weekDay,
+  ]);
 
   useEffect(() => {
     setIsWorking(isWorkingProp);
     setIsWorkingPropState(isWorkingProp);
+    const getDateInfo = async () => {
+      try {
+        const response = await axios(
+          `http://localhost:3333/dates/single/${fullDate}/${curSpecialistId}`
+        );
+        const data = response.data;
+        if (data.isWorkingDateChanged) {
+          setIsWorkingPropState(true);
+          setIsWorking(data.isWorkingDate);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getDateInfo();
     let today = new window.Date();
     if (date === today.getDate()) {
@@ -70,7 +76,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
       curMonthTitle = "май";
     }
     setMonthTitle(curMonthTitle);
-  }, [isWorkingProp]);
+  }, [isWorkingProp, date, fullDate, curSpecialistId, onClick]);
 
   return (
     <div

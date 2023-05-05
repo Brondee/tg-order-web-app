@@ -57,7 +57,7 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
         setIsActive(false);
       }
     }
-  }, [curCategoryIds]);
+  }, [curCategoryIds, curEditType, id]);
 
   return (
     <div

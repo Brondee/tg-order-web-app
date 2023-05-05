@@ -17,66 +17,64 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
   const dispatch = useDispatch();
   let chosenCounter = 0;
 
-  const getCategories = async () => {
-    try {
-      const response = await axios("http://localhost:3333/category/all");
-      const data = response.data;
-      setCategories(data);
-      if (!isEdit) {
-        setIsCategoriesActive(true);
-        setFilteredCategories(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const filterCategories = () => {
-    if (isEdit) {
-      if (curEditType === "specialists") {
-        const newData = categories.map((category) => {
-          const { specialists } = category;
-          const specialistIds = specialists.map((specialist) => {
-            return specialist.specialistId;
-          });
-          if (specialistIds.includes(specialistId)) {
-            return { ...category, isChosen: true };
-          } else {
-            return { ...category, isChosen: false };
-          }
-        });
-        setFilteredCategories(newData);
-        const curCategoriesIds = newData
-          .map((category) => {
-            if (category.isChosen === true) {
-              return category.id;
-            } else {
-              return null;
-            }
-          })
-          .filter((category) => category !== null);
-        dispatch(setCurCategoryIds(curCategoriesIds));
-        setCategoriesCounter(curCategoriesIds);
-      } else if (curEditType === "services") {
-        dispatch(setCurCategoryIds([categoryId]));
-        const newData = categories.map((category) => {
-          if (category.id === categoryId) {
-            return { ...category, isChosen: true };
-          } else {
-            return { ...category, isChosen: false };
-          }
-        });
-        setFilteredCategories(newData);
-      }
-    }
-  };
-
   useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const response = await axios("http://localhost:3333/category/all");
+        const data = response.data;
+        setCategories(data);
+        if (!isEdit) {
+          setIsCategoriesActive(true);
+          setFilteredCategories(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getCategories();
-  }, []);
+  }, [isEdit]);
   useEffect(() => {
+    const filterCategories = () => {
+      if (isEdit) {
+        if (curEditType === "specialists") {
+          const newData = categories.map((category) => {
+            const { specialists } = category;
+            const specialistIds = specialists.map((specialist) => {
+              return specialist.specialistId;
+            });
+            if (specialistIds.includes(specialistId)) {
+              return { ...category, isChosen: true };
+            } else {
+              return { ...category, isChosen: false };
+            }
+          });
+          setFilteredCategories(newData);
+          const curCategoriesIds = newData
+            .map((category) => {
+              if (category.isChosen === true) {
+                return category.id;
+              } else {
+                return null;
+              }
+            })
+            .filter((category) => category !== null);
+          dispatch(setCurCategoryIds(curCategoriesIds));
+          setCategoriesCounter(curCategoriesIds);
+        } else if (curEditType === "services") {
+          dispatch(setCurCategoryIds([categoryId]));
+          const newData = categories.map((category) => {
+            if (category.id === categoryId) {
+              return { ...category, isChosen: true };
+            } else {
+              return { ...category, isChosen: false };
+            }
+          });
+          setFilteredCategories(newData);
+        }
+      }
+    };
     filterCategories();
-  }, [categories]);
+  }, [categories, categoryId, curEditType, isEdit, specialistId, dispatch]);
 
   return (
     <div>
@@ -101,6 +99,7 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
                   return title;
                 }
               }
+              return null;
             })}
           </p>
           <ArrowDown

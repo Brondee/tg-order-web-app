@@ -10,7 +10,6 @@ import {
   setCurTimeTable,
 } from "../../../store/adminSlice";
 import "./Specialist.css";
-import { useTelegram } from "../../../hooks/useTelegram";
 import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 
@@ -49,21 +48,6 @@ const Specialist = ({
     }
   };
 
-  const getImage = async () => {
-    if (photo) {
-      try {
-        const response = await axios(
-          `http://localhost:3333/specialist/img/${photo}`,
-          { responseType: "blob" }
-        );
-        const data = response.data;
-        setImgPath(URL.createObjectURL(data));
-      } catch (err) {
-        console.log("err");
-      }
-    }
-  };
-
   const deleteClick = async () => {
     try {
       await axios.delete(`http://localhost:3333/specialist/del/${id}`);
@@ -76,6 +60,20 @@ const Specialist = ({
 
   useEffect(() => {
     setIsAnimation(true);
+    const getImage = async () => {
+      if (photo) {
+        try {
+          const response = await axios(
+            `http://localhost:3333/specialist/img/${photo}`,
+            { responseType: "blob" }
+          );
+          const data = response.data;
+          setImgPath(URL.createObjectURL(data));
+        } catch (err) {
+          console.log("err");
+        }
+      }
+    };
     getImage();
   }, [photo]);
 

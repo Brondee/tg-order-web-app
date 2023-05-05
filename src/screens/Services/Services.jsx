@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import AddBtn from "../../components/ui/AddBtn/AddBtn";
-import { curServiceIds } from "../../store/orderInfoSlice";
 import { useTelegram } from "../../hooks/useTelegram";
 import Service from "../../components/shared/Service/Service";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";

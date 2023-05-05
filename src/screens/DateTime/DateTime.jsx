@@ -103,7 +103,7 @@ const DateTime = () => {
   useEffect(() => {
     const dateFuncArray = getDateArray(curBeginDate, curTimeTable);
     setDateArray(dateFuncArray);
-  }, []);
+  }, [curBeginDate, curTimeTable]);
 
   return (
     <AnimationPage>

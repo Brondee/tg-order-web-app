@@ -19,7 +19,7 @@ const Add = () => {
     } else if (curEditType === "categories") {
       setArrowScreenTitle("/categories");
     }
-  }, []);
+  }, [curEditType]);
 
   return (
     <AnimationPage>

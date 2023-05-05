@@ -58,7 +58,7 @@ const CategoryForm = ({ id, titleProp }) => {
     if (isEdit) {
       setTitle(titleProp);
     }
-  }, [titleProp]);
+  }, [titleProp, isEdit]);
 
   return (
     <form className="specialist-form">

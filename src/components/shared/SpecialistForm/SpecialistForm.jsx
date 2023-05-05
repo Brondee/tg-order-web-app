@@ -117,7 +117,7 @@ const SpecialistForm = ({
     setFirstTimeTable(timeTable?.split("/")[0]);
     setSecondTimeTable(timeTable?.split("/")[1]);
     setBeginDate(beginingDate);
-  }, [nameProp]);
+  }, [nameProp, beginingDate, qualificationProp, timeTable]);
 
   return (
     <form className="specialist-form">
