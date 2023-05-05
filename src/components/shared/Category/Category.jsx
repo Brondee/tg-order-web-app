@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import {
-  setCurCategoryIds,
-  setCurTimeArray,
-  setIsEdit,
-} from "../../../store/adminSlice";
+import { setCurCategoryIds, setIsEdit } from "../../../store/adminSlice";
 import "./Category.css";
 import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
