@@ -28,7 +28,7 @@ const Confirm = () => {
   let servicesPrice = 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tg } = useTelegram;
+  const { tg } = useTelegram();
   const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const {
@@ -44,7 +44,10 @@ const Confirm = () => {
 
   const onKeyDownTelephone = (e) => {
     if (telephone.length > 0 && name.length > 0) {
+      tg.MainButton.setText("Подтвердить");
       tg.MainButton.show();
+    } else {
+      tg.MainButton.hide();
     }
     if (e.key !== "Backspace") {
       if (telephone.startsWith("+7")) {
@@ -58,6 +61,16 @@ const Confirm = () => {
         }
       }
     }
+  };
+
+  const onChangeName = (e) => {
+    if (telephone.length > 0 && name.length > 0) {
+      tg.MainButton.setText("Подтвердить");
+      tg.MainButton.show();
+    } else {
+      tg.MainButton.hide();
+    }
+    setName(e.target.value);
   };
 
   const editSpecialistClick = () => {
@@ -182,7 +195,7 @@ const Confirm = () => {
               id="name"
               placeholder="ваше имя"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => onChangeName(e)}
               className={`input ${nameError && "input-error"}`}
             />
             <label
