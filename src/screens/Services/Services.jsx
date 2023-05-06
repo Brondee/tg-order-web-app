@@ -66,7 +66,7 @@ const Services = () => {
             {isAdminActions && <ArrowBack screenTitle="/admin" />}
             <h1
               className={`main-title ${
-                colorScheme === "light" && "main-title=light"
+                colorScheme === "light" && "main-title-light"
               }`}
             >
               Выберите услугу

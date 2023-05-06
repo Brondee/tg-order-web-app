@@ -12,3 +12,7 @@
 .arrow-back-img {
   padding-right: 2px;
 }
+
+.arrow-back-container-light {
+  background: rgba(0, 0, 0, 0.8);
+}

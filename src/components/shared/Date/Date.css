@@ -40,3 +40,19 @@
 .date-active .month-title {
   color: #000000;
 }
+
+.date-container-light .date,
+.date-container-light .month-title {
+  color: #8b8b8b;
+}
+.date-container-light.date-active {
+  background: #000000;
+}
+.date-container-light.date-active .date,
+.date-container-light.date-active .month-title {
+  color: #fff;
+}
+.date-container-light .month-title-working,
+.date-container-light .date-working {
+  color: #000000;
+}

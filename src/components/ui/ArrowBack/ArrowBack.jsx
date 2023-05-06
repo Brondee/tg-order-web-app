@@ -10,6 +10,7 @@ import { ReactComponent as ArrowBackIcon } from "../../../assets/img/arrow.svg";
 const ArrowBack = ({ screenTitle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const { isAdminActions } = useSelector((state) => state.admin);
 
@@ -26,7 +27,12 @@ const ArrowBack = ({ screenTitle }) => {
   };
 
   return (
-    <div className="arrow-back-container" onClick={onClick}>
+    <div
+      className={`arrow-back-container ${
+        colorScheme === "light" && "arrow-back-container-light"
+      }`}
+      onClick={onClick}
+    >
       <ArrowBackIcon className="arrow-back-img" />
     </div>
   );

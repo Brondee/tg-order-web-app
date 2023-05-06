@@ -29,6 +29,7 @@ const Confirm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { tg } = useTelegram;
+  const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const {
     curTime,
@@ -153,11 +154,21 @@ const Confirm = () => {
 
   return (
     <AnimationPage>
-      <div className="main-container">
+      <div
+        className={`main-container ${
+          colorScheme === "light" && "main-container-light"
+        }`}
+      >
         <div className="wrap">
           <div className="arrow-title-container">
             <ArrowBack screenTitle={"/date"} />
-            <h1 className="main-title">Ваши данные</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title-light"
+              }`}
+            >
+              Ваши данные
+            </h1>
           </div>
           <form className="form">
             <label

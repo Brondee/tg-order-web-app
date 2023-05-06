@@ -11,9 +11,10 @@ const Time = ({ time }) => {
   const [isActive, setIsActive] = useState(false);
   const { curTime, curDate } = useSelector((state) => state.orderInfo);
   const { curEditType, curTimeArray } = useSelector((state) => state.admin);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const onClick = () => {
     if (curEditType === "datetime") {
@@ -44,7 +45,7 @@ const Time = ({ time }) => {
     <div
       className={`time-handler ${curTime === time && "time-handler-active"} ${
         isActive && "time-handler-active"
-      }`}
+      } ${colorScheme === "light" && "time-handler-light"}`}
       onClick={onClick}
     >
       <p className="time-obj">{time}</p>

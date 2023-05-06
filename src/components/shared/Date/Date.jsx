@@ -19,6 +19,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
 
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
+  const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const onClick = useCallback(async () => {
     dispatch(setCurDate(fullDate));
@@ -82,7 +83,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     <div
       className={`date-container ${curDate === fullDate && "date-active"} ${
         isWorking && "date-container-working"
-      }`}
+      } ${colorScheme === "light" && "date-container-light"}`}
       onClick={onClick}
     >
       <p className={`month-title ${isWorking && "month-title-working"}`}>

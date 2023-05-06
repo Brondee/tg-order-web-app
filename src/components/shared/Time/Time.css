@@ -24,3 +24,12 @@
   font-weight: 700;
   font-size: 15px;
 }
+
+.time-handler-light {
+  color: #000;
+  border: 2.5px solid #000;
+}
+.time-handler-light .time-handler-active {
+  color: #fff;
+  background: #000;
+}

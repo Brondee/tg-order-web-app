@@ -53,3 +53,14 @@
   opacity: 1;
   transform: scale(1);
 }
+
+.main-container-light {
+  color: #000;
+}
+.main-container-light .tick-container {
+  border: 2px solid #000;
+}
+.main-container-light .empty-date-text,
+.main-container-light .time-title {
+  color: #000;
+}

@@ -22,6 +22,7 @@ const Specialists = () => {
     (state) => state.admin
   );
 
+  const colorScheme = window.Telegram.WebApp.colorScheme;
   const { tg } = useTelegram();
   tg.MainButton.onClick(() => navigate("/date"));
 
@@ -64,7 +65,13 @@ const Specialists = () => {
         <div className="wrap">
           <div className="arrow-title-container">
             <ArrowBack screenTitle={isAdminActions ? "/admin" : "/"} />
-            <h1 className="main-title">Выберите специалиста</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title-light"
+              }`}
+            >
+              Выберите специалиста
+            </h1>
           </div>
           <div className="components-container">
             {isAddBtnShown && <AddBtn screenTitle={"/add"} />}

@@ -25,6 +25,7 @@ const DateTime = () => {
     useSelector((state) => state.admin);
 
   const navigate = useNavigate();
+  const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const tickClick = () => {
     setIsTickActive(!isTickActive);
@@ -107,11 +108,21 @@ const DateTime = () => {
 
   return (
     <AnimationPage>
-      <div className="main-container">
+      <div
+        className={`main-container ${
+          colorScheme === "light" && "main-container-light"
+        }`}
+      >
         <div className="wrap">
           <div className="arrow-title-container">
             <ArrowBack screenTitle={"/specialists"} />
-            <h1 className="main-title">Выберите дату и время</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title-light"
+              }`}
+            >
+              Выберите дату и время
+            </h1>
           </div>
           <div className="dates-container">
             {dateArray?.map((dateOnly) => {
@@ -129,7 +140,7 @@ const DateTime = () => {
           </div>
           {isAdminActions && (
             <div className="working-date-container">
-              <div className="tick-container" onClick={tickClick}>
+              <div className={`tick-container`} onClick={tickClick}>
                 <TickIcon
                   className={`tick-img ${isTickActive && "tick-img-active"}`}
                 />

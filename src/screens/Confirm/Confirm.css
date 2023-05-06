@@ -84,3 +84,16 @@
   color: #ffffff;
   margin-top: 8px;
 }
+
+.main-container-light .label,
+.main-container-light .service-counter,
+.main-container-light .services-price,
+.main-container-light .details-title {
+  color: #000000;
+}
+.main-container-light .line {
+  background: #000;
+}
+.main-container-light .input {
+  border: 2.5px solid #000;
+}
