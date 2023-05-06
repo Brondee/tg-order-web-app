@@ -46,7 +46,7 @@ const Service = ({ id, title, price, time, categoryId }) => {
       if (curServiceIds.length > 0 || !isActive) {
         console.log("mainbtnshpwn");
         tg.MainButton.show();
-      } else {
+      } else if (curServiceIds.length <= 1 || isActive) {
         tg.MainButton.hide();
       }
     }

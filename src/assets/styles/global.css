@@ -2,7 +2,6 @@
 body {
   background: var(--tg-theme-bg-color);
   font-family: "Montserrat";
-  color: var(--tg-theme-text-color);
 }
 .main-container {
   width: 100%;
@@ -17,6 +16,9 @@ body {
   font-size: 20px;
   color: #ffffff;
   margin: 0;
+}
+.main-title-light {
+  color: #000000;
 }
 .arrow-title-container {
   display: flex;

@@ -19,6 +19,7 @@ const Services = () => {
   const { isAdminActions } = useSelector((state) => state.admin);
 
   const navigate = useNavigate();
+  const colorScheme = window.Telegram.WebApp.colorScheme;
 
   const { tg } = useTelegram();
   tg.MainButton.onClick(() => {
@@ -63,7 +64,13 @@ const Services = () => {
         <div className="wrap">
           <div className="arrow-title-container">
             {isAdminActions && <ArrowBack screenTitle="/admin" />}
-            <h1 className="main-title">Выберите услугу</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title=light"
+              }`}
+            >
+              Выберите услугу
+            </h1>
           </div>
           <div className="components-container">
             {isAdminActions && <AddBtn screenTitle={"/add"} />}
@@ -74,7 +81,11 @@ const Services = () => {
               );
               return (
                 <div key={id}>
-                  <h3 className="category">
+                  <h3
+                    className={`category ${
+                      colorScheme === "light" && "category-light"
+                    }`}
+                  >
                     {curServices?.length !== 0 && title}
                   </h3>
                   {curServices?.map((service) => {
