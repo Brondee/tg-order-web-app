@@ -15,7 +15,7 @@
 .input {
   width: calc(100% - 37px);
   height: 44px;
-  border: 2.5px solid var(--tg-theme-button-color);
+  border: 2.5px solid #fff;
   border-radius: 25px;
   background: none;
   font-weight: 600;
@@ -90,6 +90,10 @@
 .main-container-light .services-price,
 .main-container-light .details-title {
   color: #000000;
+}
+.main-container-light .input {
+  color: #000000;
+  border: 2.5px solid #000;
 }
 .main-container-light .line {
   background: #000;
