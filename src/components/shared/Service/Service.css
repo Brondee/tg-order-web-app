@@ -13,7 +13,7 @@
   transform: scale(0.8);
 }
 .container-active {
-  background: #ffeeee;
+  background: var(--tg-theme-button-color);
 }
 .container-animation {
   transform: scale(1);
