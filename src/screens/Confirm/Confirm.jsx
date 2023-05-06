@@ -59,7 +59,7 @@ const Confirm = () => {
 
   const onChangeName = (e) => {
     setName(e.target.value);
-    if (telephone.length > 0 && name.length > 0) {
+    if (telephone.length > 5 && name.length > 2) {
       tg.MainButton.setText("Подтвердить");
       tg.MainButton.show();
     } else {
@@ -69,7 +69,7 @@ const Confirm = () => {
 
   const onChangeTelephone = (e) => {
     setTelephone(e.target.value);
-    if (telephone.length > 0 && name.length > 0) {
+    if (telephone.length > 5 && name.length > 2) {
       tg.MainButton.setText("Подтвердить");
       tg.MainButton.show();
     } else {
