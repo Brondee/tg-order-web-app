@@ -16,7 +16,7 @@
   transform: scale(1);
 }
 .spec-container-active {
-  background: #ffeeee;
+  background: var(--tg-theme-button-color);
 }
 .img-name-container {
   display: flex;
