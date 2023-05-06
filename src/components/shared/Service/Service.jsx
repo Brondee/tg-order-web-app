@@ -43,9 +43,11 @@ const Service = ({ id, title, price, time, categoryId }) => {
         dispatch(setCurServiceIds(newCurServiceIds));
         dispatch(setCurCategoryIds(newCurCategoryIds));
       }
-      if (curServiceIds.length > 0) {
+      if (curServiceIds.length > 0 || !isActive) {
         console.log("mainbtnshpwn");
         tg.MainButton.show();
+      } else {
+        tg.MainButton.hide();
       }
     }
   };
