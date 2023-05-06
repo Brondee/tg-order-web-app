@@ -43,12 +43,6 @@ const Confirm = () => {
   } = useSelector((state) => state.orderInfo);
 
   const onKeyDownTelephone = (e) => {
-    if (telephone.length > 0 && name.length > 0) {
-      tg.MainButton.setText("Подтвердить");
-      tg.MainButton.show();
-    } else {
-      tg.MainButton.hide();
-    }
     if (e.key !== "Backspace") {
       if (telephone.startsWith("+7")) {
         if (
@@ -64,13 +58,23 @@ const Confirm = () => {
   };
 
   const onChangeName = (e) => {
+    setName(e.target.value);
     if (telephone.length > 0 && name.length > 0) {
       tg.MainButton.setText("Подтвердить");
       tg.MainButton.show();
     } else {
       tg.MainButton.hide();
     }
-    setName(e.target.value);
+  };
+
+  const onChangeTelephone = (e) => {
+    setTelephone(e.target.value);
+    if (telephone.length > 0 && name.length > 0) {
+      tg.MainButton.setText("Подтвердить");
+      tg.MainButton.show();
+    } else {
+      tg.MainButton.hide();
+    }
   };
 
   const editSpecialistClick = () => {
@@ -209,7 +213,7 @@ const Confirm = () => {
               id="telephone"
               placeholder="+7 000 000 00 00"
               value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
+              onChange={(e) => onChangeTelephone(e)}
               onKeyDown={(e) => onKeyDownTelephone(e)}
               className={`input ${telephoneError && "input-error"}`}
               maxLength={16}
