@@ -43,6 +43,7 @@ const Confirm = () => {
   } = useSelector((state) => state.orderInfo);
 
   tg.MainButton.onClick(() => {
+    navigate("/");
     confirmClick();
   });
 
