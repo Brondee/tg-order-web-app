@@ -100,9 +100,9 @@ const Confirm = () => {
     }
   };
 
-  const confirmClick = () => {
+  const confirmClick = async () => {
     if (name !== "" && telephone !== "") {
-      const messageToSend = sendOrder(
+      const messageToSend = await sendOrder(
         name,
         telephone,
         comment,

@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { days, months } from "./calendarArrays";
 
-export const sendOrder = (
+export const sendOrder = async (
   name,
   telephone,
   comment,
@@ -62,7 +62,7 @@ export const sendOrder = (
       console.log(err);
     }
   };
-  sendOrderToDb();
+  await sendOrderToDb();
 
   const sendClientInfoToDb = async () => {
     const clientData = {
@@ -79,7 +79,7 @@ export const sendOrder = (
       console.log(err);
     }
   };
-  sendClientInfoToDb();
+  await sendClientInfoToDb();
 
   const updateTimeDb = async () => {
     const newMorningTime = morningTime.filter((time) => time !== curTime);
@@ -102,17 +102,17 @@ export const sendOrder = (
       console.log(error);
     }
   };
-  updateTimeDb();
+  await updateTimeDb();
 
   let message = `✅ Ваша заявка принята!\n
-Дополнительного подтверджения по телефону не требуется!\n
-📘 Мы ожидаем Вас:
-🗓 Дата и время: ${curDate.slice(-2)} ${
+    Дополнительного подтверджения по телефону не требуется!\n
+    📘 Мы ожидаем Вас:
+    🔹 Дата и время: ${curDate.slice(-2)} ${
     months[Number(curDate.slice(5, -3)) - 1]
   }, ${days[curWeekDay]}, в ${curTime}
-👨‍💼 Мастер: ${masterName}
-📌 Услуга(и): ${servicesInfo}
-🗺 Адрес: Ул.Красная 2/2, г.Краснодар\n
-⭐️ Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
+    🔹 Мастер: ${masterName}
+    🔹 Услуга(и): ${servicesInfo}
+    🔹 Адрес: Ул.Красная 2/2, г.Краснодар\n
+    ⭐️ Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
   return message;
 };
