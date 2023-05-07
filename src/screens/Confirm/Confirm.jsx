@@ -102,7 +102,7 @@ const Confirm = () => {
 
   const confirmClick = async () => {
     if (name !== "" && telephone !== "") {
-      const messageToSend = await sendOrder(
+      const orderData = await sendOrder(
         name,
         telephone,
         comment,
@@ -116,10 +116,9 @@ const Confirm = () => {
         afternoonTime,
         eveningTime
       );
-      console.log(messageToSend);
       setNameError(false);
       setTelephoneError(false);
-      tg.sendData(messageToSend);
+      tg.sendData(orderData);
       navigate("/");
     } else if (name === "" && telephone === "") {
       setNameError(true);

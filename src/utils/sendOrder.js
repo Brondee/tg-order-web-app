@@ -19,6 +19,7 @@ export const sendOrder = async (
   let services = [];
   let servicesInfo = "";
   let totalPrice = 0;
+  let orderId = null;
   const getServiceInfo = async () => {
     try {
       const response = await axios.get(
@@ -57,6 +58,8 @@ export const sendOrder = async (
         `http://localhost:3333/order/add`,
         orderData
       );
+      const data = response.data;
+      orderId = data.id;
       console.log(response.data);
     } catch (err) {
       console.log(err);
@@ -114,5 +117,5 @@ export const sendOrder = async (
 🔹 Услуга(и): ${servicesInfo}
 🔹 Адрес: Ул.Красная 2/2, г.Краснодар\n
 ⭐️ Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
-  return message;
+  return { message, orderId };
 };
