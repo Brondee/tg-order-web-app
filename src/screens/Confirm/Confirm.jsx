@@ -43,7 +43,6 @@ const Confirm = () => {
   } = useSelector((state) => state.orderInfo);
 
   tg.MainButton.onClick(() => {
-    navigate("/");
     confirmClick();
   });
 
@@ -117,6 +116,7 @@ const Confirm = () => {
         afternoonTime,
         eveningTime
       );
+      console.log(messageToSend);
       setNameError(false);
       setTelephoneError(false);
       tg.sendData(messageToSend);
