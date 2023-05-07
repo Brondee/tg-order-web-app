@@ -42,6 +42,10 @@ const Confirm = () => {
     eveningTime,
   } = useSelector((state) => state.orderInfo);
 
+  tg.MainButton.onClick(() => {
+    confirmClick();
+  });
+
   const onKeyDownTelephone = (e) => {
     if (e.key !== "Backspace") {
       if (telephone.startsWith("+7")) {
@@ -114,9 +118,7 @@ const Confirm = () => {
       );
       setNameError(false);
       setTelephoneError(false);
-      tg.MainButton.onClick(() => {
-        tg.sendData(messageToSend);
-      });
+      tg.sendData(messageToSend);
       navigate("/");
     } else if (name === "" && telephone === "") {
       setNameError(true);
