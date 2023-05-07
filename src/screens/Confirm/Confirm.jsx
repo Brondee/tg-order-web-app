@@ -114,7 +114,9 @@ const Confirm = () => {
       );
       setNameError(false);
       setTelephoneError(false);
-      tg.sendData(messageToSend);
+      tg.MainButton.onClick(() => {
+        tg.sendData(messageToSend);
+      });
       navigate("/");
     } else if (name === "" && telephone === "") {
       setNameError(true);
