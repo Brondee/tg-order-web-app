@@ -115,5 +115,5 @@ export const sendOrder = (
     Услуга(и): ${servicesInfo}\n
     Адрес: Ул.Красная 2/2, г.Краснодар\n\n
     Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
-  console.log(message);
+  return message;
 };

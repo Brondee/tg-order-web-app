@@ -98,7 +98,7 @@ const Confirm = () => {
 
   const confirmClick = () => {
     if (name !== "" && telephone !== "") {
-      sendOrder(
+      const messageToSend = sendOrder(
         name,
         telephone,
         comment,
@@ -114,6 +114,7 @@ const Confirm = () => {
       );
       setNameError(false);
       setTelephoneError(false);
+      tg.sendData(messageToSend);
       navigate("/");
     } else if (name === "" && telephone === "") {
       setNameError(true);
