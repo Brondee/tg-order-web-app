@@ -118,7 +118,8 @@ const Confirm = () => {
       );
       setNameError(false);
       setTelephoneError(false);
-      tg.sendData(orderData);
+      const dataToSend = JSON.parse(orderData);
+      tg.sendData(dataToSend);
       navigate("/");
     } else if (name === "" && telephone === "") {
       setNameError(true);
