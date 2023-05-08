@@ -14,9 +14,14 @@ export function useTelegram() {
     console.log("toggledbtn");
   };
 
+  const activateHaptic = (impactStyle) => {
+    tg.HapticFeedback.impactOccurred(impactStyle);
+  };
+
   return {
     onClose,
     onToggleButton,
+    activateHaptic,
     tg,
   };
 }

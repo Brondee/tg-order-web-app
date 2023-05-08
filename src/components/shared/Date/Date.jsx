@@ -10,6 +10,7 @@ import {
 } from "../../../store/orderInfoSlice";
 import { setCurTimeArray } from "../../../store/adminSlice";
 import "./Date.css";
+import { useTelegram } from "../../../hooks/useTelegram";
 import { months } from "../../../utils/calendarArrays";
 
 const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
@@ -19,9 +20,11 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
 
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
-  const colorScheme = window.Telegram.WebApp.colorScheme;
+  const { tg, activateHaptic } = useTelegram();
+  const colorScheme = tg.colorScheme;
 
   const onClick = useCallback(async () => {
+    activateHaptic("light");
     dispatch(setCurDate(fullDate));
     dispatch(setCurWeekDay(weekDay));
     dispatch(setCurTime(""));

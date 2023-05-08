@@ -10,6 +10,7 @@ import {
   setCurTimeTable,
 } from "../../../store/adminSlice";
 import "./Specialist.css";
+import { useTelegram } from "../../../hooks/useTelegram";
 import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 
@@ -29,10 +30,12 @@ const Specialist = ({
     (state) => state.admin
   );
 
+  const { activateHaptic } = useTelegram();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onClick = () => {
+    activateHaptic("medium");
     setIsActive(!isActive);
     dispatch(setSpecialistId(id));
     dispatch(setCurBeginDate(beginDate));
@@ -49,6 +52,7 @@ const Specialist = ({
   };
 
   const deleteClick = async () => {
+    activateHaptic("medium");
     try {
       await axios.delete(`http://localhost:3333/specialist/del/${id}`);
       dispatch(setIsEdit(false));

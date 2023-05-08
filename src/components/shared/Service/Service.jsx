@@ -13,7 +13,7 @@ import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 const Service = ({ id, title, price, time, categoryId }) => {
   const [isActive, setIsActive] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
-  const { tg } = useTelegram();
+  const { tg, activateHaptic } = useTelegram();
 
   const { curServiceIds } = useSelector((state) => state.orderInfo);
   const { curCategoryIds } = useSelector((state) => state.admin);
@@ -22,6 +22,7 @@ const Service = ({ id, title, price, time, categoryId }) => {
   const navigate = useNavigate();
 
   const onClick = async () => {
+    activateHaptic("medium");
     if (isEdit) {
       deleteClick();
     } else if (isAdminActions) {
@@ -56,6 +57,7 @@ const Service = ({ id, title, price, time, categoryId }) => {
   };
 
   const deleteClick = async () => {
+    activateHaptic("medium");
     try {
       await axios.delete(`http://localhost:3333/services/del/${id}`);
       dispatch(setIsEdit(false));

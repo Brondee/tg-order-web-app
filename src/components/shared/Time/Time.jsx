@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setCurTime } from "../../../store/orderInfoSlice";
 import { setCurTimeArray } from "../../../store/adminSlice";
+import { useTelegram } from "../../../hooks/useTelegram";
 
 import "./Time.css";
 
@@ -14,9 +15,11 @@ const Time = ({ time }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const colorScheme = window.Telegram.WebApp.colorScheme;
+  const { tg, activateHaptic } = useTelegram();
+  const colorScheme = tg.colorScheme;
 
   const onClick = () => {
+    activateHaptic("light");
     if (curEditType === "datetime") {
       if (!isActive) {
         if (curTimeArray.includes(time)) {
