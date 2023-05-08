@@ -20,10 +20,9 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
 
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
-  const { activateHaptic, colorScheme } = useTelegram();
+  const { colorScheme } = useTelegram();
 
   const onClick = useCallback(async () => {
-    activateHaptic("light");
     dispatch(setCurDate(fullDate));
     dispatch(setCurWeekDay(weekDay));
     dispatch(setCurTime(""));
@@ -50,7 +49,6 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     isWorking,
     isWorkingPropState,
     weekDay,
-    activateHaptic,
   ]);
 
   useEffect(() => {
