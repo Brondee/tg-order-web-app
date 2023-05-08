@@ -51,6 +51,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     isWorking,
     isWorkingPropState,
     weekDay,
+    activateHaptic,
   ]);
 
   useEffect(() => {
