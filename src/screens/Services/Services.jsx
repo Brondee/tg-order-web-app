@@ -19,9 +19,8 @@ const Services = () => {
   const { isAdminActions } = useSelector((state) => state.admin);
 
   const navigate = useNavigate();
-  const colorScheme = window.Telegram.WebApp.colorScheme;
 
-  const { tg } = useTelegram();
+  const { tg, colorScheme } = useTelegram();
   tg.MainButton.onClick(() => {
     navigate("/specialists");
     tg.MainButton.hide();

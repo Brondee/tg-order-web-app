@@ -15,8 +15,7 @@ const Time = ({ time }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { tg, activateHaptic } = useTelegram();
-  const colorScheme = tg.colorScheme;
+  const { activateHaptic, colorScheme } = useTelegram();
 
   const onClick = () => {
     activateHaptic("light");

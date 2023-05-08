@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import { useTelegram } from "../../hooks/useTelegram";
+
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import Specialist from "../../components/shared/Specialist/Specialist";
 import Service from "../../components/shared/Service/Service";
@@ -17,6 +19,8 @@ const Edit = () => {
   const [serviceInfo, setServiceInfo] = useState([]);
   const [categoryInfo, setCategoryInfo] = useState(null);
   const [arrowScreenTitle, setArrowScreenTitle] = useState(null);
+
+  const { colorScheme } = useTelegram();
 
   const { curEditType } = useSelector((state) => state.admin);
   const { curSpecialistId, curServiceIds } = useSelector(
@@ -77,7 +81,13 @@ const Edit = () => {
         <div className="wrap">
           <div className="arrow-title-container">
             <ArrowBack screenTitle={arrowScreenTitle} />
-            <h1 className="main-title">Редактирование</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title-light"
+              }`}
+            >
+              Редактирование
+            </h1>
           </div>
           {curEditType === "specialists" && (
             <div>

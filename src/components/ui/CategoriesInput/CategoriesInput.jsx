@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurCategoryIds } from "../../../store/adminSlice";
 import "./CategoriesInput.css";
 import Category from "../../shared/Category/Category";
+import { useTelegram } from "../../../hooks/useTelegram";
 import { ReactComponent as ArrowDown } from "../../../assets/img/arrow-bold.svg";
 
 const CategoriesInput = ({ specialistId, categoryId }) => {
@@ -16,6 +17,7 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
   const { isEdit, curEditType } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   let chosenCounter = 0;
+  const { colorScheme } = useTelegram();
 
   useEffect(() => {
     const getCategories = async () => {
@@ -78,13 +80,25 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
 
   return (
     <div>
-      <p className="form-label">Категории</p>
+      <p
+        className={`form-label ${
+          colorScheme === "light" && "form-label-light"
+        }`}
+      >
+        Категории
+      </p>
       {isEdit && (
         <div
-          className="categories-titles-container"
+          className={`categories-titles-container ${
+            colorScheme === "light" && "categories-titles-container-light"
+          }`}
           onClick={() => setIsCategoriesActive(!isCategoriesActive)}
         >
-          <p className="categories-titles">
+          <p
+            className={`categories-titles ${
+              colorScheme === "light" && "categories-titles-light"
+            }`}
+          >
             {filteredCategories.map((category) => {
               const { title, isChosen } = category;
               if (isChosen) {
@@ -105,14 +119,14 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
           <ArrowDown
             className={`arrow-down ${
               isCategoriesActive && "arrow-down-active"
-            }`}
+            } ${colorScheme === "light" && "arrow-down-light"}`}
           />
         </div>
       )}
       <div
         className={`categories-container ${
           isCategoriesActive && "categories-container-active"
-        }`}
+        } ${colorScheme === "light" && "categories-container-light"}`}
       >
         {filteredCategories.map((category) => {
           const { id, title, isChosen } = category;

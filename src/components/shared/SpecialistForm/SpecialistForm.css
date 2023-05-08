@@ -24,13 +24,22 @@
   margin-top: 2px;
   transition: all 0.3s;
 }
+.file-input-light {
+  background: #000;
+}
 .file-btn-chosen {
-  background: #ffeeee;
+  background: var(--tg-theme-button-color);
+}
+.icon-light {
+  filter: invert(100%);
 }
 .file-title {
   font-weight: 500;
   font-size: 14px;
   color: #ffffff;
+}
+.file-title-light {
+  color: #000;
 }
 .pink-text {
   color: #ffeeee;
@@ -63,6 +72,9 @@
   color: #ffffff;
   margin: 0 10px;
   padding-top: 5px;
+}
+.timetable-light {
+  color: #000;
 }
 .begin-date-container {
   display: flex;

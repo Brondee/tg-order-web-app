@@ -18,10 +18,13 @@ export function useTelegram() {
     tg.HapticFeedback.impactOccurred(impactStyle);
   };
 
+  const colorScheme = tg.colorScheme;
+
   return {
     onClose,
     onToggleButton,
     activateHaptic,
     tg,
+    colorScheme,
   };
 }

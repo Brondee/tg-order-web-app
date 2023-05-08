@@ -22,8 +22,7 @@ const Specialists = () => {
     (state) => state.admin
   );
 
-  const colorScheme = window.Telegram.WebApp.colorScheme;
-  const { tg } = useTelegram();
+  const { tg, colorScheme } = useTelegram();
   tg.MainButton.onClick(() => navigate("/date"));
 
   const moveNext = () => {

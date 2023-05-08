@@ -20,8 +20,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
 
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
-  const { tg, activateHaptic } = useTelegram();
-  const colorScheme = tg.colorScheme;
+  const { activateHaptic, colorScheme } = useTelegram();
 
   const onClick = useCallback(async () => {
     activateHaptic("light");

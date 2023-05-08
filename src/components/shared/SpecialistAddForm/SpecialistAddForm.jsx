@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { useTelegram } from "../../../hooks/useTelegram";
 import "../../../assets/styles/global.css";
 import FormInput from "../../ui/FormInput/FormInput";
 import CategoriesInput from "../../ui/CategoriesInput/CategoriesInput";
@@ -25,6 +26,7 @@ const SpecialistAddForm = () => {
   const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   let specId = null;
+  const { colorScheme } = useTelegram();
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -134,7 +136,12 @@ const SpecialistAddForm = () => {
         isError={qualError}
       />
       <div className="file-input-container">
-        <label htmlFor="photoInput" className={`form-label`}>
+        <label
+          htmlFor="photoInput"
+          className={`form-label ${
+            colorScheme === "light" && "form-label-light"
+          }`}
+        >
           Фотография
         </label>
         <input
@@ -144,13 +151,23 @@ const SpecialistAddForm = () => {
           className={`file-input`}
         />
         <label
-          className={`file-btn ${image && "file-btn-chosen"}`}
+          className={`file-btn ${image && "file-btn-chosen"} ${
+            colorScheme === "light" && "file-input-light"
+          }`}
           htmlFor="photoInput"
         >
-          {image ? <EditIcon /> : <AddIcon />}
+          {image ? (
+            <EditIcon />
+          ) : (
+            <AddIcon className={`${colorScheme === "light" && "icon-light"}`} />
+          )}
         </label>
         {image && (
-          <p className="file-title">
+          <p
+            className={`file-title ${
+              colorScheme === "light" && "file-title-light"
+            }`}
+          >
             Выбрано: <span className="pink-text">{image?.name}</span>
           </p>
         )}
@@ -160,7 +177,9 @@ const SpecialistAddForm = () => {
           htmlFor="firstTimeTable"
           className={`form-label ${
             isFirstTimeTableError && "form-label-error"
-          } ${isSecondTimeTableError && "form-label-error"}`}
+          } ${isSecondTimeTableError && "form-label-error"} ${
+            colorScheme === "light" && "form-label-light"
+          }`}
         >
           Режим работы
         </label>
@@ -172,29 +191,49 @@ const SpecialistAddForm = () => {
           onChange={(e) => onChangeFirstTimeTable(e)}
           className={`input-timetable ${
             isFirstTimeTableError && "form-input-error"
-          }`}
+          } ${colorScheme === "light" && "form-input-light"}`}
+          value={firstTimeTable}
           maxLength={1}
         />
-        <p className="timetable-text">через</p>
+        <p
+          className={`timetable-text ${
+            colorScheme === "light" && "timetable-light"
+          }`}
+        >
+          через
+        </p>
         <input
           type="text"
           id="secondTimeTable"
           onChange={(e) => onChangeSecondTimeTable(e)}
           className={`input-timetable ${
             isSecondTimeTableError && "form-input-error"
-          }`}
+          } ${colorScheme === "light" && "form-input-light"}`}
+          value={secondTimeTable}
           maxLength={1}
         />
-        <p className="timetable-text">дней</p>
+        <p
+          className={`timetable-text ${
+            colorScheme === "light" && "timetable-light"
+          }`}
+        >
+          дней
+        </p>
       </div>
       <div className="begin-date-container">
-        <p className="timetable-text">начиная с</p>
+        <p
+          className={`timetable-text ${
+            colorScheme === "light" && "timetable-light"
+          }`}
+        >
+          начиная с
+        </p>
         <input
           type="text"
           onChange={(e) => onChangeBeginDate(e)}
           className={`input-begin-date input-timetable ${
             isBeginDateError && "form-input-error"
-          }`}
+          } ${colorScheme === "light" && "form-input-light"}`}
           maxLength={10}
           value={beginDate}
           placeholder="ГГГГ-ММ-ДД"

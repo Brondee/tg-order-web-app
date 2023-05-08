@@ -1,6 +1,8 @@
 import React from "react";
 import "./FormInput.css";
 
+import { useTelegram } from "../../../hooks/useTelegram";
+
 const FormInput = ({
   labelTitle,
   inputValue,
@@ -9,6 +11,9 @@ const FormInput = ({
   isError,
   onKeyDown,
 }) => {
+  const { tg } = useTelegram();
+  const colorScheme = tg.colorScheme;
+
   const onKeyDownFunc = (e) => {
     if (onKeyDown) {
       onKeyDown(e);
@@ -18,7 +23,9 @@ const FormInput = ({
     <div>
       <label
         htmlFor={labelTitle}
-        className={`form-label ${isError && "form-label-error"}`}
+        className={`form-label ${isError && "form-label-error"} ${
+          colorScheme === "light" && "form-label-light"
+        }`}
       >
         {labelTitle}
       </label>
@@ -29,7 +36,9 @@ const FormInput = ({
         placeholder={placeholder}
         onChange={(e) => onChangeFunc(e)}
         onKeyDown={onKeyDownFunc}
-        className={`form-input ${isError && "form-input-error"}`}
+        className={`form-input ${isError && "form-input-error"} ${
+          colorScheme === "light" && "form-input-light"
+        }`}
       />
     </div>
   );

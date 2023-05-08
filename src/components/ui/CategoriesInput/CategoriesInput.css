@@ -7,11 +7,17 @@
   align-items: center;
   margin-bottom: 10px;
 }
+.categories-titles-container-light {
+  border: 2.5px solid #000;
+}
 .categories-titles {
   font-weight: 500;
   font-size: 14px;
   color: #ffffff;
   margin: 0;
+}
+.categories-titles-light {
+  color: #000;
 }
 .categories-container {
   background: #ffffff;
@@ -21,6 +27,9 @@
   transform: scale(0.5);
   transition: all 0.3s;
 }
+.categories-container-light {
+  border: 2px solid #000;
+}
 .categories-container-active {
   opacity: 1;
   transform: scale(1);
@@ -28,6 +37,9 @@
 .arrow-down {
   transition: all 0.3s;
   transform: rotate(180deg);
+}
+.arrow-down-light {
+  filter: invert(100%);
 }
 .arrow-down-active {
   transform: rotate(0);

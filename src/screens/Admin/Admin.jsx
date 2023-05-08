@@ -6,10 +6,12 @@ import { setIsAdminActions, setCurEditType } from "../../store/adminSlice";
 import "./Admin.css";
 import "../../assets/styles/global.css";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
+import { useTelegram } from "../../hooks/useTelegram";
 
 const Admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { colorScheme } = useTelegram();
   const onClick = (screenTitle, editType) => {
     dispatch(setIsAdminActions(true));
     dispatch(setCurEditType(editType));
@@ -21,7 +23,13 @@ const Admin = () => {
       <div className="main-container">
         <div className="wrap">
           <div className="arrow-title-container">
-            <h1 className="main-title">Выберите раздел</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title-light"
+              }`}
+            >
+              Выберите раздел
+            </h1>
           </div>
           <div className="sections-container">
             <div

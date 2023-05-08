@@ -63,7 +63,7 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
     <div
       className={`category-container ${isActive && "category-active"} ${
         isFromEditPage && "category-edit-page"
-      } ${isAnimation && "container-animation"} `}
+      } ${isAnimation && "container-animation"}`}
       onClick={onClick}
     >
       <p className="category-title">{title}</p>

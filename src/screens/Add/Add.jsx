@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
+import { useTelegram } from "../../hooks/useTelegram";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import SpecialistAddForm from "../../components/shared/SpecialistAddForm/SpecialistAddForm";
 import ServiceAddForm from "../../components/shared/ServiceAddForm/ServiceAddForm";
@@ -10,6 +11,7 @@ import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 const Add = () => {
   const [arrowScreenTitle, setArrowScreenTitle] = useState("");
   const { curEditType } = useSelector((state) => state.admin);
+  const { colorScheme } = useTelegram();
 
   useEffect(() => {
     if (curEditType === "specialists") {
@@ -27,7 +29,13 @@ const Add = () => {
         <div className="wrap">
           <div className="arrow-title-container">
             <ArrowBack screenTitle={arrowScreenTitle} />
-            <h1 className="main-title">Добавить</h1>
+            <h1
+              className={`main-title ${
+                colorScheme === "light" && "main-title-light"
+              }`}
+            >
+              Добавить
+            </h1>
           </div>
           {curEditType === "specialists" && <SpecialistAddForm />}
           {curEditType === "services" && <ServiceAddForm />}

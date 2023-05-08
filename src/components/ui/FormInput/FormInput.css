@@ -5,6 +5,9 @@
   margin-bottom: 6px;
   transition: all 0.2s;
 }
+.form-label-light {
+  color: #000000;
+}
 .form-label-error {
   color: #ff7d7d;
 }
@@ -22,6 +25,10 @@
   margin-top: 8px;
   margin-bottom: 15px;
   transition: all 0.2s;
+}
+.form-input-light {
+  color: #000000;
+  border: 2.5px solid #000000;
 }
 .form-input:focus {
   outline: none;
