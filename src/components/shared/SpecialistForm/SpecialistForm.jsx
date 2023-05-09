@@ -96,11 +96,7 @@ const SpecialistForm = ({
         categoryIds: curCategoryIds,
       };
       try {
-        const response = await axios.patch(
-          "http://localhost:3333/specialist/edit",
-          data
-        );
-        console.log(response.data);
+        await axios.patch("http://localhost:3333/specialist/edit", data);
         dispatch(setIsEdit(false));
         dispatch(setCurCategoryIds([]));
         navigate("/specialists");

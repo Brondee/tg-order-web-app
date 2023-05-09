@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,10 +28,6 @@ const ServiceEditForm = ({
   const dispatch = useDispatch();
   const { tg } = useTelegram();
 
-  tg.MainButton.onClick(() => {
-    confirmClick();
-  });
-
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -49,7 +45,7 @@ const ServiceEditForm = ({
     }
   };
 
-  const confirmClick = async () => {
+  const confirmClick = useCallback(async () => {
     if (title.length === 0 && price.length === 0 && time.length === 0) {
       setTitleError(true);
       setPriceError(true);
@@ -77,14 +73,17 @@ const ServiceEditForm = ({
         console.log(error);
       }
     }
-  };
+  }, [curCategoryIds, dispatch, id, navigate, price, priceError, time, title]);
 
   useEffect(() => {
     setTitle(titleProp);
     setPrice(priceProp);
     setTime(timeProp);
     tg.MainButton.show();
-  }, [id, priceProp, timeProp, titleProp, tg.MainButton]);
+    tg.MainButton.onClick(() => {
+      confirmClick();
+    });
+  }, [id, priceProp, timeProp, titleProp, tg.MainButton, confirmClick]);
 
   return (
     <form className="specialist-form">
