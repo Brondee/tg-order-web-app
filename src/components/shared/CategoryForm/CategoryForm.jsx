@@ -3,22 +3,18 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useTelegram } from "../../../hooks/useTelegram";
 import { setIsEdit } from "../../../store/adminSlice";
 import FormInput from "../../ui/FormInput/FormInput";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 const CategoryForm = ({ id, titleProp }) => {
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState(false);
 
-  const { isEdit, curEditType } = useSelector((state) => state.admin);
+  const { isEdit } = useSelector((state) => state.admin);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { tg, setOnClickButton } = useTelegram();
-
-  tg.MainButton.show();
-  tg.MainButton.setText("Подтвердить");
 
   const onChange = (e) => {
     setTitle(e.target.value);
@@ -59,10 +55,6 @@ const CategoryForm = ({ id, titleProp }) => {
     }
   };
 
-  if (curEditType === "categories") {
-    setOnClickButton(categoryConfirmClick);
-  }
-
   useEffect(() => {
     if (isEdit) {
       setTitle(titleProp);
@@ -77,7 +69,7 @@ const CategoryForm = ({ id, titleProp }) => {
         onChangeFunc={onChange}
         isError={titleError}
       />
-      <div onClick={categoryConfirmClick}>Confirm</div>
+      <SubmitBtn onClick={categoryConfirmClick} />
     </form>
   );
 };

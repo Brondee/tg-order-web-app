@@ -12,6 +12,7 @@ import { setIsEdit } from "../../../store/adminSlice";
 import { ReactComponent as AddIcon } from "../../../assets/img/add.svg";
 import { ReactComponent as EditIcon } from "../../../assets/img/pencil.svg";
 import { setCurCategoryIds } from "../../../store/adminSlice";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 const SpecialistForm = ({
   specialistId,
@@ -33,13 +34,10 @@ const SpecialistForm = ({
   const [isSecondTimeTableError, setIsSecondTimeTableError] = useState(false);
   const [isBeginDateError, setIsBeginDateError] = useState(false);
 
-  const { curCategoryIds, curEditType } = useSelector((state) => state.admin);
+  const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { colorScheme, tg, setOnClickButton } = useTelegram();
-
-  tg.MainButton.show();
-  tg.MainButton.setText("Подтвердить");
+  const { colorScheme } = useTelegram();
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -105,10 +103,6 @@ const SpecialistForm = ({
       }
     }
   };
-
-  if (curEditType === "specialists") {
-    setOnClickButton(specConfirmClick);
-  }
 
   const onKeyDownBeginDate = (e) => {
     if (e.key !== "Backspace") {
@@ -246,7 +240,7 @@ const SpecialistForm = ({
         />
       </div>
       <CategoriesInput specialistId={specialistId} />
-      <div onClick={specConfirmClick}>Confirm</div>
+      <SubmitBtn onClick={specConfirmClick} />
     </form>
   );
 };

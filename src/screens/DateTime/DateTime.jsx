@@ -28,10 +28,6 @@ const DateTime = () => {
   const navigate = useNavigate();
   const { colorScheme, tg } = useTelegram();
 
-  tg.MainButton.onClick(() => {
-    confirmClick();
-  });
-
   const tickClick = () => {
     setIsTickActive(!isTickActive);
     setIsTickChange(true);

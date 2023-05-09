@@ -1,3 +1,6 @@
+.categories-input-container {
+  position: static;
+}
 .categories-titles-container {
   padding: 15px 18px;
   border: 2.5px solid #ffffff;

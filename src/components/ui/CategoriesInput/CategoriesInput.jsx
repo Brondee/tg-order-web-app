@@ -79,7 +79,7 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
   }, [categories, categoryId, curEditType, isEdit, specialistId, dispatch]);
 
   return (
-    <div>
+    <div className="categories-input-container">
       <p
         className={`form-label ${
           colorScheme === "light" && "form-label-light"

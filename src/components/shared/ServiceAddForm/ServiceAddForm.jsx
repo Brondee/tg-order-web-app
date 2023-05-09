@@ -7,6 +7,7 @@ import "./ServiceAddForm.css";
 import FormInput from "../../ui/FormInput/FormInput";
 import CategoriesInput from "../../ui/CategoriesInput/CategoriesInput";
 import { setCurCategoryIds } from "../../../store/adminSlice";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 const ServiceAddForm = () => {
   const [title, setTitle] = useState("");
@@ -79,7 +80,7 @@ const ServiceAddForm = () => {
         isError={timeError}
       />
       <CategoriesInput />
-      <div onClick={confirmClick}>Confirm</div>
+      <SubmitBtn onClick={confirmClick} />
     </form>
   );
 };

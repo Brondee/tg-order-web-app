@@ -3,11 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { useTelegram } from "../../../hooks/useTelegram";
 import "./ServiceEditForm.css";
 import FormInput from "../../ui/FormInput/FormInput";
 import CategoriesInput from "../../ui/CategoriesInput/CategoriesInput";
 import { setCurCategoryIds, setIsEdit } from "../../../store/adminSlice";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 const ServiceEditForm = ({
   id,
@@ -23,13 +23,9 @@ const ServiceEditForm = ({
   const [priceError, setPriceError] = useState(false);
   const [timeError, setTimeError] = useState(false);
 
-  const { curCategoryIds, curEditType } = useSelector((state) => state.admin);
+  const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tg, setOnClickButton } = useTelegram();
-
-  tg.MainButton.show();
-  tg.MainButton.setText("Подтвердить");
 
   const onChangeTitle = (e) => {
     console.log(e.target.value);
@@ -79,10 +75,6 @@ const ServiceEditForm = ({
     }
   };
 
-  if (curEditType === "services") {
-    setOnClickButton(serviceConfirmClick);
-  }
-
   useEffect(() => {
     setTitle(titleProp);
     setPrice(priceProp);
@@ -112,7 +104,7 @@ const ServiceEditForm = ({
         onKeyDown={onKeyDownTime}
       />
       <CategoriesInput categoryId={categoryId} />
-      <div onClick={serviceConfirmClick}>Confirm</div>
+      <SubmitBtn onClick={serviceConfirmClick} />
     </form>
   );
 };

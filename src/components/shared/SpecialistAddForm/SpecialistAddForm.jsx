@@ -9,6 +9,7 @@ import FormInput from "../../ui/FormInput/FormInput";
 import CategoriesInput from "../../ui/CategoriesInput/CategoriesInput";
 import { ReactComponent as AddIcon } from "../../../assets/img/add.svg";
 import { ReactComponent as EditIcon } from "../../../assets/img/pencil.svg";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 
 const SpecialistAddForm = () => {
   const [name, setName] = useState("");
@@ -241,7 +242,7 @@ const SpecialistAddForm = () => {
         />
       </div>
       <CategoriesInput />
-      <div onClick={confirmClick}>Confirm</div>
+      <SubmitBtn onClick={confirmClick} />
     </form>
   );
 };

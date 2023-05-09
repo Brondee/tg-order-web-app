@@ -18,15 +18,6 @@ export function useTelegram() {
     tg.HapticFeedback.impactOccurred(impactStyle);
   };
 
-  const setOnClickButton = (func) => {
-    tg.MainButton.onClick(() => {
-      func();
-    });
-    tg.MainButton.offClick(() => {
-      alert("setNull");
-    });
-  };
-
   const colorScheme = tg.colorScheme;
 
   return {
@@ -35,6 +26,5 @@ export function useTelegram() {
     activateHaptic,
     tg,
     colorScheme,
-    setOnClickButton,
   };
 }
