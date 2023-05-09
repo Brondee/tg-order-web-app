@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -39,9 +39,6 @@ const SpecialistForm = ({
   const { colorScheme, tg } = useTelegram();
 
   tg.MainButton.show();
-  tg.MainButton.onClick(() => {
-    specConfirmClick();
-  });
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -62,7 +59,7 @@ const SpecialistForm = ({
     setBeginDate(e.target.value);
   };
 
-  const specConfirmClick = useCallback(async () => {
+  const specConfirmClick = async () => {
     if (name.length === 0) {
       setNameError(true);
     }
@@ -105,18 +102,12 @@ const SpecialistForm = ({
         console.log(err);
       }
     }
-  }, [
-    beginDate,
-    curCategoryIds,
-    dispatch,
-    firstTimeTable,
-    name,
-    navigate,
-    photoUrlProp,
-    qualification,
-    secondTimeTable,
-    specialistId,
-  ]);
+  };
+
+  tg.MainButton.onClick(() => {
+    alert(specialistId, "specconfirm");
+    // specConfirmClick();
+  });
 
   const onKeyDownBeginDate = (e) => {
     if (e.key !== "Backspace") {
