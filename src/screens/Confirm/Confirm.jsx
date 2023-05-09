@@ -45,7 +45,7 @@ const Confirm = () => {
   } = useSelector((state) => state.orderInfo);
 
   tg.MainButton.onClick(() => {
-    confirmClick();
+    confirmPageClick();
   });
 
   const onKeyDownTelephone = (e) => {
@@ -112,7 +112,7 @@ const Confirm = () => {
     }
   };
 
-  const confirmClick = async () => {
+  const confirmPageClick = async () => {
     if (name !== "" && telephone !== "") {
       const orderData = await sendOrder(
         name,
@@ -331,7 +331,7 @@ const Confirm = () => {
             </p>
             <p className="services-price">{servicesPrice} ₽</p>
           </div>
-          <button onClick={confirmClick}>Confirm</button>
+          <button onClick={confirmPageClick}>Confirm</button>
         </div>
       </div>
     </AnimationPage>

@@ -20,7 +20,7 @@ const CategoryForm = ({ id, titleProp }) => {
   const onChange = (e) => {
     setTitle(e.target.value);
   };
-  const confirmClick = useCallback(async () => {
+  const categoryConfirmClick = useCallback(async () => {
     if (title.length === 0) {
       setTitleError(true);
     } else {
@@ -64,9 +64,9 @@ const CategoryForm = ({ id, titleProp }) => {
   useEffect(() => {
     tg.MainButton.show();
     tg.MainButton.onClick(() => {
-      confirmClick();
+      categoryConfirmClick();
     });
-  }, [tg.MainButton, confirmClick]);
+  }, [tg.MainButton, categoryConfirmClick]);
 
   return (
     <form className="specialist-form">
@@ -76,7 +76,7 @@ const CategoryForm = ({ id, titleProp }) => {
         onChangeFunc={onChange}
         isError={titleError}
       />
-      <div onClick={confirmClick}>Confirm</div>
+      <div onClick={categoryConfirmClick}>Confirm</div>
     </form>
   );
 };

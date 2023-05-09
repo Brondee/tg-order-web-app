@@ -57,7 +57,7 @@ const SpecialistForm = ({
     setBeginDate(e.target.value);
   };
 
-  const confirmClick = useCallback(async () => {
+  const specConfirmClick = useCallback(async () => {
     if (name.length === 0) {
       setNameError(true);
     }
@@ -131,9 +131,9 @@ const SpecialistForm = ({
   useEffect(() => {
     tg.MainButton.show();
     tg.MainButton.onClick(() => {
-      confirmClick();
+      specConfirmClick();
     });
-  }, [tg.MainButton, confirmClick]);
+  }, [tg.MainButton, specConfirmClick]);
 
   return (
     <form className="specialist-form">
@@ -255,7 +255,7 @@ const SpecialistForm = ({
         />
       </div>
       <CategoriesInput specialistId={specialistId} />
-      <div onClick={confirmClick}>Confirm</div>
+      <div onClick={specConfirmClick}>Confirm</div>
     </form>
   );
 };

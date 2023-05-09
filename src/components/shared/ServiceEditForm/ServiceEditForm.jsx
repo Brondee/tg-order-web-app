@@ -46,7 +46,7 @@ const ServiceEditForm = ({
     }
   };
 
-  const confirmClick = useCallback(async () => {
+  const serviceConfirmClick = useCallback(async () => {
     if (title.length === 0 && price.length === 0 && time.length === 0) {
       setTitleError(true);
       setPriceError(true);
@@ -85,9 +85,9 @@ const ServiceEditForm = ({
   useEffect(() => {
     tg.MainButton.show();
     tg.MainButton.onClick(() => {
-      confirmClick();
+      serviceConfirmClick();
     });
-  }, [tg.MainButton, confirmClick]);
+  }, [tg.MainButton, serviceConfirmClick]);
 
   return (
     <form className="specialist-form">
@@ -112,7 +112,7 @@ const ServiceEditForm = ({
         onKeyDown={onKeyDownTime}
       />
       <CategoriesInput categoryId={categoryId} />
-      <div onClick={confirmClick}>Confirm</div>
+      <div onClick={serviceConfirmClick}>Confirm</div>
     </form>
   );
 };
