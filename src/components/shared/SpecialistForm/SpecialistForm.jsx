@@ -104,11 +104,6 @@ const SpecialistForm = ({
     }
   };
 
-  tg.MainButton.onClick(() => {
-    alert(specialistId, "specconfirm");
-    // specConfirmClick();
-  });
-
   const onKeyDownBeginDate = (e) => {
     if (e.key !== "Backspace") {
       if (beginDate.length === 4 || beginDate.length === 7) {
@@ -124,6 +119,12 @@ const SpecialistForm = ({
     setSecondTimeTable(timeTable?.split("/")[1]);
     setBeginDate(beginingDate);
   }, [nameProp, beginingDate, qualificationProp, timeTable]);
+  useEffect(() => {
+    tg.MainButton.onClick(() => {
+      alert(specialistId, "specconfirm");
+      // specConfirmClick();
+    });
+  }, [specialistId, tg.MainButton]);
 
   return (
     <form className="specialist-form">
