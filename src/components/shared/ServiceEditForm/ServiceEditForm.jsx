@@ -83,7 +83,6 @@ const ServiceEditForm = ({
 
   useEffect(() => {
     setTitle(titleProp);
-    console.log(titleProp);
     setPrice(priceProp);
     setTime(timeProp);
   }, [id, priceProp, timeProp, titleProp]);

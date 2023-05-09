@@ -22,6 +22,9 @@ export function useTelegram() {
     tg.MainButton.onClick(() => {
       func();
     });
+    tg.MainButton.offClick(() => {
+      alert("setNull");
+    });
   };
 
   const colorScheme = tg.colorScheme;
