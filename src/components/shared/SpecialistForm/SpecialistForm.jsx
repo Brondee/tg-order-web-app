@@ -94,6 +94,7 @@ const SpecialistForm = ({
         categoryIds: curCategoryIds,
       };
       try {
+        alert(data.id, specialistId);
         await axios.patch("http://localhost:3333/specialist/edit", data);
         dispatch(setIsEdit(false));
         dispatch(setCurCategoryIds([]));
@@ -131,8 +132,8 @@ const SpecialistForm = ({
     setBeginDate(beginingDate);
   }, [nameProp, beginingDate, qualificationProp, timeTable]);
   useEffect(() => {
-    alert(specialistId);
     if (specialistId) {
+      tg.MainButton.setText("Подтвердить");
       tg.MainButton.onClick(() => {
         alert(specialistId, "specconfirm");
         specConfirmClick();
