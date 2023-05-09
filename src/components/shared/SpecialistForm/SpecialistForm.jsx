@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +59,7 @@ const SpecialistForm = ({
     setBeginDate(e.target.value);
   };
 
-  const specConfirmClick = async () => {
+  const specConfirmClick = useCallback(async () => {
     if (name.length === 0) {
       setNameError(true);
     }
@@ -102,7 +102,18 @@ const SpecialistForm = ({
         console.log(err);
       }
     }
-  };
+  }, [
+    beginDate,
+    curCategoryIds,
+    dispatch,
+    firstTimeTable,
+    name,
+    navigate,
+    photoUrlProp,
+    qualification,
+    secondTimeTable,
+    specialistId,
+  ]);
 
   const onKeyDownBeginDate = (e) => {
     if (e.key !== "Backspace") {
@@ -122,9 +133,9 @@ const SpecialistForm = ({
   useEffect(() => {
     tg.MainButton.onClick(() => {
       alert(specialistId, "specconfirm");
-      // specConfirmClick();
+      specConfirmClick();
     });
-  }, [specialistId, tg.MainButton]);
+  }, [specialistId, tg.MainButton, specConfirmClick]);
 
   return (
     <form className="specialist-form">
