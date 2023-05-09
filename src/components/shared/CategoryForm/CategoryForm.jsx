@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const CategoryForm = ({ id, titleProp }) => {
   const onChange = (e) => {
     setTitle(e.target.value);
   };
-  const confirmClick = async () => {
+  const confirmClick = useCallback(async () => {
     if (title.length === 0) {
       setTitleError(true);
     } else {
@@ -58,14 +58,19 @@ const CategoryForm = ({ id, titleProp }) => {
         }
       }
     }
-  };
+  }, [dispatch, id, isEdit, navigate, title]);
 
   useEffect(() => {
     if (isEdit) {
       setTitle(titleProp);
     }
+  }, [titleProp, isEdit]);
+  useEffect(() => {
     tg.MainButton.show();
-  }, [titleProp, isEdit, tg.MainButton]);
+    tg.MainButton.onClick(() => {
+      confirmClick();
+    });
+  }, [tg.MainButton, confirmClick]);
 
   return (
     <form className="specialist-form">
