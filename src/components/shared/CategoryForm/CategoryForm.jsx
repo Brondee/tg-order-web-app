@@ -17,10 +17,6 @@ const CategoryForm = ({ id, titleProp }) => {
   const navigate = useNavigate();
   const { tg } = useTelegram();
 
-  tg.MainButton.onClick(() => {
-    confirmClick();
-  });
-
   const onChange = (e) => {
     setTitle(e.target.value);
   };

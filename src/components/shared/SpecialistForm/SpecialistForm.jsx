@@ -38,10 +38,6 @@ const SpecialistForm = ({
   const dispatch = useDispatch();
   const { colorScheme, tg } = useTelegram();
 
-  tg.MainButton.onClick(() => {
-    confirmClick();
-  });
-
   const onChangeName = (e) => {
     setName(e.target.value);
   };
