@@ -70,6 +70,7 @@
 }
 .input-timetable:focus {
   outline: none;
+  border: 2.5px solid var(--tg-theme-button-color);
 }
 .timetable-text {
   font-weight: 500;

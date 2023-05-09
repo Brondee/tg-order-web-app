@@ -11,7 +11,7 @@
   transition: all 0.3s;
 }
 .add-btn-container:hover {
-  transform: scale(1.06);
+  background: #efefef;
 }
 .add-btn-container p {
   font-weight: 600;
