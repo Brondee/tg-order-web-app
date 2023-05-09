@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -36,9 +36,10 @@ const SpecialistForm = ({
   const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { colorScheme, tg } = useTelegram();
+  const { colorScheme, tg, setOnClickButton } = useTelegram();
 
   tg.MainButton.show();
+  tg.MainButton.setText("Подтвердить");
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -59,7 +60,7 @@ const SpecialistForm = ({
     setBeginDate(e.target.value);
   };
 
-  const specConfirmClick = useCallback(async () => {
+  const specConfirmClick = async () => {
     if (name.length === 0) {
       setNameError(true);
     }
@@ -103,18 +104,9 @@ const SpecialistForm = ({
         console.log(err);
       }
     }
-  }, [
-    beginDate,
-    curCategoryIds,
-    dispatch,
-    firstTimeTable,
-    name,
-    navigate,
-    photoUrlProp,
-    qualification,
-    secondTimeTable,
-    specialistId,
-  ]);
+  };
+
+  setOnClickButton(specConfirmClick);
 
   const onKeyDownBeginDate = (e) => {
     if (e.key !== "Backspace") {
@@ -131,15 +123,6 @@ const SpecialistForm = ({
     setSecondTimeTable(timeTable?.split("/")[1]);
     setBeginDate(beginingDate);
   }, [nameProp, beginingDate, qualificationProp, timeTable]);
-  useEffect(() => {
-    if (specialistId) {
-      tg.MainButton.setText("Подтвердить");
-      tg.MainButton.onClick(() => {
-        alert(specialistId, "specconfirm");
-        specConfirmClick();
-      });
-    }
-  }, [specialistId, tg.MainButton, specConfirmClick]);
 
   return (
     <form className="specialist-form">

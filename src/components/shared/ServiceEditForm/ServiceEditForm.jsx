@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,12 +26,10 @@ const ServiceEditForm = ({
   const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tg } = useTelegram();
+  const { tg, setOnClickButton } = useTelegram();
 
   tg.MainButton.show();
-  tg.MainButton.onClick(() => {
-    serviceConfirmClick();
-  });
+  tg.MainButton.setText("Подтвердить");
 
   const onChangeTitle = (e) => {
     console.log(e.target.value);
@@ -51,7 +49,7 @@ const ServiceEditForm = ({
     }
   };
 
-  const serviceConfirmClick = useCallback(async () => {
+  const serviceConfirmClick = async () => {
     if (title.length === 0 && price.length === 0 && time.length === 0) {
       setTitleError(true);
       setPriceError(true);
@@ -79,7 +77,9 @@ const ServiceEditForm = ({
         console.log(error);
       }
     }
-  }, [curCategoryIds, dispatch, id, navigate, price, priceError, time, title]);
+  };
+
+  setOnClickButton(serviceConfirmClick);
 
   useEffect(() => {
     setTitle(titleProp);
