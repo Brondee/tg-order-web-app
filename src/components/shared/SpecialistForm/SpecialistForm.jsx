@@ -93,7 +93,6 @@ const SpecialistForm = ({
         categoryIds: curCategoryIds,
       };
       try {
-        alert(data.id, specialistId);
         await axios.patch("http://localhost:3333/specialist/edit", data);
         dispatch(setIsEdit(false));
         dispatch(setCurCategoryIds([]));

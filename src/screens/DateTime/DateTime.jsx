@@ -13,6 +13,7 @@ import Date from "../../components/shared/Date/Date";
 import Time from "../../components/shared/Time/Time";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 import { ReactComponent as TickIcon } from "../../assets/img/tick.svg";
+import SubmitBtn from "../../components/shared/SubmitBtn/SubmitBtn";
 
 const DateTime = () => {
   const [isEmptyTime, setIsEmptyTime] = useState(false);
@@ -182,7 +183,7 @@ const DateTime = () => {
               </div>
             </div>
           )}
-          {isAdminActions && <div onClick={confirmClick}>Confirm</div>}
+          {isAdminActions && <SubmitBtn onClick={confirmClick} />}
         </div>
       </div>
     </AnimationPage>

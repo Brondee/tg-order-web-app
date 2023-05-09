@@ -14,15 +14,15 @@
   align-items: center;
   justify-content: center;
   width: 60%;
-  bottom: 15px;
+  bottom: 8px;
   z-index: 20;
   transition: all 0.3s;
 }
 .submit-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.07);
 }
 .submit-text {
   font-size: 15px;
-  color: #000000;
+  color: var(--tg-theme-button-color);
   margin: 0;
 }
