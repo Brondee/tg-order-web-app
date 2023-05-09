@@ -26,6 +26,9 @@
   margin-bottom: 15px;
   transition: all 0.2s;
 }
+.form-input:focus {
+  border: 2.5px solid var(--tg-theme-button-color);
+}
 .form-input-light {
   color: #000000;
   border: 2.5px solid #000000;

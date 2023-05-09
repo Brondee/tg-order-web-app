@@ -8,6 +8,10 @@
   margin-bottom: 20px;
   box-shadow: 0px 2px 20px rgb(0 0 0 / 10%);
   cursor: pointer;
+  transition: all 0.3s;
+}
+.add-btn-container:hover {
+  transform: scale(1.06);
 }
 .add-btn-container p {
   font-weight: 600;

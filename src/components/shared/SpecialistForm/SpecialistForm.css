@@ -26,6 +26,9 @@
   transition: all 0.3s;
   cursor: pointer;
 }
+.file-btn:hover {
+  background: var(--tg-theme-button-color);
+}
 .file-input-light {
   background: #000;
 }

@@ -9,6 +9,10 @@
   justify-content: center;
   margin-right: 10px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+.arrow-back-container:hover {
+  transform: scale(1.05);
 }
 .arrow-back-img {
   padding-right: 2px;

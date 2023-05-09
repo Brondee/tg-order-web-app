@@ -27,7 +27,7 @@ const DateTime = () => {
     useSelector((state) => state.admin);
 
   const navigate = useNavigate();
-  const { colorScheme, tg } = useTelegram();
+  const { colorScheme } = useTelegram();
 
   const tickClick = () => {
     setIsTickActive(!isTickActive);
@@ -102,10 +102,7 @@ const DateTime = () => {
       setIsEmptyTime(false);
       setIsTickActive(true);
     }
-    if (isAdminActions) {
-      tg.MainButton.show();
-    }
-  }, [morningTime, afternoonTime, eveningTime, tg.MainButton, isAdminActions]);
+  }, [morningTime, afternoonTime, eveningTime]);
   useEffect(() => {
     const dateFuncArray = getDateArray(curBeginDate, curTimeTable);
     setDateArray(dateFuncArray);
