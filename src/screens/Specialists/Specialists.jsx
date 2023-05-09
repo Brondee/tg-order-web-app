@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import Specialist from "../../components/shared/Specialist/Specialist";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
@@ -16,18 +15,12 @@ const Specialists = () => {
   const [specialists, setSpecialists] = useState([]);
   const [isAddBtnShown, setIsAddBtnShown] = useState(false);
 
-  const navigate = useNavigate();
-
   const { isAdminActions, curEditType, curCategoryIds } = useSelector(
     (state) => state.admin
   );
 
   const { tg, colorScheme } = useTelegram();
-  tg.MainButton.onClick(() => navigate("/date"));
-
-  const moveNext = () => {
-    navigate("/date");
-  };
+  tg.MainButton.hide();
 
   useEffect(() => {
     const getSpecialists = async (categoryIds) => {
@@ -106,9 +99,6 @@ const Specialists = () => {
                 </h3>
               </div>
             )}
-          </div>
-          <div className="move" onClick={moveNext}>
-            <p>Continue</p>
           </div>
         </div>
       </div>

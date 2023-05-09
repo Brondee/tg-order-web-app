@@ -17,6 +17,11 @@ const CategoryForm = ({ id, titleProp }) => {
   const navigate = useNavigate();
   const { tg } = useTelegram();
 
+  tg.MainButton.show();
+  tg.MainButton.onClick(() => {
+    categoryConfirmClick();
+  });
+
   const onChange = (e) => {
     setTitle(e.target.value);
   };
@@ -61,12 +66,6 @@ const CategoryForm = ({ id, titleProp }) => {
       setTitle(titleProp);
     }
   }, [titleProp, isEdit]);
-  useEffect(() => {
-    tg.MainButton.show();
-    tg.MainButton.onClick(() => {
-      categoryConfirmClick();
-    });
-  }, [tg.MainButton, categoryConfirmClick]);
 
   return (
     <form className="specialist-form">

@@ -38,6 +38,11 @@ const SpecialistForm = ({
   const dispatch = useDispatch();
   const { colorScheme, tg } = useTelegram();
 
+  tg.MainButton.show();
+  tg.MainButton.onClick(() => {
+    specConfirmClick();
+  });
+
   const onChangeName = (e) => {
     setName(e.target.value);
   };
@@ -128,12 +133,6 @@ const SpecialistForm = ({
     setSecondTimeTable(timeTable?.split("/")[1]);
     setBeginDate(beginingDate);
   }, [nameProp, beginingDate, qualificationProp, timeTable]);
-  useEffect(() => {
-    tg.MainButton.show();
-    tg.MainButton.onClick(() => {
-      specConfirmClick();
-    });
-  }, [tg.MainButton, specConfirmClick]);
 
   return (
     <form className="specialist-form">

@@ -28,6 +28,11 @@ const ServiceEditForm = ({
   const dispatch = useDispatch();
   const { tg } = useTelegram();
 
+  tg.MainButton.show();
+  tg.MainButton.onClick(() => {
+    serviceConfirmClick();
+  });
+
   const onChangeTitle = (e) => {
     console.log(e.target.value);
     setTitle(e.target.value);
@@ -82,12 +87,6 @@ const ServiceEditForm = ({
     setPrice(priceProp);
     setTime(timeProp);
   }, [id, priceProp, timeProp, titleProp]);
-  useEffect(() => {
-    tg.MainButton.show();
-    tg.MainButton.onClick(() => {
-      serviceConfirmClick();
-    });
-  }, [tg.MainButton, serviceConfirmClick]);
 
   return (
     <form className="specialist-form">

@@ -21,10 +21,14 @@ const Services = () => {
   const navigate = useNavigate();
 
   const { tg, colorScheme } = useTelegram();
-  tg.MainButton.onClick(() => {
-    navigate("/specialists");
+  if (isAdminActions) {
     tg.MainButton.hide();
-  });
+  } else {
+    tg.MainButton.onClick(() => {
+      navigate("/specialists");
+      tg.MainButton.hide();
+    });
+  }
 
   const getServices = async () => {
     try {

@@ -10,7 +10,9 @@ import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 const Categories = () => {
   const [categories, setCategories] = useState([]);
 
-  const { colorScheme } = useTelegram();
+  const { colorScheme, tg } = useTelegram();
+
+  tg.MainButton.hide();
 
   const getCategories = async () => {
     try {
