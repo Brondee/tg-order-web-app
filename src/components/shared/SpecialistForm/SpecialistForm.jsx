@@ -131,10 +131,13 @@ const SpecialistForm = ({
     setBeginDate(beginingDate);
   }, [nameProp, beginingDate, qualificationProp, timeTable]);
   useEffect(() => {
-    tg.MainButton.onClick(() => {
-      alert(specialistId, "specconfirm");
-      specConfirmClick();
-    });
+    alert(specialistId);
+    if (specialistId) {
+      tg.MainButton.onClick(() => {
+        alert(specialistId, "specconfirm");
+        specConfirmClick();
+      });
+    }
   }, [specialistId, tg.MainButton, specConfirmClick]);
 
   return (
