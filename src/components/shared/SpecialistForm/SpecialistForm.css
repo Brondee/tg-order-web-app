@@ -24,6 +24,7 @@
   justify-content: center;
   margin-top: 2px;
   transition: all 0.3s;
+  cursor: pointer;
 }
 .file-input-light {
   background: #000;

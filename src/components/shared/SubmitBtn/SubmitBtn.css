@@ -17,6 +17,7 @@
   bottom: 8px;
   z-index: 20;
   transition: all 0.3s;
+  cursor: pointer;
 }
 .submit-btn:hover {
   transform: scale(1.07);
