@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+import { useTelegram } from "../../../hooks/useTelegram";
 import "./ServiceEditForm.css";
 import FormInput from "../../ui/FormInput/FormInput";
 import CategoriesInput from "../../ui/CategoriesInput/CategoriesInput";
@@ -25,6 +26,11 @@ const ServiceEditForm = ({
   const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { tg } = useTelegram();
+
+  tg.MainButton.onClick(() => {
+    confirmClick();
+  });
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -77,7 +83,8 @@ const ServiceEditForm = ({
     setTitle(titleProp);
     setPrice(priceProp);
     setTime(timeProp);
-  }, [id, priceProp, timeProp, titleProp]);
+    tg.MainButton.show();
+  }, [id, priceProp, timeProp, titleProp, tg.MainButton]);
 
   return (
     <form className="specialist-form">

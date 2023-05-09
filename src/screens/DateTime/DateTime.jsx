@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../../assets/styles/global.css";
 import "./DateTime.css";
 
+import { useTelegram } from "../../hooks/useTelegram";
 import { getDateArray } from "../../utils/getDateArray";
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import Date from "../../components/shared/Date/Date";
@@ -25,7 +26,11 @@ const DateTime = () => {
     useSelector((state) => state.admin);
 
   const navigate = useNavigate();
-  const colorScheme = window.Telegram.WebApp.colorScheme;
+  const { colorScheme, tg } = useTelegram();
+
+  tg.MainButton.onClick(() => {
+    confirmClick();
+  });
 
   const tickClick = () => {
     setIsTickActive(!isTickActive);
@@ -100,7 +105,10 @@ const DateTime = () => {
       setIsEmptyTime(false);
       setIsTickActive(true);
     }
-  }, [morningTime, afternoonTime, eveningTime]);
+    if (isAdminActions) {
+      tg.MainButton.show();
+    }
+  }, [morningTime, afternoonTime, eveningTime, tg.MainButton, isAdminActions]);
   useEffect(() => {
     const dateFuncArray = getDateArray(curBeginDate, curTimeTable);
     setDateArray(dateFuncArray);

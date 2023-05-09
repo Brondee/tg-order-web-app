@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import { useTelegram } from "../../../hooks/useTelegram";
 import { setIsEdit } from "../../../store/adminSlice";
 import FormInput from "../../ui/FormInput/FormInput";
 
@@ -14,6 +15,11 @@ const CategoryForm = ({ id, titleProp }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { tg } = useTelegram();
+
+  tg.MainButton.onClick(() => {
+    confirmClick();
+  });
 
   const onChange = (e) => {
     setTitle(e.target.value);
@@ -58,7 +64,8 @@ const CategoryForm = ({ id, titleProp }) => {
     if (isEdit) {
       setTitle(titleProp);
     }
-  }, [titleProp, isEdit]);
+    tg.MainButton.show();
+  }, [titleProp, isEdit, tg.MainButton]);
 
   return (
     <form className="specialist-form">

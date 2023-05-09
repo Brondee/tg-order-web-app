@@ -36,7 +36,11 @@ const SpecialistForm = ({
   const { curCategoryIds } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { colorScheme } = useTelegram();
+  const { colorScheme, tg } = useTelegram();
+
+  tg.MainButton.onClick(() => {
+    confirmClick();
+  });
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -120,7 +124,8 @@ const SpecialistForm = ({
     setFirstTimeTable(timeTable?.split("/")[0]);
     setSecondTimeTable(timeTable?.split("/")[1]);
     setBeginDate(beginingDate);
-  }, [nameProp, beginingDate, qualificationProp, timeTable]);
+    tg.MainButton.show();
+  }, [nameProp, beginingDate, qualificationProp, timeTable, tg.MainButton]);
 
   return (
     <form className="specialist-form">

@@ -17,12 +17,14 @@ import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 
 const Confirm = () => {
   const [name, setName] = useState("");
+  const [telegram, setTelegram] = useState("");
   const [telephone, setTelephone] = useState("");
   const [comment, setComment] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [services, setServices] = useState([]);
   const [nameError, setNameError] = useState(false);
   const [telephoneError, setTelephoneError] = useState(false);
+  const [telegramError, setTelegramError] = useState(false);
   const [imgPath, setImgPath] = useState("");
 
   let servicesPrice = 0;
@@ -63,7 +65,7 @@ const Confirm = () => {
 
   const onChangeName = (e) => {
     setName(e.target.value);
-    if (telephone.length > 5 && name.length > 2) {
+    if (telephone.length > 5 && name.length > 2 && telegram.length > 2) {
       tg.MainButton.setText("Подтвердить");
       tg.MainButton.show();
     } else {
@@ -73,7 +75,17 @@ const Confirm = () => {
 
   const onChangeTelephone = (e) => {
     setTelephone(e.target.value);
-    if (telephone.length > 5 && name.length > 2) {
+    if (telephone.length > 5 && name.length > 2 && telegram.length > 2) {
+      tg.MainButton.setText("Подтвердить");
+      tg.MainButton.show();
+    } else {
+      tg.MainButton.hide();
+    }
+  };
+
+  const onChangeTelegram = (e) => {
+    setTelegram(e.target.value);
+    if (telephone.length > 5 && name.length > 2 && telegram.length > 2) {
       tg.MainButton.setText("Подтвердить");
       tg.MainButton.show();
     } else {
@@ -104,6 +116,7 @@ const Confirm = () => {
     if (name !== "" && telephone !== "") {
       const orderData = await sendOrder(
         name,
+        telegram,
         telephone,
         comment,
         specialist.name,
@@ -118,17 +131,25 @@ const Confirm = () => {
       );
       setNameError(false);
       setTelephoneError(false);
+      setTelegramError(false);
       const dataToSend = JSON.stringify(orderData);
       tg.sendData(dataToSend);
       navigate("/");
     } else if (name === "" && telephone === "") {
       setNameError(true);
       setTelephoneError(true);
+      setTelegramError(true);
     } else if (name === "") {
+      setTelegramError(false);
       setTelephoneError(false);
       setNameError(true);
     } else if (telephone === "") {
+      setTelegramError(false);
       setNameError(false);
+      setTelephoneError(true);
+    } else if (telegram === "") {
+      setNameError(false);
+      setTelegramError(false);
       setTelephoneError(true);
     }
   };
@@ -207,6 +228,20 @@ const Confirm = () => {
               value={name}
               onChange={(e) => onChangeName(e)}
               className={`input ${nameError && "input-error"}`}
+            />
+            <label
+              htmlFor="telegram"
+              className={`label ${nameError && "label-error"}`}
+            >
+              Телеграм*
+            </label>
+            <input
+              type="text"
+              id="telegram"
+              placeholder="телеграм"
+              value={telegram}
+              onChange={(e) => onChangeTelegram(e)}
+              className={`input ${telegramError && "input-error"}`}
             />
             <label
               htmlFor="telephone"

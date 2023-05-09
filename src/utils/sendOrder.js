@@ -4,6 +4,7 @@ import { days, months } from "./calendarArrays";
 
 export const sendOrder = async (
   name,
+  telegram,
   telephone,
   comment,
   masterName,
@@ -45,6 +46,7 @@ export const sendOrder = async (
     await getServiceInfo();
     const orderData = {
       clientName: name,
+      clientTelegram: telegram,
       clientTelephone: telephone,
       clientComment: comment,
       masterName,
