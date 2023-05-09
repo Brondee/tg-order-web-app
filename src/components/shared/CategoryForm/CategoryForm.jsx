@@ -11,7 +11,7 @@ const CategoryForm = ({ id, titleProp }) => {
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState(false);
 
-  const { isEdit } = useSelector((state) => state.admin);
+  const { isEdit, curEditType } = useSelector((state) => state.admin);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,7 +59,9 @@ const CategoryForm = ({ id, titleProp }) => {
     }
   };
 
-  setOnClickButton(categoryConfirmClick);
+  if (curEditType === "categories") {
+    setOnClickButton(categoryConfirmClick);
+  }
 
   useEffect(() => {
     if (isEdit) {

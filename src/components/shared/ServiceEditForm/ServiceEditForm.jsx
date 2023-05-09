@@ -23,7 +23,7 @@ const ServiceEditForm = ({
   const [priceError, setPriceError] = useState(false);
   const [timeError, setTimeError] = useState(false);
 
-  const { curCategoryIds } = useSelector((state) => state.admin);
+  const { curCategoryIds, curEditType } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { tg, setOnClickButton } = useTelegram();
@@ -79,7 +79,9 @@ const ServiceEditForm = ({
     }
   };
 
-  setOnClickButton(serviceConfirmClick);
+  if (curEditType === "services") {
+    setOnClickButton(serviceConfirmClick);
+  }
 
   useEffect(() => {
     setTitle(titleProp);

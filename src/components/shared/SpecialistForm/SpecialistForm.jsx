@@ -33,7 +33,7 @@ const SpecialistForm = ({
   const [isSecondTimeTableError, setIsSecondTimeTableError] = useState(false);
   const [isBeginDateError, setIsBeginDateError] = useState(false);
 
-  const { curCategoryIds } = useSelector((state) => state.admin);
+  const { curCategoryIds, curEditType } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { colorScheme, tg, setOnClickButton } = useTelegram();
@@ -106,7 +106,9 @@ const SpecialistForm = ({
     }
   };
 
-  setOnClickButton(specConfirmClick);
+  if (curEditType === "specialists") {
+    setOnClickButton(specConfirmClick);
+  }
 
   const onKeyDownBeginDate = (e) => {
     if (e.key !== "Backspace") {
