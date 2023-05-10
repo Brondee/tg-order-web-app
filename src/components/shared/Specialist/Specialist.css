@@ -12,9 +12,6 @@
   transition: all 0.3s;
   transform: scale(0.8);
 }
-.spec-container:hover {
-  background: #efefef;
-}
 .spec-animation {
   transform: scale(1);
 }

@@ -9,6 +9,7 @@ import Admin from "./screens/Admin/Admin";
 import Edit from "./screens/Edit/Edit";
 import Add from "./screens/Add/Add";
 import Categories from "./screens/Categories/Categories";
+import General from "./screens/General/General";
 
 function App() {
   const { tg } = useTelegram();
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/general" element={<General />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/add" element={<Add />} />
       <Route path="/edit" element={<Edit />} />
