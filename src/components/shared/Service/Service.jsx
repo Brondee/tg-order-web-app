@@ -45,8 +45,6 @@ const Service = ({ id, title, price, time, categoryId }) => {
         dispatch(setCurCategoryIds(newCurCategoryIds));
       }
       if (curServiceIds.length > 1 || !isActive) {
-        console.log(curServiceIds, !isActive);
-        console.log("show");
         tg.MainButton.setText("Далее");
         tg.MainButton.show();
       } else if (curServiceIds.length <= 1 || isActive) {

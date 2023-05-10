@@ -20,6 +20,9 @@ const DateTime = () => {
   const [isTickActive, setIsTickActive] = useState(false);
   const [dateArray, setDateArray] = useState([]);
   const [isTickChange, setIsTickChange] = useState(false);
+  const [morningTimeState, setMorningTimeState] = useState([]);
+  const [afternoonTimeState, setAfternoonTimeState] = useState([]);
+  const [eveningTimeState, setEveningTimeState] = useState([]);
 
   const { morningTime, afternoonTime, eveningTime, curDate, curSpecialistId } =
     useSelector((state) => state.orderInfo);
@@ -91,10 +94,23 @@ const DateTime = () => {
   };
 
   useEffect(() => {
+    let filteredMorningTime = morningTime.filter(
+      (time) => !time.startsWith("disabled")
+    );
+    setMorningTimeState(filteredMorningTime);
+    let filteredAfternoonTime = afternoonTime.filter(
+      (time) => !time.startsWith("disabled")
+    );
+    setAfternoonTimeState(filteredAfternoonTime);
+    let filteredEveningTime = eveningTime.filter(
+      (time) => !time.startsWith("disabled")
+    );
+    setEveningTimeState(filteredEveningTime);
+
     if (
-      morningTime.length === 0 &&
-      afternoonTime.length === 0 &&
-      eveningTime.length === 0
+      filteredMorningTime.length === 0 &&
+      filteredAfternoonTime.length === 0 &&
+      filteredEveningTime.length === 0
     ) {
       setIsEmptyTime(true);
       setIsTickActive(false);
@@ -155,26 +171,26 @@ const DateTime = () => {
           ) : (
             <div>
               <h3 className="time-title">
-                {morningTime.length !== 0 && "Утро"}
+                {morningTimeState.length !== 0 && "Утро"}
               </h3>
               <div className="time-container">
-                {morningTime?.map((time) => {
+                {morningTimeState?.map((time) => {
                   return <Time key={time} time={time} />;
                 })}
               </div>
               <h3 className="time-title">
-                {afternoonTime.length !== 0 && "День"}
+                {afternoonTimeState.length !== 0 && "День"}
               </h3>
               <div className="time-container">
-                {afternoonTime?.map((time) => {
+                {afternoonTimeState?.map((time) => {
                   return <Time key={time} time={time} />;
                 })}
               </div>
               <h3 className="time-title">
-                {eveningTime.length !== 0 && "Вечер"}
+                {eveningTimeState.length !== 0 && "Вечер"}
               </h3>
               <div className="time-container">
-                {eveningTime?.map((time) => {
+                {eveningTimeState?.map((time) => {
                   return <Time key={time} time={time} />;
                 })}
               </div>

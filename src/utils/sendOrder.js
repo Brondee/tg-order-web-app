@@ -20,7 +20,13 @@ export const sendOrder = async (
   let services = [];
   let servicesInfo = "";
   let totalPrice = 0;
+  let totalTime = 0;
   let orderId = null;
+
+  let newMorningTime = [...morningTime];
+  let newAfternoonTime = [...afternoonTime];
+  let newEveningTime = [...eveningTime];
+
   const getServiceInfo = async () => {
     try {
       const response = await axios.get(
@@ -31,7 +37,19 @@ export const sendOrder = async (
       console.log(error.response);
     }
     services.map((service, index) => {
-      const { title, price } = service;
+      const { title, price, time } = service;
+      let hours = 0;
+      let minutes = 0;
+      const timeFirst = time.split(" ")[0];
+      if (timeFirst.includes("ч")) {
+        hours = Number(timeFirst.replace("ч", ""));
+      } else if (timeFirst.includes("м")) {
+        minutes = Number(timeFirst.replace("м", ""));
+      }
+      if (time.split(" ")[1]) {
+        minutes = Number(time.split(" ")[1].replace("м", ""));
+      }
+      totalTime += hours * 60 + minutes;
       totalPrice += price;
       if (services.length - 1 === index) {
         servicesInfo += title;
@@ -87,9 +105,42 @@ export const sendOrder = async (
   await sendClientInfoToDb();
 
   const updateTimeDb = async () => {
-    const newMorningTime = morningTime.filter((time) => time !== curTime);
-    const newAfternoonTime = afternoonTime.filter((time) => time !== curTime);
-    const newEveningTime = eveningTime.filter((time) => time !== curTime);
+    const repeatDisableTime = Math.ceil(totalTime / 30);
+    if (morningTime.indexOf(curTime) !== -1) {
+      for (let i = 0; i < repeatDisableTime; i++) {
+        let index = morningTime.indexOf(curTime) + i;
+        if (newMorningTime[index]) {
+          newMorningTime[index] = `disabled ${newMorningTime[index]}`;
+        }
+        if (!newMorningTime[index]) {
+          let newI = repeatDisableTime - i;
+          for (let i = 0; i < newI; i++) {
+            newAfternoonTime[i] = `disabled ${newAfternoonTime[i]}`;
+          }
+          break;
+        }
+      }
+    } else if (afternoonTime.indexOf(curTime) !== -1) {
+      for (let i = 0; i < repeatDisableTime; i++) {
+        let index = afternoonTime.indexOf(curTime) + i;
+        if (newAfternoonTime[index]) {
+          newAfternoonTime[index] = `disabled ${newAfternoonTime[index]}`;
+        }
+        if (!newAfternoonTime[index]) {
+          let newI = repeatDisableTime - i;
+          for (let i = 0; i < newI; i++) {
+            newEveningTime[i] = `disabled ${newEveningTime[i]}`;
+          }
+          break;
+        }
+      }
+    } else if (eveningTime.indexOf(curTime) !== -1) {
+      for (let i = 0; i < repeatDisableTime; i++) {
+        let index = eveningTime.indexOf(curTime) + i;
+        if (newEveningTime[index])
+          newEveningTime[index] = `disabled ${newEveningTime[index]}`;
+      }
+    }
     const timeData = {
       date: curDate,
       specialistId: curSpecialistId,

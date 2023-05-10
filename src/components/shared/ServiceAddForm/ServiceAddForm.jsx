@@ -31,6 +31,14 @@ const ServiceAddForm = () => {
     setTime(e.target.value);
   };
 
+  const onKeyDownTime = (e) => {
+    if (e.key !== "Backspace") {
+      if (time.length === 2 && time[1] === "ч") {
+        setTime(time + " ");
+      }
+    }
+  };
+
   const confirmClick = async () => {
     if (title.length === 0 && price.length === 0 && time.length === 0) {
       setTitleError(true);
@@ -78,6 +86,8 @@ const ServiceAddForm = () => {
         inputValue={time}
         onChangeFunc={onChangeTime}
         isError={timeError}
+        placeholder="1ч 30м"
+        onKeyDown={onKeyDownTime}
       />
       <CategoriesInput />
       <SubmitBtn onClick={confirmClick} />
