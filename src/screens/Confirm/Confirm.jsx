@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
+import SubmitBtn from "../../components/shared/SubmitBtn/SubmitBtn";
 import { setCurServiceIds } from "../../store/orderInfoSlice";
 import { sendOrder } from "../../utils/sendOrder";
 import { useTelegram } from "../../hooks/useTelegram";
@@ -45,10 +46,6 @@ const Confirm = () => {
     eveningTime,
   } = useSelector((state) => state.orderInfo);
 
-  tg.MainButton.onClick(() => {
-    confirmPageClick();
-  });
-
   const onKeyDownTelephone = (e) => {
     if (e.key !== "Backspace") {
       if (telephone.startsWith("+7")) {
@@ -76,22 +73,10 @@ const Confirm = () => {
 
   const onChangeTelephone = (e) => {
     setTelephone(e.target.value);
-    if (telephone.length > 5 && name.length > 2 && telegram.length > 2) {
-      tg.MainButton.setText("Подтвердить");
-      tg.MainButton.show();
-    } else {
-      tg.MainButton.hide();
-    }
   };
 
   const onChangeTelegram = (e) => {
     setTelegram(e.target.value);
-    if (telephone.length > 5 && name.length > 2 && telegram.length > 2) {
-      tg.MainButton.setText("Подтвердить");
-      tg.MainButton.show();
-    } else {
-      tg.MainButton.hide();
-    }
   };
 
   const editSpecialistClick = () => {
@@ -344,7 +329,8 @@ const Confirm = () => {
             </p>
             <p className="services-price">{servicesPrice} ₽</p>
           </div>
-          <button onClick={confirmPageClick}>Confirm</button>
+          {/* <button onClick={confirmPageClick}>Confirm</button> */}
+          <SubmitBtn onClick={confirmPageClick} />
         </div>
       </div>
     </AnimationPage>
