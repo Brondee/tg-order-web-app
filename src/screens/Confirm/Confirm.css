@@ -76,6 +76,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 60px;
 }
 .service-counter,
 .services-price {
