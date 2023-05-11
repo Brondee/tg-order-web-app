@@ -150,11 +150,7 @@ export const sendOrder = async (
       eveningTime: newEveningTime,
     };
     try {
-      const response = await axios.patch(
-        `http://localhost:3333/dates/editTime`,
-        timeData
-      );
-      console.log(response.data);
+      await axios.patch(`http://localhost:3333/dates/editTime`, timeData);
     } catch (error) {
       console.log(error);
     }

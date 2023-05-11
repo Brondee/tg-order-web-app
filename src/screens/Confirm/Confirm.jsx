@@ -114,7 +114,7 @@ const Confirm = () => {
   };
 
   const confirmPageClick = async () => {
-    if (name !== "" && telephone !== "") {
+    if (name !== "" && telephone !== "" && telegram !== "") {
       const orderData = await sendOrder(
         name,
         telegram,
