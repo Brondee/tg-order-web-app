@@ -7,6 +7,7 @@ export const sendOrder = async (
   telegram,
   telephone,
   comment,
+  companyAddress,
   masterName,
   curSpecialistId,
   curTime,
@@ -168,7 +169,7 @@ export const sendOrder = async (
   }, ${days[curWeekDay]}, в ${curTime}
 🔹 Мастер: ${masterName}
 🔹 Услуга(и): ${servicesInfo}
-🔹 Адрес: Ул.Красная 2/2, г.Краснодар\n
+🔹 Адрес: ${companyAddress}\n
 ⭐️ Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
   return { message, orderId };
 };

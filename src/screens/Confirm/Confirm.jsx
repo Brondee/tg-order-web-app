@@ -20,6 +20,7 @@ const Confirm = () => {
   const [telegram, setTelegram] = useState("");
   const [telephone, setTelephone] = useState("");
   const [comment, setComment] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [services, setServices] = useState([]);
   const [nameError, setNameError] = useState(false);
@@ -119,6 +120,7 @@ const Confirm = () => {
         telegram,
         telephone,
         comment,
+        companyAddress,
         specialist.name,
         curSpecialistId,
         curTime,
@@ -177,6 +179,17 @@ const Confirm = () => {
       }
     };
     getServicesInfo();
+    const getGeneralInfo = async () => {
+      try {
+        const response = await axios("http://localhost:3333/general/info");
+        const data = response.data;
+        setCompanyAddress(data.companyAddress);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getGeneralInfo();
   }, [curServiceIds, curSpecialistId]);
   useEffect(() => {
     const getImage = async () => {
