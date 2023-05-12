@@ -72,6 +72,7 @@ export const sendOrder = async (
       masterId,
       masterName,
       dateTime: `${curDate}, ${curTime}`,
+      totalTime,
       servicesInfo,
       totalPrice: totalPrice,
       servicesCount: services.length,
