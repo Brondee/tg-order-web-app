@@ -12,8 +12,10 @@ import "./General.css";
 const General = () => {
   const [telephone, setTelephone] = useState("");
   const [address, setAddress] = useState("");
+  const [companyDescription, setCompanyDescription] = useState("");
   const [telephoneError, setTelephoneError] = useState(false);
   const [addressError, setAddressError] = useState(false);
+  const [companyDescriptionError, setCompanyDescriptionError] = useState(false);
 
   const { colorScheme } = useTelegram();
   const navigate = useNavigate();
@@ -26,15 +28,26 @@ const General = () => {
   };
 
   const confirmClick = async () => {
-    if (telephone.length === 0 && address.length === 0) {
+    if (
+      telephone.length === 0 &&
+      address.length === 0 &&
+      companyDescription.length === 0
+    ) {
       setTelephoneError(true);
       setAddressError(true);
+      setCompanyDescriptionError(true);
     } else if (telephone.length === 0) {
+      setCompanyDescriptionError(false);
       setAddressError(false);
       setTelephoneError(true);
     } else if (address.length === 0) {
+      setCompanyDescriptionError(false);
       setTelephoneError(false);
       setAddressError(true);
+    } else if (companyDescription.length === 0) {
+      setTelephoneError(false);
+      setAddressError(false);
+      setCompanyDescriptionError(true);
     } else {
       const data = {
         companyTelephone: telephone,
@@ -53,9 +66,11 @@ const General = () => {
     const getGeneralInfo = async () => {
       try {
         const response = await axios.get("http://localhost:3333/general/info");
-        const { companyAddress, companyTelephone } = response.data;
+        const { companyAddress, companyTelephone, companyDescription } =
+          response.data;
         setTelephone(companyTelephone);
         setAddress(companyAddress);
+        setCompanyDescription(companyDescription);
       } catch (err) {
         console.log(err);
       }
@@ -92,6 +107,24 @@ const General = () => {
               placeholder="введите адрес салона"
               isError={addressError}
             />
+            <label
+              htmlFor="description"
+              className={`form-label ${
+                companyDescriptionError && "form-label-error"
+              } ${colorScheme === "light" && "form-label-light"}`}
+            >
+              Краткое описание
+            </label>
+            <textarea
+              name="description"
+              id="description"
+              defaultValue={companyDescription}
+              placeholder="Введите описание компании"
+              onChange={(e) => setCompanyDescription(e)}
+              className={`form-input form-area ${
+                companyDescriptionError && "form-input-error"
+              } ${colorScheme === "light" && "form-input-light"}`}
+            ></textarea>
             <SubmitBtn onClick={confirmClick} />
           </form>
         </div>
