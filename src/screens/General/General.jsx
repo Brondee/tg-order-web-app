@@ -52,6 +52,7 @@ const General = () => {
       const data = {
         companyTelephone: telephone,
         companyAddress: address,
+        companyDescription,
       };
       try {
         await axios.patch("http://localhost:3333/general/edit", data);
