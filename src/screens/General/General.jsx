@@ -26,6 +26,9 @@ const General = () => {
   const onChangeAdress = (e) => {
     setAddress(e.target.value);
   };
+  const onChangeCompanyDesc = (e) => {
+    setCompanyDescription(e.target.value);
+  };
 
   const confirmClick = async () => {
     if (
@@ -52,7 +55,7 @@ const General = () => {
       const data = {
         companyTelephone: telephone,
         companyAddress: address,
-        companyDescription,
+        companyDescription: companyDescription,
       };
       try {
         await axios.patch("http://localhost:3333/general/edit", data);
@@ -121,7 +124,7 @@ const General = () => {
               id="description"
               defaultValue={companyDescription}
               placeholder="Введите описание компании"
-              onChange={(e) => setCompanyDescription(e)}
+              onChange={onChangeCompanyDesc}
               className={`form-input form-area ${
                 companyDescriptionError && "form-input-error"
               } ${colorScheme === "light" && "form-input-light"}`}
