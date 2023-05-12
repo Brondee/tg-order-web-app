@@ -114,12 +114,16 @@ export const sendOrder = async (
       for (let i = 0; i < repeatDisableTime; i++) {
         let index = morningTime.indexOf(curTime) + i;
         if (newMorningTime[index]) {
-          newMorningTime[index] = `disabled ${newMorningTime[index]}`;
+          if (!newMorningTime[index].includes("disabled")) {
+            newMorningTime[index] = `disabled ${newMorningTime[index]}`;
+          }
         }
         if (!newMorningTime[index]) {
           let newI = repeatDisableTime - i;
           for (let i = 0; i < newI; i++) {
-            newAfternoonTime[i] = `disabled ${newAfternoonTime[i]}`;
+            if (!newAfternoonTime[index].includes("disabled")) {
+              newAfternoonTime[i] = `disabled ${newAfternoonTime[i]}`;
+            }
           }
           break;
         }
@@ -128,12 +132,16 @@ export const sendOrder = async (
       for (let i = 0; i < repeatDisableTime; i++) {
         let index = afternoonTime.indexOf(curTime) + i;
         if (newAfternoonTime[index]) {
-          newAfternoonTime[index] = `disabled ${newAfternoonTime[index]}`;
+          if (!newAfternoonTime[index].includes("disabled")) {
+            newAfternoonTime[index] = `disabled ${newAfternoonTime[index]}`;
+          }
         }
         if (!newAfternoonTime[index]) {
           let newI = repeatDisableTime - i;
           for (let i = 0; i < newI; i++) {
-            newEveningTime[i] = `disabled ${newEveningTime[i]}`;
+            if (!newEveningTime[index].includes("disabled")) {
+              newEveningTime[i] = `disabled ${newEveningTime[i]}`;
+            }
           }
           break;
         }
@@ -142,7 +150,9 @@ export const sendOrder = async (
       for (let i = 0; i < repeatDisableTime; i++) {
         let index = eveningTime.indexOf(curTime) + i;
         if (newEveningTime[index])
-          newEveningTime[index] = `disabled ${newEveningTime[index]}`;
+          if (!newEveningTime[index].includes("disabled")) {
+            newEveningTime[index] = `disabled ${newEveningTime[index]}`;
+          }
       }
     }
     const timeData = {
@@ -170,5 +180,18 @@ export const sendOrder = async (
 🔹 Услуга(и): ${servicesInfo}
 🔹 Адрес: ${companyAddress}\n
 ⭐️ Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
-  return { message, orderId, totalTime };
+
+  let adminMessage = `❇️ Новая заявка\n
+🧍‍♂️ От: ${name}
+✉️ Телеграм клиента: ${telegram}
+📞 Телефон клиента: ${telephone}
+💬 Комментарий: ${comment}
+👨‍⚕️ Специалист: ${masterName}
+🗓 Дата и время: ${curDate.slice(-2)} ${
+    months[Number(curDate.slice(5, -3)) - 1]
+  }, ${days[curWeekDay]}, в ${curTime}
+🛠 Услуга(и): ${servicesInfo}
+💵 Стоимость услуг: ${totalPrice}
+`;
+  return { message, adminMessage, orderId, totalTime };
 };
