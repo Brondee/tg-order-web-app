@@ -106,6 +106,7 @@ const Confirm = () => {
         telephone,
         comment,
         companyAddress,
+        specialist.id,
         specialist.name,
         curSpecialistId,
         curTime,
@@ -329,7 +330,6 @@ const Confirm = () => {
             </p>
             <p className="services-price">{servicesPrice} ₽</p>
           </div>
-          {/* <button onClick={confirmPageClick}>Confirm</button> */}
           <SubmitBtn onClick={confirmPageClick} />
         </div>
       </div>

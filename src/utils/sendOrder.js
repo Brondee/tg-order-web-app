@@ -8,6 +8,7 @@ export const sendOrder = async (
   telephone,
   comment,
   companyAddress,
+  masterId,
   masterName,
   curSpecialistId,
   curTime,
@@ -68,6 +69,7 @@ export const sendOrder = async (
       clientTelegram: telegram,
       clientTelephone: telephone,
       clientComment: comment,
+      masterId,
       masterName,
       dateTime: `${curDate}, ${curTime}`,
       servicesInfo,
@@ -167,5 +169,5 @@ export const sendOrder = async (
 🔹 Услуга(и): ${servicesInfo}
 🔹 Адрес: ${companyAddress}\n
 ⭐️ Вы будете уведомлены о записи предварительно за 24 часа и за 2 часа до визита!`;
-  return { message, orderId };
+  return { message, orderId, totalTime };
 };
