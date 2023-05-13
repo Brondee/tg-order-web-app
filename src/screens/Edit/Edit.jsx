@@ -103,7 +103,7 @@ const Edit = () => {
                 colorScheme === "light" && "main-title-light"
               }`}
             >
-              Редактирование
+              {curEditType === "orders" ? "Просмотр" : "Редактирование"}
             </h1>
           </div>
           {curEditType === "specialists" && (
