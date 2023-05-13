@@ -5,7 +5,7 @@
 .img-container {
   width: 45px;
   height: 45px;
-  background: #ffeeee;
+  background: var(--tg-theme-button-color);
   border-radius: 10px;
   display: flex;
   align-items: center;
