@@ -65,6 +65,14 @@ const Admin = () => {
               <h3 className="section-title">Время</h3>
             </div>
             <div
+              className="section section-orders"
+              onClick={() => {
+                onClick("/orders", "orders");
+              }}
+            >
+              <h3 className="section-title">Заказы</h3>
+            </div>
+            <div
               className="section section-general"
               onClick={() => {
                 onClick("/general", "general");

@@ -13,16 +13,19 @@ import "../../assets/styles/global.css";
 import Category from "../../components/shared/Category/Category";
 import CategoryForm from "../../components/shared/CategoryForm/CategoryForm";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
+import Order from "../../components/shared/Order/Order";
+import OrderInfoBlock from "../../components/ui/OrderInfoBlock/OrderInfoBlock";
 
 const Edit = () => {
   const [specialistInfo, setSpecialistInfo] = useState(null);
   const [serviceInfo, setServiceInfo] = useState([]);
   const [categoryInfo, setCategoryInfo] = useState(null);
+  const [orderInfo, setOrderInfo] = useState(null);
   const [arrowScreenTitle, setArrowScreenTitle] = useState(null);
 
   const { colorScheme } = useTelegram();
 
-  const { curEditType } = useSelector((state) => state.admin);
+  const { curEditType, curOrderId } = useSelector((state) => state.admin);
   const { curSpecialistId, curServiceIds } = useSelector(
     (state) => state.orderInfo
   );
@@ -73,8 +76,22 @@ const Edit = () => {
         }
       };
       getCategory();
+    } else if (curEditType === "orders") {
+      setArrowScreenTitle("/orders");
+      const getOrderInfo = async () => {
+        try {
+          const response = await axios(
+            `http://localhost:3333/order/${curOrderId}`
+          );
+          const data = response.data;
+          setOrderInfo(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getOrderInfo();
     }
-  }, [curEditType, curCategoryIds, curServiceIds, curSpecialistId]);
+  }, [curEditType, curCategoryIds, curServiceIds, curSpecialistId, curOrderId]);
   return (
     <AnimationPage>
       <div className="main-container">
@@ -136,6 +153,24 @@ const Edit = () => {
               <CategoryForm
                 id={categoryInfo?.id}
                 titleProp={categoryInfo?.title}
+              />
+            </div>
+          )}
+          {curEditType === "orders" && (
+            <div>
+              <Order
+                id={orderInfo?.id}
+                clientName={orderInfo?.clientName}
+                date={orderInfo?.dateTime}
+              />
+              <OrderInfoBlock
+                clientTelegram={orderInfo?.clientTelegram}
+                clientTelephone={orderInfo?.clientTelephone}
+                clientComment={orderInfo?.clientComment}
+                masterName={orderInfo?.masterName}
+                dateTime={orderInfo?.dateTime}
+                servicesInfo={orderInfo?.servicesInfo}
+                totalPrice={orderInfo?.totalPrice}
               />
             </div>
           )}

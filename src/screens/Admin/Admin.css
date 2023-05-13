@@ -38,6 +38,11 @@
   background-repeat: no-repeat;
   background-position: bottom -90px right -20px;
 }
+.section-orders {
+  background-image: url("../../assets/img/files.png");
+  background-repeat: no-repeat;
+  background-position: bottom 0px right 0px;
+}
 .section-general {
   background-image: url("../../assets/img/settings.png");
   background-repeat: no-repeat;
