@@ -79,7 +79,7 @@ const DateTime = () => {
       const dto = {
         date: curDate,
         specialistId: curSpecialistId,
-        isWorkingDate: isTickActive,
+        isWorkingDate: String(isTickActive),
         isWorkingDateChanged: true,
       };
       const response = await axios.patch(
