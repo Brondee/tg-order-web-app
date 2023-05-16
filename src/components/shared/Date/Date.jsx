@@ -15,7 +15,7 @@ import { months } from "../../../utils/calendarArrays";
 
 const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
   const [monthTitle, setMonthTitle] = useState("");
-  const [isWorking, setIsWorking] = useState(true);
+  const [isWorking, setIsWorking] = useState(null);
 
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
@@ -55,21 +55,21 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
         } else {
           setIsWorking(Boolean(isWorkingProp));
         }
+        let today = new window.Date();
+        if (date === today.getDate() && isWorking) {
+          onClick();
+        }
       } catch (err) {
         console.log(err);
       }
     };
     getDateInfo();
-    let today = new window.Date();
-    if (date === today.getDate()) {
-      onClick();
-    }
     let curMonthTitle = months[Number(fullDate.slice(5, -3)) - 1].slice(0, 3);
     if (curMonthTitle === "мая") {
       curMonthTitle = "май";
     }
     setMonthTitle(curMonthTitle);
-  }, [isWorkingProp, date, fullDate, curSpecialistId, onClick]);
+  }, [isWorkingProp, date, fullDate, curSpecialistId, onClick, isWorking]);
 
   return (
     <div

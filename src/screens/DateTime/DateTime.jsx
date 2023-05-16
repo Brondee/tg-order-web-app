@@ -82,11 +82,7 @@ const DateTime = () => {
         isWorkingDate: String(isTickActive),
         isWorkingDateChanged: true,
       };
-      const response = await axios.patch(
-        "http://localhost:3333/dates/editDate",
-        dto
-      );
-      console.log(response.data);
+      await axios.patch("http://localhost:3333/dates/editDate", dto);
       navigate("/admin");
     } catch (error) {
       console.log(error);
