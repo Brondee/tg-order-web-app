@@ -27,6 +27,9 @@
   align-items: center;
   margin-top: 10px;
 }
+.time-all-container {
+  padding-bottom: 70px;
+}
 .tick-container {
   margin-right: 13px;
   border: 2px solid #ffffff;

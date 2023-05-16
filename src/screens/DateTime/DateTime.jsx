@@ -169,7 +169,7 @@ const DateTime = () => {
           {isEmptyTime ? (
             <p className="empty-date-text">На данную дату не записаться</p>
           ) : (
-            <div>
+            <div className="time-all-container">
               <h3 className="time-title">
                 {morningTimeState.length !== 0 && "Утро"}
               </h3>
