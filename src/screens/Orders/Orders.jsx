@@ -39,7 +39,7 @@ const Orders = () => {
             return [...data];
           }
         });
-        if (data.length === 0 || data.length < 10) {
+        if (data.length < 10) {
           setIsLoadMoreShown(false);
         }
       } catch (err) {
@@ -52,7 +52,9 @@ const Orders = () => {
   useEffect(() => {
     const getTodayOrders = async () => {
       try {
-        const response = await axios(`http://localhost:3333/order/today`);
+        const response = await axios(
+          `http://localhost:3333/order/today${todayOffset}`
+        );
         const data = response.data;
         setTodayOrders((prev) => {
           if (JSON.stringify(prev) !== JSON.stringify(data)) {
@@ -61,7 +63,7 @@ const Orders = () => {
             return [...data];
           }
         });
-        if (data.length === 0 || data.length < 10) {
+        if (data.length < 10) {
           setIsLoadMoreTodayShown(false);
         }
       } catch (err) {
