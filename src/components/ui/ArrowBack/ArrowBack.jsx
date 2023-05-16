@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setCurServiceIds } from "../../../store/orderInfoSlice";
+import { setCurServiceIds, setCurDate } from "../../../store/orderInfoSlice";
 import { setIsEdit, setCurCategoryIds } from "../../../store/adminSlice";
 import "./ArrowBack.css";
 import { ReactComponent as ArrowBackIcon } from "../../../assets/img/arrow.svg";
@@ -20,6 +20,7 @@ const ArrowBack = ({ screenTitle }) => {
       dispatch(setCurServiceIds([]));
     }
     if (isAdminActions) {
+      dispatch(setCurDate(""));
       dispatch(setCurCategoryIds([]));
     }
     dispatch(setIsEdit(false));

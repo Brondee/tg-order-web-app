@@ -58,6 +58,16 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
         let today = new window.Date();
         if (date === today.getDate() && isWorking) {
           onClick();
+        } else if (date === today.getDate()) {
+          dispatch(setCurDate(fullDate));
+          dispatch(setCurWeekDay(weekDay));
+          dispatch(
+            setCurDateTime({
+              morningTime: [],
+              afternoonTime: [],
+              eveningTime: [],
+            })
+          );
         }
       } catch (err) {
         console.log(err);

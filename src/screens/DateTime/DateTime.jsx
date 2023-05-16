@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +14,7 @@ import Time from "../../components/shared/Time/Time";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 import { ReactComponent as TickIcon } from "../../assets/img/tick.svg";
 import SubmitBtn from "../../components/shared/SubmitBtn/SubmitBtn";
+import { setCurDate } from "../../store/orderInfoSlice";
 
 const DateTime = () => {
   const [isEmptyTime, setIsEmptyTime] = useState(false);
@@ -30,6 +31,7 @@ const DateTime = () => {
     useSelector((state) => state.admin);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { colorScheme } = useTelegram();
 
   const tickClick = () => {
@@ -68,6 +70,7 @@ const DateTime = () => {
         timeData
       );
       console.log(response.data);
+      dispatch(setCurDate(""));
       navigate("/admin");
     } catch (error) {
       console.log(error);
@@ -83,6 +86,7 @@ const DateTime = () => {
         isWorkingDateChanged: true,
       };
       await axios.patch("http://localhost:3333/dates/editDate", dto);
+      dispatch(setCurDate(""));
       navigate("/admin");
     } catch (error) {
       console.log(error);
