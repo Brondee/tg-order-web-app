@@ -56,5 +56,5 @@
   color: var(--tg-theme-button-text-color);
 }
 .deleteIcon {
-  color: var(--tg-theme-button-text-color);
+  fill: var(--tg-theme-button-text-color);
 }
