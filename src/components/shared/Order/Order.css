@@ -23,11 +23,19 @@
   font-size: 16px;
   margin-bottom: 0;
   margin-top: 0;
+  transition: all 0.3s;
+}
+.spec-container-active .client-name {
+  color: var(--tg-theme-button-text-color);
 }
 .small-text {
   font-weight: 500;
   font-size: 15px;
   color: #5b5b5b;
+  transition: all 0.3s;
+}
+.spec-container-active .small-text {
+  color: var(--tg-theme-button-text-color);
 }
 .order-date {
   font-weight: 500;
@@ -35,4 +43,8 @@
   color: #333333;
   margin-top: 5px;
   margin-bottom: 0;
+  transition: all 0.3s;
+}
+.spec-container-active .order-date {
+  color: var(--tg-theme-button-text-color);
 }

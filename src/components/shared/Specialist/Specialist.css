@@ -40,6 +40,10 @@
   color: #000000;
   margin-bottom: 2px;
   margin-top: 0;
+  transition: all 0.3s;
+}
+.spec-container-active .name {
+  color: var(--tg-theme-button-text-color);
 }
 .qualification {
   font-weight: 500;
@@ -47,4 +51,8 @@
   color: #b4b4b4;
   margin-top: 0;
   margin-bottom: 0;
+  transition: all 0.3s;
+}
+.spec-container-active .qualification {
+  color: var(--tg-theme-button-text-color);
 }
