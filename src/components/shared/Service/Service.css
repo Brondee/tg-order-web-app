@@ -55,3 +55,6 @@
 .container-active .time {
   color: var(--tg-theme-button-text-color);
 }
+.deleteIcon {
+  color: var(--tg-theme-button-text-color);
+}

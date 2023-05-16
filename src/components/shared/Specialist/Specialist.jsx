@@ -96,7 +96,7 @@ const Specialist = ({
         </div>
       </div>
       {isEdit ? (
-        <DeleteIcon width="26" height="26" />
+        <DeleteIcon width="26" height="26" className="deleteIcon" />
       ) : (
         <CircleBtn isActive={isActive} />
       )}

@@ -68,7 +68,7 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
     >
       <p className="category-title">{title}</p>
       {isEdit && isFromEditPage ? (
-        <DeleteIcon height={"32"} />
+        <DeleteIcon width="26" height="32" className="deleteIcon" />
       ) : (
         <CircleBtn isActive={isActive} />
       )}

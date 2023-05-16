@@ -83,7 +83,11 @@ const Service = ({ id, title, price, time, categoryId }) => {
           <p className="time">{time}</p>
         </div>
       </div>
-      {isEdit ? <DeleteIcon /> : <CircleBtn isActive={isActive} />}
+      {isEdit ? (
+        <DeleteIcon width="26" height="26" className="deleteIcon" />
+      ) : (
+        <CircleBtn isActive={isActive} />
+      )}
     </div>
   );
 };
