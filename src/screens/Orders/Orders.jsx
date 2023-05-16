@@ -53,7 +53,7 @@ const Orders = () => {
     const getTodayOrders = async () => {
       try {
         const response = await axios(
-          `http://localhost:3333/order/today${todayOffset}`
+          `http://localhost:3333/order/today/${todayOffset}`
         );
         const data = response.data;
         setTodayOrders((prev) => {
