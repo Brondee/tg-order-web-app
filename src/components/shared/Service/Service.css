@@ -24,6 +24,10 @@
   font-size: 15px;
   margin-bottom: 0;
   margin-top: 0;
+  transition: 0.3s;
+}
+.container-active .title {
+  color: var(--tg-theme-button-text-color);
 }
 .price-time-container {
   display: flex;
@@ -34,6 +38,10 @@
   font-size: 14px;
   margin-top: 6px;
   margin-bottom: 0;
+  transition: 0.3s;
+}
+.container-active .price {
+  color: var(--tg-theme-button-text-color);
 }
 .time {
   font-weight: 500;
@@ -42,4 +50,8 @@
   margin-left: 10px;
   margin-top: 6px;
   margin-bottom: 0;
+  transition: 0.3s;
+}
+.container-active .time {
+  color: var(--tg-theme-button-text-color);
 }
