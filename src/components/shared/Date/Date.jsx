@@ -79,7 +79,16 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
       curMonthTitle = "май";
     }
     setMonthTitle(curMonthTitle);
-  }, [isWorkingProp, date, fullDate, curSpecialistId, onClick, isWorking]);
+  }, [
+    isWorkingProp,
+    date,
+    fullDate,
+    curSpecialistId,
+    onClick,
+    isWorking,
+    dispatch,
+    weekDay,
+  ]);
 
   return (
     <div
