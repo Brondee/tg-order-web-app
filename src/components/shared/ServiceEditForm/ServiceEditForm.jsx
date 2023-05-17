@@ -65,7 +65,7 @@ const ServiceEditForm = ({
           time,
           categoryId: curCategoryIds[0],
         };
-        await axios.patch("http://localhost:3333/services/edit", data);
+        await axios.patch("http://localhost:8080/services/edit", data);
         dispatch(setCurCategoryIds([]));
         dispatch(setIsEdit(false));
         navigate("/");

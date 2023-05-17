@@ -58,7 +58,7 @@ const General = () => {
         companyDescription: companyDescription,
       };
       try {
-        await axios.patch("http://localhost:3333/general/edit", data);
+        await axios.patch("http://localhost:8080/general/edit", data);
         navigate("/admin");
       } catch (err) {
         console.log(err);
@@ -69,7 +69,7 @@ const General = () => {
   useEffect(() => {
     const getGeneralInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/general/info");
+        const response = await axios.get("http://localhost:8080/general/info");
         const { companyAddress, companyTelephone, companyDescription } =
           response.data;
         setTelephone(companyTelephone);

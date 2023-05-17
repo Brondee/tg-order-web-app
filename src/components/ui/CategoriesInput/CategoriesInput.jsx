@@ -22,7 +22,7 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const response = await axios("http://localhost:3333/category/all");
+        const response = await axios("http://localhost:8080/category/all");
         const data = response.data;
         setCategories(data);
         if (!isEdit) {

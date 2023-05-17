@@ -54,7 +54,7 @@ const Specialist = ({
   const deleteClick = async () => {
     activateHaptic("medium");
     try {
-      await axios.delete(`http://localhost:3333/specialist/del/${id}`);
+      await axios.delete(`http://localhost:8080/specialist/del/${id}`);
       dispatch(setIsEdit(false));
       navigate("/specialists");
     } catch (err) {
@@ -68,7 +68,7 @@ const Specialist = ({
       if (photo) {
         try {
           const response = await axios(
-            `http://localhost:3333/specialist/img/${photo}`,
+            `http://localhost:8080/specialist/img/${photo}`,
             { responseType: "blob" }
           );
           const data = response.data;

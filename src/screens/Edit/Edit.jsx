@@ -37,7 +37,7 @@ const Edit = () => {
       const getSpecialist = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3333/specialist/${curSpecialistId}`
+            `http://localhost:8080/specialist/${curSpecialistId}`
           );
           const data = response.data;
           setSpecialistInfo(data);
@@ -51,7 +51,7 @@ const Edit = () => {
       const getServiceInfo = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3333/services/${curServiceIds}`
+            `http://localhost:8080/services/${curServiceIds}`
           );
           const data = response.data;
           setServiceInfo(data);
@@ -64,7 +64,7 @@ const Edit = () => {
       setArrowScreenTitle("/categories");
       const getCategory = async () => {
         try {
-          const response = await axios("http://localhost:3333/category/all");
+          const response = await axios("http://localhost:8080/category/all");
           const data = response.data;
           const curCategoryId = curCategoryIds[0];
           const newData = data.filter(
@@ -81,7 +81,7 @@ const Edit = () => {
       const getOrderInfo = async () => {
         try {
           const response = await axios(
-            `http://localhost:3333/order/${curOrderId}`
+            `http://localhost:8080/order/${curOrderId}`
           );
           const data = response.data;
           setOrderInfo(data);
