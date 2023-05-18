@@ -66,7 +66,7 @@ const DateTime = () => {
     };
     try {
       const response = await axios.patch(
-        `http://localhost:8080/dates/editTime`,
+        `http://45.9.43.152:8080/dates/editTime`,
         timeData
       );
       console.log(response.data);
@@ -85,7 +85,7 @@ const DateTime = () => {
         isWorkingDate: String(isTickActive),
         isWorkingDateChanged: true,
       };
-      await axios.patch("http://localhost:8080/dates/editDate", dto);
+      await axios.patch("http://45.9.43.152:8080/dates/editDate", dto);
       dispatch(setCurDate(""));
       navigate("/admin");
     } catch (error) {

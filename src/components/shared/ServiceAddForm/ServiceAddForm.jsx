@@ -58,7 +58,7 @@ const ServiceAddForm = () => {
           time,
           categoryId: curCategoryIds[0],
         };
-        await axios.post("http://localhost:8080/services/add", data);
+        await axios.post("http://45.9.43.152:8080/services/add", data);
         dispatch(setCurCategoryIds([]));
         navigate("/");
       } catch (error) {

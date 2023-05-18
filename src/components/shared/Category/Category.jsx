@@ -22,7 +22,7 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
   const onClick = async () => {
     if (isEdit && isFromEditPage) {
       try {
-        await axios.delete(`http://localhost:8080/category/del/${id}`);
+        await axios.delete(`http://45.9.43.152:8080/category/del/${id}`);
         dispatch(setIsEdit(false));
         navigate("/categories");
       } catch (error) {

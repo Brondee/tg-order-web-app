@@ -32,7 +32,7 @@ export const sendOrder = async (
   const getServiceInfo = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/services/${curServiceIds}`
+        `http://45.9.43.152:8080/services/${curServiceIds}`
       );
       services = response.data;
     } catch (error) {
@@ -79,7 +79,7 @@ export const sendOrder = async (
     };
     try {
       const response = await axios.post(
-        `http://localhost:8080/order/add`,
+        `http://45.9.43.152:8080/order/add`,
         orderData
       );
       const data = response.data;
@@ -98,7 +98,7 @@ export const sendOrder = async (
     };
     try {
       const response = await axios.post(
-        `http://localhost:8080/client/add`,
+        `http://45.9.43.152:8080/client/add`,
         clientData
       );
       console.log(response.data);
@@ -163,7 +163,7 @@ export const sendOrder = async (
       eveningTime: newEveningTime,
     };
     try {
-      await axios.patch(`http://localhost:8080/dates/editTime`, timeData);
+      await axios.patch(`http://45.9.43.152:8080/dates/editTime`, timeData);
     } catch (error) {
       console.log(error);
     }

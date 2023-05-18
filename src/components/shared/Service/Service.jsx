@@ -57,7 +57,7 @@ const Service = ({ id, title, price, time, categoryId }) => {
   const deleteClick = async () => {
     activateHaptic("medium");
     try {
-      await axios.delete(`http://localhost:8080/services/del/${id}`);
+      await axios.delete(`http://45.9.43.152:8080/services/del/${id}`);
       dispatch(setIsEdit(false));
       navigate("/");
     } catch (err) {

@@ -30,7 +30,7 @@ const CategoryForm = ({ id, titleProp }) => {
         };
         try {
           const reponse = await axios.patch(
-            "http://localhost:8080/category/edit",
+            "http://45.9.43.152:8080/category/edit",
             data
           );
           console.log(reponse.data);
@@ -42,7 +42,7 @@ const CategoryForm = ({ id, titleProp }) => {
       } else {
         try {
           const reponse = await axios.post(
-            "http://localhost:8080/category/add",
+            "http://45.9.43.152:8080/category/add",
             { title }
           );
           console.log(reponse.data);

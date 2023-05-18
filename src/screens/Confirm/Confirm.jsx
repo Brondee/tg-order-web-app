@@ -146,7 +146,7 @@ const Confirm = () => {
     const getSpecialistInfo = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/specialist/${curSpecialistId}`
+          `http://45.9.43.152:8080/specialist/${curSpecialistId}`
         );
         setSpecialist(response.data);
       } catch (error) {
@@ -157,7 +157,7 @@ const Confirm = () => {
     const getServicesInfo = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/services/${curServiceIds}`
+          `http://45.9.43.152:8080/services/${curServiceIds}`
         );
         setServices(response.data);
       } catch (error) {
@@ -167,7 +167,7 @@ const Confirm = () => {
     getServicesInfo();
     const getGeneralInfo = async () => {
       try {
-        const response = await axios("http://localhost:8080/general/info");
+        const response = await axios("http://45.9.43.152:8080/general/info");
         const data = response.data;
         setCompanyAddress(data.companyAddress);
         console.log(data);
@@ -182,7 +182,7 @@ const Confirm = () => {
       if (specialist?.photoUrl) {
         try {
           const response = await axios(
-            `http://localhost:8080/specialist/img/${specialist.photoUrl}`,
+            `http://45.9.43.152:8080/specialist/img/${specialist.photoUrl}`,
             { responseType: "blob" }
           );
           const data = response.data;
