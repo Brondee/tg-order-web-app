@@ -27,13 +27,13 @@ const Specialists = () => {
       try {
         if (isAdminActions) {
           const response = await axios.get(
-            `http://45.9.43.152:8080/specialist/all`
+            `http://localhost:8080/specialist/all`
           );
           const data = response.data;
           setSpecialists(data);
         } else {
           const response = await axios.get(
-            `http://45.9.43.152:8080/specialist/all/${categoryIds}`
+            `http://localhost:8080/specialist/all/${categoryIds}`
           );
           let data = response.data;
           data = data.filter((specialist) => specialist !== null);

@@ -29,7 +29,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     if (isWorking) {
       try {
         const response = await axios(
-          `http://45.9.43.152:8080/dates/${fullDate}/${curSpecialistId}`
+          `http://localhost:8080/dates/${fullDate}/${curSpecialistId}`
         );
         const data = response.data;
         dispatch(setCurDateTime({ ...data }));
@@ -47,7 +47,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     const getDateInfo = async () => {
       try {
         const response = await axios(
-          `http://45.9.43.152:8080/dates/single/${fullDate}/${curSpecialistId}`
+          `http://localhost:8080/dates/single/${fullDate}/${curSpecialistId}`
         );
         const data = response.data;
         if (data.isWorkingDate !== "none") {

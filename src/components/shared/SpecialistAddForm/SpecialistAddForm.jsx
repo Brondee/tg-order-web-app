@@ -82,7 +82,7 @@ const SpecialistAddForm = () => {
           categoryIds: curCategoryIds,
         };
         const response = await axios.post(
-          "http://45.9.43.152:8080/specialist/add",
+          "http://localhost:8080/specialist/add",
           data
         );
         console.log(response.data);
@@ -97,7 +97,7 @@ const SpecialistAddForm = () => {
         console.log(formData, image);
         try {
           const response = await axios.post(
-            `http://45.9.43.152:8080/specialist/upload/${specId}`,
+            `http://localhost:8080/specialist/upload/${specId}`,
             formData,
             {
               headers: {

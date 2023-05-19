@@ -33,7 +33,7 @@ const Services = () => {
 
   const getServices = async () => {
     try {
-      const response = await axios.get(`http://45.9.43.152:8080/services/all`);
+      const response = await axios.get(`http://localhost:8080/services/all`);
       const data = response.data;
       const activeServices = data?.filter(
         (service) => service.isActive !== false
@@ -45,7 +45,7 @@ const Services = () => {
   };
   const getCategories = async () => {
     try {
-      const response = await axios.get("http://45.9.43.152:8080/category/all");
+      const response = await axios.get("http://localhost:8080/category/all");
       const data = response.data;
       setCategories(data);
     } catch (error) {
@@ -62,7 +62,7 @@ const Services = () => {
     getServices();
     const getBotPaidInfo = async () => {
       try {
-        const response = await axios.get("http://45.9.43.152:8080/admin/info");
+        const response = await axios.get("http://localhost:8080/admin/info");
         const data = response.data;
         setIsBotPaid(data.BotPaid);
         console.log(data);

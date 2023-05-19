@@ -29,7 +29,7 @@ const Orders = () => {
     const getOrdersInfo = async () => {
       try {
         const response = await axios(
-          `http://45.9.43.152:8080/order/all/${offset}`
+          `http://localhost:8080/order/all/${offset}`
         );
         const data = response.data;
         setOrders((prev) => {
@@ -53,7 +53,7 @@ const Orders = () => {
     const getTodayOrders = async () => {
       try {
         const response = await axios(
-          `http://45.9.43.152:8080/order/today/${todayOffset}`
+          `http://localhost:8080/order/today/${todayOffset}`
         );
         const data = response.data;
         setTodayOrders((prev) => {
