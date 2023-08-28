@@ -28,6 +28,7 @@ const SpecialistAddForm = () => {
   const navigate = useNavigate();
   let specId = null;
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -75,16 +76,13 @@ const SpecialistAddForm = () => {
       try {
         const timeTable = firstTimeTable + "/" + secondTimeTable;
         const data = {
-          name,
+          name: name.trim(),
           qualification,
           timeTable,
           beginingDate: beginDate,
           categoryIds: curCategoryIds,
         };
-        const response = await axios.post(
-          "http://localhost:8080/specialist/add",
-          data
-        );
+        const response = await axios.post(`${reqUrl}specialist/add`, data);
         console.log(response.data);
         specId = response.data.id;
         navigate("/specialists");
@@ -97,7 +95,7 @@ const SpecialistAddForm = () => {
         console.log(formData, image);
         try {
           const response = await axios.post(
-            `http://localhost:8080/specialist/upload/${specId}`,
+            `${reqUrl}specialist/upload/${specId}`,
             formData,
             {
               headers: {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -9,8 +9,6 @@ import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 import { useTelegram } from "../../../hooks/useTelegram";
 
 const Order = ({ id, clientName, date, totalTime }) => {
-  const [isAnimation, setIsAnimation] = useState(false);
-
   const { isEdit } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const { activateHaptic } = useTelegram();
@@ -23,15 +21,9 @@ const Order = ({ id, clientName, date, totalTime }) => {
     navigate("/edit");
   };
 
-  useEffect(() => {
-    setIsAnimation(true);
-  }, []);
-
   return (
     <div
-      className={`spec-container ${isAnimation && "spec-animation"} ${
-        isEdit && "spec-container-active"
-      }`}
+      className={`spec-container ${isEdit && "spec-container-active"}`}
       onClick={onClick}
     >
       <div className="img-info-container">

@@ -13,6 +13,7 @@ import "../../assets/styles/global.css";
 import "./Confirm.css";
 import { ReactComponent as EditIcon } from "../../assets/img/pencil.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/img/delete.svg";
+// import { ReactComponent as MarkIcon } from "../../assets/img/mark.svg";
 import { months, days } from "../../utils/calendarArrays";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 
@@ -30,10 +31,12 @@ const Confirm = () => {
   const [imgPath, setImgPath] = useState("");
 
   let servicesPrice = 0;
+  let servicesSecondPrice = 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tg } = useTelegram();
+  const { tg, activateHaptic } = useTelegram();
   const colorScheme = window.Telegram.WebApp.colorScheme;
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const {
     curTime,
@@ -80,14 +83,17 @@ const Confirm = () => {
   };
 
   const editSpecialistClick = () => {
+    activateHaptic("medium");
     navigate("/specialists");
   };
 
   const editDateTimeClick = () => {
+    activateHaptic("medium");
     navigate("/date");
   };
 
   const deleteServiceClick = (id) => {
+    activateHaptic("medium");
     if (services.length > 1) {
       const newServiceIds = curServiceIds.filter(
         (serviceId) => serviceId !== id
@@ -115,7 +121,8 @@ const Confirm = () => {
         curServiceIds,
         morningTime,
         afternoonTime,
-        eveningTime
+        eveningTime,
+        reqUrl
       );
       setNameError(false);
       setTelephoneError(false);
@@ -146,7 +153,7 @@ const Confirm = () => {
     const getSpecialistInfo = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/specialist/${curSpecialistId}`
+          `${reqUrl}specialist/${curSpecialistId}`
         );
         setSpecialist(response.data);
       } catch (error) {
@@ -156,9 +163,7 @@ const Confirm = () => {
     getSpecialistInfo();
     const getServicesInfo = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/services/${curServiceIds}`
-        );
+        const response = await axios.get(`${reqUrl}services/${curServiceIds}`);
         setServices(response.data);
       } catch (error) {
         console.log(error.response);
@@ -167,7 +172,7 @@ const Confirm = () => {
     getServicesInfo();
     const getGeneralInfo = async () => {
       try {
-        const response = await axios("http://localhost:8080/general/info");
+        const response = await axios(`${reqUrl}general/info`);
         const data = response.data;
         setCompanyAddress(data.companyAddress);
         console.log(data);
@@ -176,13 +181,13 @@ const Confirm = () => {
       }
     };
     getGeneralInfo();
-  }, [curServiceIds, curSpecialistId]);
+  }, [curServiceIds, curSpecialistId, reqUrl]);
   useEffect(() => {
     const getImage = async () => {
       if (specialist?.photoUrl) {
         try {
           const response = await axios(
-            `http://localhost:8080/specialist/img/${specialist.photoUrl}`,
+            `${reqUrl}specialist/img/${specialist.photoUrl}`,
             { responseType: "blob" }
           );
           const data = response.data;
@@ -193,7 +198,7 @@ const Confirm = () => {
       }
     };
     getImage();
-  }, [specialist]);
+  }, [specialist, reqUrl]);
 
   return (
     <AnimationPage>
@@ -237,11 +242,18 @@ const Confirm = () => {
             <input
               type="text"
               id="telegram"
-              placeholder="телеграм"
+              placeholder="ник в телеграме"
               value={telegram}
               onChange={(e) => onChangeTelegram(e)}
               className={`input ${telegramError && "input-error"}`}
             />
+            {/* <div className="tg-warning-container">
+              <MarkIcon width="30" />
+              <p className="tg-warning-text">
+                Введя свой ник в поле телеграм неправильно, вы не сможете
+                просматривать свои записи.
+              </p>
+            </div> */}
             <label
               htmlFor="telephone"
               className={`label ${telephoneError && "label-error"}`}
@@ -292,8 +304,9 @@ const Confirm = () => {
             <EditIcon onClick={editDateTimeClick} />
           </div>
           {services?.map((service, index) => {
-            const { id, title, price, time } = service;
+            const { id, title, price, time, priceSecond } = service;
             servicesPrice += price;
+            servicesSecondPrice += priceSecond;
             return (
               <div
                 key={id}
@@ -313,7 +326,13 @@ const Confirm = () => {
                 <div className="info-container">
                   <h3 className="title">{title}</h3>
                   <div className="price-time-container">
-                    <p className="price">{price} ₽</p>
+                    {price === priceSecond && priceSecond ? (
+                      <p className="price">{price} ₽</p>
+                    ) : (
+                      <p className="price">
+                        {price} - {priceSecond} ₽
+                      </p>
+                    )}
                     <p className="time">{time}</p>
                   </div>
                 </div>
@@ -328,7 +347,15 @@ const Confirm = () => {
               {curServiceIds.length > 1 && curServiceIds.length < 5 && "услуги"}
               {curServiceIds.length >= 5 && "услуг"}
             </p>
-            <p className="services-price">{servicesPrice} ₽</p>
+            {servicesPrice === servicesSecondPrice ? (
+              <p className="services-price">{servicesPrice} ₽</p>
+            ) : (
+              <p className="price">
+                <p className="services-price">
+                  {servicesPrice} - {servicesSecondPrice} ₽
+                </p>
+              </p>
+            )}
           </div>
           <SubmitBtn onClick={confirmPageClick} />
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,9 +10,8 @@ import "./Service.css";
 import CircleBtn from "../../ui/CircleBtn/CircleBtn";
 import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 
-const Service = ({ id, title, price, time, categoryId }) => {
+const Service = ({ id, title, price, time, categoryId, priceSec }) => {
   const [isActive, setIsActive] = useState(false);
-  const [isAnimation, setIsAnimation] = useState(false);
   const { tg, activateHaptic } = useTelegram();
 
   const { curServiceIds } = useSelector((state) => state.orderInfo);
@@ -20,6 +19,7 @@ const Service = ({ id, title, price, time, categoryId }) => {
   const { isAdminActions, isEdit } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onClick = async () => {
     activateHaptic("medium");
@@ -57,7 +57,7 @@ const Service = ({ id, title, price, time, categoryId }) => {
   const deleteClick = async () => {
     activateHaptic("medium");
     try {
-      await axios.delete(`http://localhost:8080/services/del/${id}`);
+      await axios.delete(`${reqUrl}services/del/${id}`);
       dispatch(setIsEdit(false));
       navigate("/");
     } catch (err) {
@@ -65,21 +65,23 @@ const Service = ({ id, title, price, time, categoryId }) => {
     }
   };
 
-  useEffect(() => {
-    setIsAnimation(true);
-  }, []);
-
   return (
     <div
       className={`container ${isActive && "container-active"} ${
         isEdit && "container-active"
-      } ${isAnimation && "container-animation"}`}
+      }`}
       onClick={onClick}
     >
       <div className="info-container">
         <h3 className="title">{title}</h3>
         <div className="price-time-container">
-          <p className="price">{price} ₽</p>
+          {price === priceSec && priceSec ? (
+            <p className="price">{price} ₽</p>
+          ) : (
+            <p className="price">
+              {price} - {priceSec} ₽
+            </p>
+          )}
           <p className="time">{time}</p>
         </div>
       </div>

@@ -17,11 +17,13 @@ export const sendOrder = async (
   curServiceIds,
   morningTime,
   afternoonTime,
-  eveningTime
+  eveningTime,
+  reqUrl
 ) => {
   let services = [];
   let servicesInfo = "";
   let totalPrice = 0;
+  let totalSecondPrice = 0;
   let totalTime = 0;
   let orderId = null;
 
@@ -31,15 +33,13 @@ export const sendOrder = async (
 
   const getServiceInfo = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/services/${curServiceIds}`
-      );
+      const response = await axios.get(`${reqUrl}services/${curServiceIds}`);
       services = response.data;
     } catch (error) {
       console.log(error.response);
     }
     services.map((service, index) => {
-      const { title, price, time } = service;
+      const { title, price, time, secondPrice } = service;
       let hours = 0;
       let minutes = 0;
       const timeFirst = time.split(" ")[0];
@@ -53,6 +53,7 @@ export const sendOrder = async (
       }
       totalTime += hours * 60 + minutes;
       totalPrice += price;
+      totalSecondPrice += secondPrice;
       if (services.length - 1 === index) {
         servicesInfo += title;
       } else {
@@ -64,6 +65,7 @@ export const sendOrder = async (
 
   const sendOrderToDb = async () => {
     await getServiceInfo();
+    telegram = telegram.replace("@", "").trim();
     const orderData = {
       clientName: name,
       clientTelegram: telegram,
@@ -78,10 +80,7 @@ export const sendOrder = async (
       servicesCount: services.length,
     };
     try {
-      const response = await axios.post(
-        `http://localhost:8080/order/add`,
-        orderData
-      );
+      const response = await axios.post(`${reqUrl}order/add`, orderData);
       const data = response.data;
       orderId = data.id;
       console.log(response.data);
@@ -95,12 +94,10 @@ export const sendOrder = async (
     const clientData = {
       name,
       telephoneNumber: telephone,
+      telegramName: telegram,
     };
     try {
-      const response = await axios.post(
-        `http://localhost:8080/client/add`,
-        clientData
-      );
+      const response = await axios.post(`${reqUrl}client/add`, clientData);
       console.log(response.data);
     } catch (err) {
       console.log(err);
@@ -163,12 +160,19 @@ export const sendOrder = async (
       eveningTime: newEveningTime,
     };
     try {
-      await axios.patch(`http://localhost:8080/dates/editTime`, timeData);
+      await axios.patch(`${reqUrl}dates/editTime`, timeData);
     } catch (error) {
       console.log(error);
     }
   };
   await updateTimeDb();
+
+  let totalPriceText = "";
+  if (totalPrice === totalSecondPrice) {
+    totalPriceText = String(totalPrice);
+  } else {
+    totalPriceText = String(totalPrice) + " - " + String(totalSecondPrice);
+  }
 
   let message = `✅ Ваша заявка принята!\n
 Дополнительного подтверджения по телефону не требуется!\n
@@ -191,7 +195,7 @@ export const sendOrder = async (
     months[Number(curDate.slice(5, -3)) - 1]
   }, ${days[curWeekDay]}, в ${curTime}
 🛠 Услуга(и): ${servicesInfo}
-💵 Стоимость услуг: ${totalPrice}₽
+💵 Стоимость услуг: ${totalPriceText} ₽
 `;
   return { message, adminMessage, orderId, totalTime };
 };

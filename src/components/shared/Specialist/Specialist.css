@@ -10,10 +10,8 @@
   margin-bottom: 10px;
   cursor: pointer;
   transition: all 0.3s;
-  transform: scale(0.8);
-}
-.spec-animation {
-  transform: scale(1);
+  animation-duration: 0.4s;
+  animation-name: scaleUp;
 }
 .spec-container-active {
   background: var(--tg-theme-button-color);

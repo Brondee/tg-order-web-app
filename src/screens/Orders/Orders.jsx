@@ -17,6 +17,7 @@ const Orders = () => {
   const [isLoadMoreTodayShown, setIsLoadMoreTodayShown] = useState(true);
 
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const loadMoreClick = () => {
     setOffset(orders.length);
@@ -28,9 +29,7 @@ const Orders = () => {
   useEffect(() => {
     const getOrdersInfo = async () => {
       try {
-        const response = await axios(
-          `http://localhost:8080/order/all/${offset}`
-        );
+        const response = await axios(`${reqUrl}order/all/${offset}`);
         const data = response.data;
         setOrders((prev) => {
           if (JSON.stringify(prev) !== JSON.stringify(data)) {
@@ -47,14 +46,12 @@ const Orders = () => {
       }
     };
     getOrdersInfo();
-  }, [offset]);
+  }, [offset, reqUrl]);
 
   useEffect(() => {
     const getTodayOrders = async () => {
       try {
-        const response = await axios(
-          `http://localhost:8080/order/today/${todayOffset}`
-        );
+        const response = await axios(`${reqUrl}order/today/${todayOffset}`);
         const data = response.data;
         setTodayOrders((prev) => {
           if (JSON.stringify(prev) !== JSON.stringify(data)) {
@@ -71,7 +68,7 @@ const Orders = () => {
       }
     };
     getTodayOrders();
-  }, [todayOffset]);
+  }, [todayOffset, reqUrl]);
 
   return (
     <AnimationPage>
@@ -84,7 +81,7 @@ const Orders = () => {
                 colorScheme === "light" && "main-title-light"
               }`}
             >
-              Выберите заказ
+              Выберите запись
             </h1>
           </div>
           <h2
@@ -92,19 +89,29 @@ const Orders = () => {
               colorScheme === "light" && "orders-title-light"
             }`}
           >
-            Заказы на сегодня
+            Записи на сегодня
           </h2>
-          {todayOrders.map((order) => {
-            return (
-              <Order
-                key={order.id}
-                id={order.id}
-                clientName={order.clientName}
-                date={order.dateTime}
-                totalTime={order.totalTime}
-              />
-            );
-          })}
+          {todayOrders.length > 0 ? (
+            todayOrders.map((order) => {
+              return (
+                <Order
+                  key={order.id}
+                  id={order.id}
+                  clientName={order.clientName}
+                  date={order.dateTime}
+                  totalTime={order.totalTime}
+                />
+              );
+            })
+          ) : (
+            <p
+              className={`orders-none ${
+                colorScheme === "light" && "orders-none-light"
+              }`}
+            >
+              Записей на сегодня нет
+            </p>
+          )}
           <LoadMoreBtn
             isShown={isLoadMoreTodayShown}
             onClick={loadMoreTodayClick}

@@ -10,11 +10,11 @@ import { ReactComponent as DeleteIcon } from "../../../assets/img/delete.svg";
 
 const Category = ({ id, title, isChosen, isFromEditPage }) => {
   const [isActive, setIsActive] = useState(false);
-  const [isAnimation, setIsAnimation] = useState(false);
 
   const { curCategoryIds, isEdit, curEditType } = useSelector(
     (state) => state.admin
   );
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
   const onClick = async () => {
     if (isEdit && isFromEditPage) {
       try {
-        await axios.delete(`http://localhost:8080/category/del/${id}`);
+        await axios.delete(`${reqUrl}category/del/${id}`);
         dispatch(setIsEdit(false));
         navigate("/categories");
       } catch (error) {
@@ -49,7 +49,6 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
 
   useEffect(() => {
     setIsActive(isChosen);
-    setIsAnimation(true);
   }, [isChosen]);
   useEffect(() => {
     if (curEditType === "services") {
@@ -63,7 +62,7 @@ const Category = ({ id, title, isChosen, isFromEditPage }) => {
     <div
       className={`category-container ${isActive && "category-active"} ${
         isFromEditPage && "category-edit-page"
-      } ${isAnimation && "container-animation"}`}
+      }`}
       onClick={onClick}
     >
       <p className="category-title">{title}</p>

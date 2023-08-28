@@ -6,15 +6,17 @@ import { setCurServiceIds, setCurDate } from "../../../store/orderInfoSlice";
 import { setIsEdit, setCurCategoryIds } from "../../../store/adminSlice";
 import "./ArrowBack.css";
 import { ReactComponent as ArrowBackIcon } from "../../../assets/img/arrow.svg";
+import { useTelegram } from "../../../hooks/useTelegram";
 
 const ArrowBack = ({ screenTitle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const colorScheme = window.Telegram.WebApp.colorScheme;
+  const { colorScheme, activateHaptic } = useTelegram();
 
   const { isAdminActions } = useSelector((state) => state.admin);
 
   const onClick = () => {
+    activateHaptic("light");
     if (screenTitle === "/") {
       dispatch(setCurCategoryIds([]));
       dispatch(setCurServiceIds([]));

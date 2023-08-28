@@ -10,30 +10,34 @@ import "../../assets/styles/global.css";
 import "./Specialists.css";
 import AddBtn from "../../components/ui/AddBtn/AddBtn";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
+import Loader from "../../components/ui/Loader/Loader";
 
 const Specialists = () => {
   const [specialists, setSpecialists] = useState([]);
   const [isAddBtnShown, setIsAddBtnShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isAdminActions, curEditType, curCategoryIds } = useSelector(
     (state) => state.admin
   );
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const { tg, colorScheme } = useTelegram();
   tg.MainButton.hide();
 
   useEffect(() => {
+    setIsLoading(true);
+  }, []);
+  useEffect(() => {
     const getSpecialists = async (categoryIds) => {
       try {
         if (isAdminActions) {
-          const response = await axios.get(
-            `http://localhost:8080/specialist/all`
-          );
+          const response = await axios.get(`${reqUrl}specialist/all`);
           const data = response.data;
           setSpecialists(data);
         } else {
           const response = await axios.get(
-            `http://localhost:8080/specialist/all/${categoryIds}`
+            `${reqUrl}specialist/all/${categoryIds}`
           );
           let data = response.data;
           data = data.filter((specialist) => specialist !== null);
@@ -43,13 +47,18 @@ const Specialists = () => {
         console.log(error.response);
       }
     };
-    getSpecialists(curCategoryIds);
+    setTimeout(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+      getSpecialists(curCategoryIds);
+    }, 200);
     if (curEditType === "datetime") {
       setIsAddBtnShown(false);
     } else if (isAdminActions) {
       setIsAddBtnShown(true);
     }
-  }, [curCategoryIds, curEditType, isAdminActions]);
+  }, [curCategoryIds, curEditType, isAdminActions, reqUrl]);
 
   return (
     <AnimationPage>
@@ -67,36 +76,42 @@ const Specialists = () => {
           </div>
           <div className="components-container">
             {isAddBtnShown && <AddBtn screenTitle={"/add"} />}
-            {specialists.length > 0 ? (
-              specialists?.map((person) => {
-                const {
-                  id,
-                  name,
-                  qualification,
-                  photoUrl,
-                  timeTable,
-                  beginingDate,
-                } = person;
-                return (
-                  <Specialist
-                    key={id}
-                    id={id}
-                    name={name}
-                    qualification={qualification}
-                    photo={photoUrl}
-                    beginDate={beginingDate}
-                    timeTable={timeTable}
-                  />
-                );
-              })
+            {isLoading ? (
+              <Loader />
             ) : (
               <div>
-                <h3 className="error-message">
-                  Выбранные услуги не может выполнить ни один специалист
-                </h3>
-                <h3 className="error-message error-smaller">
-                  попробуйте изменить выбранные вами услуги
-                </h3>
+                {specialists.length > 0 ? (
+                  specialists?.map((person) => {
+                    const {
+                      id,
+                      name,
+                      qualification,
+                      photoUrl,
+                      timeTable,
+                      beginingDate,
+                    } = person;
+                    return (
+                      <Specialist
+                        key={id}
+                        id={id}
+                        name={name}
+                        qualification={qualification}
+                        photo={photoUrl}
+                        beginDate={beginingDate}
+                        timeTable={timeTable}
+                      />
+                    );
+                  })
+                ) : (
+                  <div>
+                    <h3 className="error-message">
+                      Выбранные услуги не может выполнить ни один специалист
+                    </h3>
+                    <h3 className="error-message error-smaller">
+                      попробуйте изменить выбранные вами услуги
+                    </h3>
+                  </div>
+                )}
               </div>
             )}
           </div>

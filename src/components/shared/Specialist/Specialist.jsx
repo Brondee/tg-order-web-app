@@ -23,7 +23,6 @@ const Specialist = ({
   timeTable,
 }) => {
   const [isActive, setIsActive] = useState(false);
-  const [isAnimation, setIsAnimation] = useState(false);
   const [imgPath, setImgPath] = useState("");
 
   const { isAdminActions, isEdit, curEditType } = useSelector(
@@ -33,6 +32,7 @@ const Specialist = ({
   const { activateHaptic } = useTelegram();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onClick = () => {
     activateHaptic("medium");
@@ -54,7 +54,7 @@ const Specialist = ({
   const deleteClick = async () => {
     activateHaptic("medium");
     try {
-      await axios.delete(`http://localhost:8080/specialist/del/${id}`);
+      await axios.delete(`${reqUrl}specialist/del/${id}`);
       dispatch(setIsEdit(false));
       navigate("/specialists");
     } catch (err) {
@@ -63,14 +63,12 @@ const Specialist = ({
   };
 
   useEffect(() => {
-    setIsAnimation(true);
     const getImage = async () => {
       if (photo) {
         try {
-          const response = await axios(
-            `http://localhost:8080/specialist/img/${photo}`,
-            { responseType: "blob" }
-          );
+          const response = await axios(`${reqUrl}specialist/img/${photo}`, {
+            responseType: "blob",
+          });
           const data = response.data;
           setImgPath(URL.createObjectURL(data));
         } catch (err) {
@@ -79,13 +77,13 @@ const Specialist = ({
       }
     };
     getImage();
-  }, [photo]);
+  }, [photo, reqUrl]);
 
   return (
     <div
-      className={`spec-container ${isAnimation && "spec-animation"} ${
-        isActive && "spec-container-active"
-      } ${isEdit && "spec-container-active"}`}
+      className={`spec-container ${isActive && "spec-container-active"} ${
+        isEdit && "spec-container-active"
+      }`}
       onClick={onClick}
     >
       <div className="img-name-container">

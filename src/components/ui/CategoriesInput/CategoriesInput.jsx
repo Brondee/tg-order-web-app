@@ -18,11 +18,12 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
   const dispatch = useDispatch();
   let chosenCounter = 0;
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const response = await axios("http://localhost:8080/category/all");
+        const response = await axios(`${reqUrl}category/all`);
         const data = response.data;
         setCategories(data);
         if (!isEdit) {
@@ -34,7 +35,7 @@ const CategoriesInput = ({ specialistId, categoryId }) => {
       }
     };
     getCategories();
-  }, [isEdit]);
+  }, [isEdit, reqUrl]);
   useEffect(() => {
     const filterCategories = () => {
       if (isEdit) {

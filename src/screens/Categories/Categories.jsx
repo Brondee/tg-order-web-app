@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import { useTelegram } from "../../hooks/useTelegram";
@@ -12,21 +12,23 @@ const Categories = () => {
 
   const { colorScheme, tg } = useTelegram();
 
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
+
   tg.MainButton.hide();
 
-  const getCategories = async () => {
+  const getCategories = useCallback(async () => {
     try {
-      const response = await axios("http://localhost:8080/category/all");
+      const response = await axios(`${reqUrl}category/all`);
       const data = response.data;
       setCategories(data);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [reqUrl]);
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [getCategories]);
 
   return (
     <AnimationPage>

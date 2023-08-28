@@ -38,6 +38,7 @@ const SpecialistForm = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -85,7 +86,7 @@ const SpecialistForm = ({
       const timeTable = firstTimeTable + "/" + secondTimeTable;
       const data = {
         id: specialistId,
-        name,
+        name: name.trim(),
         photoUrlProp,
         qualification,
         timeTable,
@@ -93,12 +94,32 @@ const SpecialistForm = ({
         categoryIds: curCategoryIds,
       };
       try {
-        await axios.patch("http://localhost:8080/specialist/edit", data);
+        await axios.patch(`${reqUrl}specialist/edit`, data);
         dispatch(setIsEdit(false));
         dispatch(setCurCategoryIds([]));
         navigate("/specialists");
       } catch (err) {
         console.log(err);
+      }
+      if (image && specialistId !== null) {
+        let formData = new FormData();
+        formData.append("image", image);
+        console.log(formData, image);
+        try {
+          const response = await axios.post(
+            `${reqUrl}specialist/upload/${specialistId}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(response.data);
+          navigate("/specialists");
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   };

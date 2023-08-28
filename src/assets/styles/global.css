@@ -10,6 +10,7 @@ body {
 }
 .wrap {
   width: 95%;
+  min-height: 100vh;
 }
 .main-title {
   font-weight: 700;

@@ -10,12 +10,15 @@ import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 import { useTelegram } from "../../hooks/useTelegram";
 
 const Admin = () => {
-  const [isBotPaid, setIsBotPaid] = useState(true);
+  const [isBotPaid, setIsBotPaid] = useState("true");
+
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { colorScheme } = useTelegram();
+  const { colorScheme, activateHaptic } = useTelegram();
   const onClick = (screenTitle, editType) => {
+    activateHaptic("medium");
     dispatch(setIsAdminActions(true));
     dispatch(setCurEditType(editType));
     navigate(screenTitle);
@@ -24,7 +27,7 @@ const Admin = () => {
   useEffect(() => {
     const getBotPaidInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/admin/info");
+        const response = await axios.get(`${reqUrl}admin/info`);
         const data = response.data;
         setIsBotPaid(data.BotPaid);
         console.log(data);
@@ -33,7 +36,7 @@ const Admin = () => {
       }
     };
     getBotPaidInfo();
-  }, []);
+  }, [reqUrl]);
 
   return (
     <AnimationPage>
@@ -89,7 +92,7 @@ const Admin = () => {
                     onClick("/orders", "orders");
                   }}
                 >
-                  <h3 className="section-title">Заказы</h3>
+                  <h3 className="section-title">Записи</h3>
                 </div>
                 <div
                   className="section section-general"

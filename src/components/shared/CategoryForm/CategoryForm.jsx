@@ -15,6 +15,7 @@ const CategoryForm = ({ id, titleProp }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onChange = (e) => {
     setTitle(e.target.value);
@@ -26,13 +27,10 @@ const CategoryForm = ({ id, titleProp }) => {
       if (isEdit) {
         const data = {
           id,
-          title,
+          title: title.trim(),
         };
         try {
-          const reponse = await axios.patch(
-            "http://localhost:8080/category/edit",
-            data
-          );
+          const reponse = await axios.patch(`${reqUrl}category/edit`, data);
           console.log(reponse.data);
           dispatch(setIsEdit(false));
           navigate("/categories");
@@ -41,10 +39,7 @@ const CategoryForm = ({ id, titleProp }) => {
         }
       } else {
         try {
-          const reponse = await axios.post(
-            "http://localhost:8080/category/add",
-            { title }
-          );
+          const reponse = await axios.post(`${reqUrl}category/add`, { title });
           console.log(reponse.data);
           dispatch(setIsEdit(false));
           navigate("/categories");

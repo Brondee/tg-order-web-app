@@ -32,6 +32,21 @@
 .input-error {
   border: 2.5px solid #ff7d7d;
 }
+.tg-warning-container {
+  background: #fff1f1;
+  border: 3px solid #ff7d7d;
+  border-radius: 17px;
+  width: calc(100%-40px);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.tg-warning-text {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 0 15px;
+}
 .details-title {
   font-weight: 600;
   font-size: 15px;

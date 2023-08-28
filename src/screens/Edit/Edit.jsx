@@ -24,6 +24,7 @@ const Edit = () => {
   const [arrowScreenTitle, setArrowScreenTitle] = useState(null);
 
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const { curEditType, curOrderId } = useSelector((state) => state.admin);
   const { curSpecialistId, curServiceIds } = useSelector(
@@ -37,7 +38,7 @@ const Edit = () => {
       const getSpecialist = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/specialist/${curSpecialistId}`
+            `${reqUrl}specialist/${curSpecialistId}`
           );
           const data = response.data;
           setSpecialistInfo(data);
@@ -51,7 +52,7 @@ const Edit = () => {
       const getServiceInfo = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8080/services/${curServiceIds}`
+            `${reqUrl}services/${curServiceIds}`
           );
           const data = response.data;
           setServiceInfo(data);
@@ -64,7 +65,7 @@ const Edit = () => {
       setArrowScreenTitle("/categories");
       const getCategory = async () => {
         try {
-          const response = await axios("http://localhost:8080/category/all");
+          const response = await axios(`${reqUrl}category/all`);
           const data = response.data;
           const curCategoryId = curCategoryIds[0];
           const newData = data.filter(
@@ -80,9 +81,7 @@ const Edit = () => {
       setArrowScreenTitle("/orders");
       const getOrderInfo = async () => {
         try {
-          const response = await axios(
-            `http://localhost:8080/order/${curOrderId}`
-          );
+          const response = await axios(`${reqUrl}order/${curOrderId}`);
           const data = response.data;
           setOrderInfo(data);
         } catch (err) {
@@ -91,7 +90,14 @@ const Edit = () => {
       };
       getOrderInfo();
     }
-  }, [curEditType, curCategoryIds, curServiceIds, curSpecialistId, curOrderId]);
+  }, [
+    curEditType,
+    curCategoryIds,
+    curServiceIds,
+    curSpecialistId,
+    curOrderId,
+    reqUrl,
+  ]);
   return (
     <AnimationPage>
       <div className="main-container">
@@ -137,6 +143,7 @@ const Edit = () => {
                 id={serviceInfo[0]?.id}
                 titleProp={serviceInfo[0]?.title}
                 priceProp={serviceInfo[0]?.price}
+                priceSecProp={serviceInfo[0]?.priceSecond}
                 timeProp={serviceInfo[0]?.time}
                 categoryId={serviceInfo[0]?.categoryId}
               />

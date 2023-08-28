@@ -15,6 +15,7 @@ import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
 import { ReactComponent as TickIcon } from "../../assets/img/tick.svg";
 import SubmitBtn from "../../components/shared/SubmitBtn/SubmitBtn";
 import { setCurDate } from "../../store/orderInfoSlice";
+import Loader from "../../components/ui/Loader/Loader";
 
 const DateTime = () => {
   const [isEmptyTime, setIsEmptyTime] = useState(false);
@@ -24,6 +25,7 @@ const DateTime = () => {
   const [morningTimeState, setMorningTimeState] = useState([]);
   const [afternoonTimeState, setAfternoonTimeState] = useState([]);
   const [eveningTimeState, setEveningTimeState] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { morningTime, afternoonTime, eveningTime, curDate, curSpecialistId } =
     useSelector((state) => state.orderInfo);
@@ -33,6 +35,7 @@ const DateTime = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const tickClick = () => {
     setIsTickActive(!isTickActive);
@@ -48,15 +51,27 @@ const DateTime = () => {
   };
 
   const updateTimeDb = async () => {
-    let newMorningTime = morningTime;
-    let newAfternoonTime = afternoonTime;
-    let newEveningTime = eveningTime;
-    curTimeArray.map((time) => {
-      newMorningTime = newMorningTime.filter((curTime) => curTime !== time);
-      newAfternoonTime = newAfternoonTime.filter((curTime) => curTime !== time);
-      newEveningTime = newEveningTime.filter((curTime) => curTime !== time);
-      return time;
-    });
+    let newMorningTime = [...morningTime];
+    let newAfternoonTime = [...afternoonTime];
+    let newEveningTime = [...eveningTime];
+    for (let i = 0; i < curTimeArray.length; i++) {
+      if (newMorningTime.indexOf(curTimeArray[i]) !== -1) {
+        let index = newMorningTime.indexOf(curTimeArray[i]);
+        if (!newMorningTime[index].includes("disabled")) {
+          newMorningTime[index] = `disabled ${newMorningTime[index]}`;
+        }
+      } else if (newAfternoonTime.indexOf(curTimeArray[i]) !== -1) {
+        let index = newAfternoonTime.indexOf(curTimeArray[i]);
+        if (!newAfternoonTime[index].includes("disabled")) {
+          newAfternoonTime[index] = `disabled ${newAfternoonTime[index]}`;
+        }
+      } else if (newEveningTime.indexOf(curTimeArray[i]) !== -1) {
+        let index = newEveningTime.indexOf(curTimeArray[i]);
+        if (!newEveningTime[index].includes("disabled")) {
+          newEveningTime[index] = `disabled ${newEveningTime[index]}`;
+        }
+      }
+    }
     const timeData = {
       date: curDate,
       specialistId: curSpecialistId,
@@ -65,10 +80,7 @@ const DateTime = () => {
       eveningTime: newEveningTime,
     };
     try {
-      const response = await axios.patch(
-        `http://localhost:8080/dates/editTime`,
-        timeData
-      );
+      const response = await axios.patch(`${reqUrl}dates/editTime`, timeData);
       console.log(response.data);
       dispatch(setCurDate(""));
       navigate("/admin");
@@ -85,7 +97,7 @@ const DateTime = () => {
         isWorkingDate: String(isTickActive),
         isWorkingDateChanged: true,
       };
-      await axios.patch("http://localhost:8080/dates/editDate", dto);
+      await axios.patch(`${reqUrl}dates/editDate`, dto);
       dispatch(setCurDate(""));
       navigate("/admin");
     } catch (error) {
@@ -93,6 +105,9 @@ const DateTime = () => {
     }
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+  }, []);
   useEffect(() => {
     let filteredMorningTime = morningTime.filter(
       (time) => !time.startsWith("disabled")
@@ -120,8 +135,13 @@ const DateTime = () => {
     }
   }, [morningTime, afternoonTime, eveningTime]);
   useEffect(() => {
-    const dateFuncArray = getDateArray(curBeginDate, curTimeTable);
-    setDateArray(dateFuncArray);
+    setTimeout(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+      const dateFuncArray = getDateArray(curBeginDate, curTimeTable);
+      setDateArray(dateFuncArray);
+    }, 200);
   }, [curBeginDate, curTimeTable]);
 
   return (
@@ -142,58 +162,67 @@ const DateTime = () => {
               Выберите дату и время
             </h1>
           </div>
-          <div className="dates-container">
-            {dateArray?.map((dateOnly) => {
-              const { id, date, isWorking, weekDay, fullDate } = dateOnly;
-              return (
-                <Date
-                  key={id}
-                  date={date}
-                  fullDate={fullDate}
-                  weekDay={weekDay}
-                  isWorkingProp={isWorking}
-                />
-              );
-            })}
-          </div>
-          {isAdminActions && (
-            <div className="working-date-container">
-              <div className={`tick-container`} onClick={tickClick}>
-                <TickIcon
-                  className={`tick-img ${isTickActive && "tick-img-active"}`}
-                />
-              </div>
-              <p className="isworking-text">на дату можно записаться</p>
-            </div>
-          )}
-          {isEmptyTime ? (
-            <p className="empty-date-text">На данную дату не записаться</p>
+
+          {isLoading ? (
+            <Loader />
           ) : (
-            <div className="time-all-container">
-              <h3 className="time-title">
-                {morningTimeState.length !== 0 && "Утро"}
-              </h3>
-              <div className="time-container">
-                {morningTimeState?.map((time) => {
-                  return <Time key={time} time={time} />;
+            <div>
+              <div className="dates-container">
+                {dateArray?.map((dateOnly) => {
+                  const { id, date, isWorking, weekDay, fullDate } = dateOnly;
+                  return (
+                    <Date
+                      key={id}
+                      date={date}
+                      fullDate={fullDate}
+                      weekDay={weekDay}
+                      isWorkingProp={isWorking}
+                    />
+                  );
                 })}
               </div>
-              <h3 className="time-title">
-                {afternoonTimeState.length !== 0 && "День"}
-              </h3>
-              <div className="time-container">
-                {afternoonTimeState?.map((time) => {
-                  return <Time key={time} time={time} />;
-                })}
-              </div>
-              <h3 className="time-title">
-                {eveningTimeState.length !== 0 && "Вечер"}
-              </h3>
-              <div className="time-container">
-                {eveningTimeState?.map((time) => {
-                  return <Time key={time} time={time} />;
-                })}
-              </div>
+              {isAdminActions && (
+                <div className="working-date-container">
+                  <div className={`tick-container`} onClick={tickClick}>
+                    <TickIcon
+                      className={`tick-img ${
+                        isTickActive && "tick-img-active"
+                      }`}
+                    />
+                  </div>
+                  <p className="isworking-text">на дату можно записаться</p>
+                </div>
+              )}
+              {isEmptyTime ? (
+                <p className="empty-date-text">На данную дату не записаться</p>
+              ) : (
+                <div className="time-all-container">
+                  <h3 className="time-title">
+                    {morningTimeState.length !== 0 && "Утро"}
+                  </h3>
+                  <div className="time-container">
+                    {morningTimeState?.map((time) => {
+                      return <Time key={time} time={time} />;
+                    })}
+                  </div>
+                  <h3 className="time-title">
+                    {afternoonTimeState.length !== 0 && "День"}
+                  </h3>
+                  <div className="time-container">
+                    {afternoonTimeState?.map((time) => {
+                      return <Time key={time} time={time} />;
+                    })}
+                  </div>
+                  <h3 className="time-title">
+                    {eveningTimeState.length !== 0 && "Вечер"}
+                  </h3>
+                  <div className="time-container">
+                    {eveningTimeState?.map((time) => {
+                      return <Time key={time} time={time} />;
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
           {isAdminActions && <SubmitBtn onClick={confirmClick} />}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -11,11 +11,15 @@ import ArrowBack from "../../components/ui/ArrowBack/ArrowBack";
 import "../../assets/styles/global.css";
 import "./Services.css";
 import AnimationPage from "../../components/shared/AnimationPage/AnimationPage";
+import Loader from "../../components/ui/Loader/Loader";
 
 const Services = () => {
   const [categories, setCategories] = useState(null);
   const [services, setServices] = useState(null);
-  const [isBotPaid, setIsBotPaid] = useState(true);
+  const [isBotPaid, setIsBotPaid] = useState("true");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const { isAdminActions } = useSelector((state) => state.admin);
 
@@ -31,9 +35,9 @@ const Services = () => {
     });
   }
 
-  const getServices = async () => {
+  const getServices = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/services/all`);
+      const response = await axios.get(`${reqUrl}services/all`);
       const data = response.data;
       const activeServices = data?.filter(
         (service) => service.isActive !== false
@@ -42,36 +46,42 @@ const Services = () => {
     } catch (error) {
       console.log(error.response);
     }
-  };
-  const getCategories = async () => {
+  }, [reqUrl]);
+  const getCategories = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8080/category/all");
+      const response = await axios.get(`${reqUrl}category/all`);
       const data = response.data;
       setCategories(data);
     } catch (error) {
       console.log(error.response);
     }
-  };
+  }, [reqUrl]);
 
   const moveNext = () => {
     navigate("/specialists");
   };
-
   useEffect(() => {
-    getCategories();
-    getServices();
+    if (isAdminActions) setIsLoading(true);
+  }, [isAdminActions]);
+  useEffect(() => {
+    setTimeout(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+      getCategories();
+      getServices();
+    }, 200);
     const getBotPaidInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/admin/info");
+        const response = await axios.get(`${reqUrl}admin/info`);
         const data = response.data;
         setIsBotPaid(data.BotPaid);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
     getBotPaidInfo();
-  }, []);
+  }, [reqUrl, getCategories, getServices]);
 
   return (
     <AnimationPage>
@@ -91,36 +101,50 @@ const Services = () => {
               </div>
               <div className="components-container">
                 {isAdminActions && <AddBtn screenTitle={"/add"} />}
-                {categories?.map((category) => {
-                  const { id, title } = category;
-                  const curServices = services?.filter(
-                    (service) => service.categoryId === id
-                  );
-                  return (
-                    <div key={id}>
-                      <h3
-                        className={`category ${
-                          colorScheme === "light" && "category-light"
-                        }`}
-                      >
-                        {curServices?.length !== 0 && title}
-                      </h3>
-                      {curServices?.map((service) => {
-                        const { id, title, price, time, categoryId } = service;
-                        return (
-                          <Service
-                            key={id}
-                            id={id}
-                            title={title}
-                            price={price}
-                            time={time}
-                            categoryId={categoryId}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <div>
+                    {categories?.map((category) => {
+                      const { id, title } = category;
+                      const curServices = services?.filter(
+                        (service) => service.categoryId === id
+                      );
+                      return (
+                        <div key={id}>
+                          <h3
+                            className={`category ${
+                              colorScheme === "light" && "category-light"
+                            }`}
+                          >
+                            {curServices?.length !== 0 && title}
+                          </h3>
+                          {curServices?.map((service) => {
+                            const {
+                              id,
+                              title,
+                              price,
+                              time,
+                              categoryId,
+                              priceSecond,
+                            } = service;
+                            return (
+                              <Service
+                                key={id}
+                                id={id}
+                                title={title}
+                                price={price}
+                                priceSec={priceSecond}
+                                time={time}
+                                categoryId={categoryId}
+                              />
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
               <div className="move" onClick={moveNext}>
                 <p>Continue</p>

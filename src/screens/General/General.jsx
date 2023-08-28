@@ -19,6 +19,7 @@ const General = () => {
 
   const { colorScheme } = useTelegram();
   const navigate = useNavigate();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onChangeTelephone = (e) => {
     setTelephone(e.target.value);
@@ -58,7 +59,7 @@ const General = () => {
         companyDescription: companyDescription,
       };
       try {
-        await axios.patch("http://localhost:8080/general/edit", data);
+        await axios.patch(`${reqUrl}general/edit`, data);
         navigate("/admin");
       } catch (err) {
         console.log(err);
@@ -69,7 +70,7 @@ const General = () => {
   useEffect(() => {
     const getGeneralInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/general/info");
+        const response = await axios.get(`${reqUrl}general/info`);
         const { companyAddress, companyTelephone, companyDescription } =
           response.data;
         setTelephone(companyTelephone);
@@ -80,7 +81,7 @@ const General = () => {
       }
     };
     getGeneralInfo();
-  }, []);
+  }, [reqUrl]);
 
   return (
     <AnimationPage>
@@ -93,7 +94,7 @@ const General = () => {
                 colorScheme === "light" && "main-title-light"
               }`}
             >
-              Выберите раздел
+              Редактирование
             </h1>
           </div>
           <form>

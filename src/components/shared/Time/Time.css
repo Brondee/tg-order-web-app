@@ -1,13 +1,10 @@
 .time-handler {
-  margin-right: 10px;
-  width: 30%;
   border: 2.5px solid #ffffff;
   border-radius: 12px;
   height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
   color: #ffffff;
   transition: all 0.2s;
   cursor: pointer;

@@ -20,6 +20,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
   const dispatch = useDispatch();
   const { curDate, curSpecialistId } = useSelector((state) => state.orderInfo);
   const { colorScheme } = useTelegram();
+  const reqUrl = process.env.REACT_APP_REQUEST_URL;
 
   const onClick = useCallback(async () => {
     dispatch(setCurDate(fullDate));
@@ -29,7 +30,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     if (isWorking) {
       try {
         const response = await axios(
-          `http://localhost:8080/dates/${fullDate}/${curSpecialistId}`
+          `${reqUrl}dates/${fullDate}/${curSpecialistId}`
         );
         const data = response.data;
         dispatch(setCurDateTime({ ...data }));
@@ -41,13 +42,13 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
         setCurDateTime({ morningTime: [], afternoonTime: [], eveningTime: [] })
       );
     }
-  }, [curSpecialistId, dispatch, fullDate, isWorking, weekDay]);
+  }, [curSpecialistId, dispatch, fullDate, isWorking, weekDay, reqUrl]);
 
   useEffect(() => {
     const getDateInfo = async () => {
       try {
         const response = await axios(
-          `http://localhost:8080/dates/single/${fullDate}/${curSpecialistId}`
+          `${reqUrl}dates/single/${fullDate}/${curSpecialistId}`
         );
         const data = response.data;
         if (data.isWorkingDate !== "none") {
@@ -88,6 +89,7 @@ const Date = ({ date, isWorkingProp, fullDate, weekDay }) => {
     isWorking,
     dispatch,
     weekDay,
+    reqUrl,
   ]);
 
   return (
